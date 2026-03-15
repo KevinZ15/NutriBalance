@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{88FE3972-305C-4415-830F-332F02F3D09F}|..\\NutriBalance.Model\\NutriBalance.Model.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.model\\services\\usuariojsonrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92C9E38C-F64A-4C0B-BE9C-86571CC03B7F}|NutriBalance.View.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.view\\editarusuarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{92C9E38C-F64A-4C0B-BE9C-86571CC03B7F}|NutriBalance.View.csproj|solutionrelative:editarusuarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92C9E38C-F64A-4C0B-BE9C-86571CC03B7F}|NutriBalance.View.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.view\\editarusuarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92C9E38C-F64A-4C0B-BE9C-86571CC03B7F}|NutriBalance.View.csproj|solutionrelative:editarusuarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsuarioJsonRepository.cs",
+              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Model\\Services\\UsuarioJsonRepository.cs",
+              "RelativeDocumentMoniker": "..\\NutriBalance.Model\\Services\\UsuarioJsonRepository.cs",
+              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Model\\Services\\UsuarioJsonRepository.cs",
+              "RelativeToolTip": "..\\NutriBalance.Model\\Services\\UsuarioJsonRepository.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAmwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T20:37:51.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EditarUsuarioForm.cs [Dise\u00F1o]",
+              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\EditarUsuarioForm.cs",
+              "RelativeDocumentMoniker": "EditarUsuarioForm.cs",
+              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\EditarUsuarioForm.cs [Dise\u00F1o]",
+              "RelativeToolTip": "EditarUsuarioForm.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T20:37:27.325Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EditarUsuarioForm.cs",
+              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\EditarUsuarioForm.cs",
+              "RelativeDocumentMoniker": "EditarUsuarioForm.cs",
+              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\EditarUsuarioForm.cs",
+              "RelativeToolTip": "EditarUsuarioForm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T20:36:59.17Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
