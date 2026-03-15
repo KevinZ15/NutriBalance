@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../NutriBalance.Controller/NutriBalance.Controller.csproj" />
+  <Project Path="../NutriBalance.Model/NutriBalance.Model.csproj" />
+  <Project Path="NutriBalance.View.csproj" />
+</Solution>
