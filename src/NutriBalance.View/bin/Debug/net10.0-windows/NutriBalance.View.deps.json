@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "NutriBalance.View/1.0.0": {
+        "dependencies": {
+          "NutriBalance.Controller": "1.0.0",
+          "NutriBalance.Model": "1.0.0"
+        },
+        "runtime": {
+          "NutriBalance.View.dll": {}
+        }
+      },
+      "NutriBalance.Controller/1.0.0": {
+        "dependencies": {
+          "NutriBalance.Model": "1.0.0"
+        },
+        "runtime": {
+          "NutriBalance.Controller.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NutriBalance.Model/1.0.0": {
+        "runtime": {
+          "NutriBalance.Model.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NutriBalance.View/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NutriBalance.Controller/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NutriBalance.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
