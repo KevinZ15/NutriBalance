@@ -1,0 +1,20 @@
+[
+  {
+    "Id": "3644fafd-ee07-4fe0-9132-4ababfa33495",
+    "Nombre": "yuca",
+    "Porcion": 1,
+    "Calorias": 17,
+    "Proteinas": 1,
+    "Carbohidratos": 1,
+    "Grasas": 1
+  },
+  {
+    "Id": "0f9e1324-f4a6-48b6-b003-3395b1dd3604",
+    "Nombre": "platano",
+    "Porcion": 1,
+    "Calorias": 17,
+    "Proteinas": 1,
+    "Carbohidratos": 1,
+    "Grasas": 1
+  }
+]

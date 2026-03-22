@@ -1,35 +1,13 @@
 [
   {
-    "Id": "599cf960-aaef-4f2e-b6bd-b58aa08dc97f",
+    "Id": "3639e121-844c-4010-8c67-24b1bf56da8d",
     "NombreUsuario": "kevin",
-    "Contrasena": "12",
+    "Contrasena": "1234",
     "Nombre": "kevin",
-    "Peso": 12,
-    "Estatura": 12,
+    "Peso": 143213,
+    "Estatura": 123,
     "NivelActividad": 0,
     "Objetivo": 0,
-    "TipoDieta": 0
-  },
-  {
-    "Id": "12187566-e3e6-4599-b31a-e292d8bf9a61",
-    "NombreUsuario": "KevinZ",
-    "Contrasena": "12345",
-    "Nombre": "Kevin Zamora",
-    "Peso": 90,
-    "Estatura": 180,
-    "NivelActividad": 2,
-    "Objetivo": 1,
-    "TipoDieta": 0
-  },
-  {
-    "Id": "6a73b645-e764-43c0-861b-bad5c66c9af1",
-    "NombreUsuario": "emanuel",
-    "Contrasena": "1233",
-    "Nombre": "emanuel",
-    "Peso": 78,
-    "Estatura": 85,
-    "NivelActividad": 0,
-    "Objetivo": 1,
     "TipoDieta": 0
   }
 ]

@@ -16,16 +16,20 @@ public partial class EditarUsuarioForm : Form
 
     private void EditarUsuarioForm_Load(object sender, EventArgs e)
     {
-        cmbNivelActividad.Items.Clear();
-        cmbNivelActividad.Items.AddRange(Enum.GetNames(typeof(NivelActividad)));
+        CargarCombos();
+        CargarUsuarioActual();
+    }
 
+    private void CargarCombos()
+    {
         cmbObjetivo.Items.Clear();
         cmbObjetivo.Items.AddRange(Enum.GetNames(typeof(ObjetivoUsuario)));
 
+        cmbNivelActividad.Items.Clear();
+        cmbNivelActividad.Items.AddRange(Enum.GetNames(typeof(NivelActividad)));
+
         cmbTipoDieta.Items.Clear();
         cmbTipoDieta.Items.AddRange(Enum.GetNames(typeof(TipoDieta)));
-
-        CargarUsuarioActual();
     }
 
     private void CargarUsuarioActual()
@@ -34,39 +38,93 @@ public partial class EditarUsuarioForm : Form
 
         if (usuario is null)
         {
-            MessageBox.Show("No hay usuario autenticado.");
+            MessageBox.Show(
+                "No hay usuario autenticado.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
             Close();
             return;
         }
 
-        txtContrasena.Text = usuario.Contrasena;
         txtNombre.Text = usuario.Nombre;
+        txtContrasena.Text = usuario.Contrasena;
         txtPeso.Text = usuario.Peso.ToString();
         txtEstatura.Text = usuario.Estatura.ToString();
-        cmbNivelActividad.SelectedItem = usuario.NivelActividad.ToString();
+
         cmbObjetivo.SelectedItem = usuario.Objetivo.ToString();
+        cmbNivelActividad.SelectedItem = usuario.NivelActividad.ToString();
         cmbTipoDieta.SelectedItem = usuario.TipoDieta.ToString();
     }
 
-    private void btnActualizar_Click(object sender, EventArgs e)
+    private void btnGuardar_Click(object sender, EventArgs e)
     {
         Usuario? usuarioActual = _usuarioController.UsuarioAutenticado;
 
         if (usuarioActual is null)
         {
-            MessageBox.Show("No hay usuario autenticado.");
+            MessageBox.Show(
+                "No hay usuario autenticado.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
             return;
         }
 
         if (!decimal.TryParse(txtPeso.Text, out decimal peso))
         {
-            MessageBox.Show("El peso debe ser numérico.");
+            MessageBox.Show(
+                "El peso debe ser numérico.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
             return;
         }
 
         if (!decimal.TryParse(txtEstatura.Text, out decimal estatura))
         {
-            MessageBox.Show("La estatura debe ser numérica.");
+            MessageBox.Show(
+                "La altura debe ser numérica.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+            return;
+        }
+
+        if (cmbObjetivo.SelectedItem is null)
+        {
+            MessageBox.Show(
+                "Debe seleccionar un objetivo.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+            return;
+        }
+
+        if (cmbNivelActividad.SelectedItem is null)
+        {
+            MessageBox.Show(
+                "Debe seleccionar un nivel de actividad.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+            return;
+        }
+
+        if (cmbTipoDieta.SelectedItem is null)
+        {
+            MessageBox.Show(
+                "Debe seleccionar un tipo de dieta.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
             return;
         }
 
@@ -78,20 +136,37 @@ public partial class EditarUsuarioForm : Form
             Nombre = txtNombre.Text.Trim(),
             Peso = peso,
             Estatura = estatura,
-            NivelActividad = Enum.Parse<NivelActividad>(cmbNivelActividad.SelectedItem!.ToString()!),
-            Objetivo = Enum.Parse<ObjetivoUsuario>(cmbObjetivo.SelectedItem!.ToString()!),
-            TipoDieta = Enum.Parse<TipoDieta>(cmbTipoDieta.SelectedItem!.ToString()!)
+            Objetivo = Enum.Parse<ObjetivoUsuario>(cmbObjetivo.SelectedItem.ToString()!),
+            NivelActividad = Enum.Parse<NivelActividad>(cmbNivelActividad.SelectedItem.ToString()!),
+            TipoDieta = Enum.Parse<TipoDieta>(cmbTipoDieta.SelectedItem.ToString()!)
         };
 
         var resultado = _usuarioController.ActualizarPerfil(usuarioActualizado);
 
         if (!resultado.Exito)
         {
-            MessageBox.Show(resultado.Mensaje, "Editar perfil", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(
+                resultado.Mensaje,
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
             return;
         }
 
-        MessageBox.Show(resultado.Mensaje, "Editar perfil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show(
+            resultado.Mensaje,
+            "NutriBalance",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information
+        );
+
+        DialogResult = DialogResult.OK;
+        Close();
+    }
+
+    private void btnCancelar_Click(object sender, EventArgs e)
+    {
         Close();
     }
 }

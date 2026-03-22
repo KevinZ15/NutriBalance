@@ -5,11 +5,18 @@ namespace NutriBalance.View;
 public partial class LoginForm : Form
 {
     private readonly UsuarioController _usuarioController;
+    private readonly AlimentoController _alimentoController;
 
-    public LoginForm(UsuarioController usuarioController)
+    public LoginForm(UsuarioController usuarioController, AlimentoController alimentoController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
+        _alimentoController = alimentoController;
+    }
+
+    private void btnVolver_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 
     private void btnIngresar_Click(object sender, EventArgs e)
@@ -25,16 +32,7 @@ public partial class LoginForm : Form
             return;
         }
 
-        Hide();
-
-        MainForm mainForm = new(_usuarioController);
-        mainForm.FormClosed += (s, args) => Close();
-        mainForm.Show();
-    }
-
-    private void btnRegistrarse_Click(object sender, EventArgs e)
-    {
-        using RegistroUsuarioForm form = new(_usuarioController);
-        form.ShowDialog();
+        DialogResult = DialogResult.OK;
+        Close();
     }
 }

@@ -11,7 +11,7 @@ internal static class Program
     {
         ApplicationConfiguration.Initialize();
 
-        string rutaArchivo = Path.GetFullPath(
+        string rutaUsuarios = Path.GetFullPath(
             Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 "..", "..", "..", "..", "..",
@@ -20,9 +20,21 @@ internal static class Program
             )
         );
 
-        IUsuarioRepository usuarioRepository = new UsuarioJsonRepository(rutaArchivo);
-        UsuarioController usuarioController = new(usuarioRepository);
+        string rutaAlimentos = Path.GetFullPath(
+            Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "..", "..", "..", "..", "..",
+                "data",
+                "alimentos.json"
+            )
+        );
 
-        Application.Run(new LoginForm(usuarioController));
+        IUsuarioRepository usuarioRepository = new UsuarioJsonRepository(rutaUsuarios);
+        IAlimentoRepository alimentoRepository = new AlimentoJsonRepository(rutaAlimentos);
+
+        UsuarioController usuarioController = new(usuarioRepository);
+        AlimentoController alimentoController = new(alimentoRepository);
+
+        Application.Run(new InicioForm(usuarioController, alimentoController));
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NutriBalance.Controller")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d161b6e1bb1c5682cf46a82926efcccaf4e71c0a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ad8ef9f02021c5dba537446a4aa2c269fa33eb9")]
 [assembly: System.Reflection.AssemblyProductAttribute("NutriBalance.Controller")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NutriBalance.Controller")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
