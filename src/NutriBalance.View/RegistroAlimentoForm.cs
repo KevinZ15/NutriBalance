@@ -59,16 +59,30 @@ public partial class RegistroAlimentoForm : Form
             return;
         }
 
+        if (!chkKeto.Checked && !chkVegetariano.Checked && !chkEstandar.Checked)
+        {
+            MessageBox.Show(
+                "Debe seleccionar al menos una clasificación para el alimento.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+            return;
+        }
+
         decimal calorias = (proteinas * 4) + (carbohidratos * 4) + (grasas * 9);
 
         Alimento nuevoAlimento = new()
         {
             Nombre = txtNombre.Text.Trim(),
-            Porcion = 1,
+            Porcion = 100,
             Grasas = grasas,
             Proteinas = proteinas,
             Carbohidratos = carbohidratos,
-            Calorias = calorias
+            Calorias = calorias,
+            EsKeto = chkKeto.Checked,
+            EsVegetariano = chkVegetariano.Checked,
+            EsEstandar = chkEstandar.Checked
         };
 
         var resultado = _alimentoController.RegistrarAlimento(nuevoAlimento);

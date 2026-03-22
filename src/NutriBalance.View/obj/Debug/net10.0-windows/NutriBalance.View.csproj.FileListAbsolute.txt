@@ -30,3 +30,5 @@ C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.View
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.View\obj\Debug\net10.0-windows\NutriBalance.View.MiPerfilForm.resources
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.View\obj\Debug\net10.0-windows\NutriBalance.View.AlimentosForm.resources
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.View\obj\Debug\net10.0-windows\NutriBalance.View.EditarAlimentoForm.resources
+C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.View\obj\Debug\net10.0-windows\NutriBalance.View.AgregarAlimentoMenuForm.resources
+C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.View\obj\Debug\net10.0-windows\NutriBalance.View.MiDietaForm.resources

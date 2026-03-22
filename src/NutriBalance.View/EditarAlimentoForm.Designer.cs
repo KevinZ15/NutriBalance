@@ -32,19 +32,25 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            this.txtProteinas = new TextBox();
-            this.txtGrasas = new TextBox();
+            txtGrasas = new TextBox();
             label4 = new Label();
+            txtProteinas = new TextBox();
             cmbAlimentos = new ComboBox();
+            txtCarbohidratos = new TextBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             lblTitulo = new Label();
-            txtCarbohidratos = new TextBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnAceptar = new Button();
             btnVolver = new Button();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            label5 = new Label();
+            chkKeto = new CheckBox();
+            chkVegetariano = new CheckBox();
+            chkEstandar = new CheckBox();
             tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel3
@@ -56,9 +62,9 @@
             tableLayoutPanel3.Controls.Add(label1, 0, 0);
             tableLayoutPanel3.Controls.Add(label2, 0, 1);
             tableLayoutPanel3.Controls.Add(label3, 0, 2);
-            tableLayoutPanel3.Controls.Add(this.txtGrasas, 2, 1);
+            tableLayoutPanel3.Controls.Add(txtGrasas, 2, 1);
             tableLayoutPanel3.Controls.Add(label4, 0, 3);
-            tableLayoutPanel3.Controls.Add(this.txtProteinas, 2, 2);
+            tableLayoutPanel3.Controls.Add(txtProteinas, 2, 2);
             tableLayoutPanel3.Controls.Add(cmbAlimentos, 2, 0);
             tableLayoutPanel3.Controls.Add(txtCarbohidratos, 2, 3);
             tableLayoutPanel3.Location = new Point(0, 72);
@@ -69,7 +75,7 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Size = new Size(624, 176);
+            tableLayoutPanel3.Size = new Size(664, 176);
             tableLayoutPanel3.TabIndex = 8;
             // 
             // label1
@@ -77,7 +83,7 @@
             label1.Anchor = AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(86, 7);
+            label1.Location = new Point(105, 7);
             label1.Name = "label1";
             label1.Size = new Size(213, 30);
             label1.TabIndex = 2;
@@ -88,7 +94,7 @@
             label2.Anchor = AnchorStyles.Right;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(220, 51);
+            label2.Location = new Point(239, 51);
             label2.Name = "label2";
             label2.Size = new Size(79, 30);
             label2.TabIndex = 3;
@@ -99,50 +105,59 @@
             label3.Anchor = AnchorStyles.Right;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(195, 95);
+            label3.Location = new Point(214, 95);
             label3.Name = "label3";
             label3.Size = new Size(104, 30);
             label3.TabIndex = 4;
             label3.Text = "Proteínas:";
             // 
-            // txtProteinas
-            // 
-            this.txtProteinas.Anchor = AnchorStyles.Left;
-            this.txtProteinas.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.txtProteinas.Location = new Point(324, 95);
-            this.txtProteinas.Name = "txtProteinas";
-            this.txtProteinas.Size = new Size(276, 29);
-            this.txtProteinas.TabIndex = 5;
-            // 
             // txtGrasas
             // 
-            this.txtGrasas.Anchor = AnchorStyles.Left;
-            this.txtGrasas.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.txtGrasas.Location = new Point(324, 51);
-            this.txtGrasas.Name = "txtGrasas";
-            this.txtGrasas.Size = new Size(276, 29);
-            this.txtGrasas.TabIndex = 6;
+            txtGrasas.Anchor = AnchorStyles.Left;
+            txtGrasas.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtGrasas.Location = new Point(345, 51);
+            txtGrasas.Name = "txtGrasas";
+            txtGrasas.Size = new Size(276, 29);
+            txtGrasas.TabIndex = 6;
             // 
             // label4
             // 
             label4.Anchor = AnchorStyles.Right;
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(151, 139);
+            label4.Location = new Point(170, 139);
             label4.Name = "label4";
             label4.Size = new Size(148, 30);
             label4.TabIndex = 8;
             label4.Text = "Carbohidratos:";
+            // 
+            // txtProteinas
+            // 
+            txtProteinas.Anchor = AnchorStyles.Left;
+            txtProteinas.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtProteinas.Location = new Point(345, 95);
+            txtProteinas.Name = "txtProteinas";
+            txtProteinas.Size = new Size(276, 29);
+            txtProteinas.TabIndex = 5;
             // 
             // cmbAlimentos
             // 
             cmbAlimentos.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbAlimentos.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbAlimentos.FormattingEnabled = true;
-            cmbAlimentos.Location = new Point(324, 3);
+            cmbAlimentos.Location = new Point(345, 3);
             cmbAlimentos.Name = "cmbAlimentos";
             cmbAlimentos.Size = new Size(276, 29);
             cmbAlimentos.TabIndex = 10;
+            // 
+            // txtCarbohidratos
+            // 
+            txtCarbohidratos.Anchor = AnchorStyles.Left;
+            txtCarbohidratos.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCarbohidratos.Location = new Point(345, 139);
+            txtCarbohidratos.Name = "txtCarbohidratos";
+            txtCarbohidratos.Size = new Size(276, 29);
+            txtCarbohidratos.TabIndex = 11;
             // 
             // tableLayoutPanel1
             // 
@@ -155,7 +170,7 @@
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(624, 48);
+            tableLayoutPanel1.Size = new Size(664, 48);
             tableLayoutPanel1.TabIndex = 6;
             // 
             // lblTitulo
@@ -163,20 +178,11 @@
             lblTitulo.Anchor = AnchorStyles.None;
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(202, 5);
+            lblTitulo.Location = new Point(222, 5);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(219, 37);
             lblTitulo.TabIndex = 3;
             lblTitulo.Text = "Editar Alimento";
-            // 
-            // txtCarbohidratos
-            // 
-            txtCarbohidratos.Anchor = AnchorStyles.Left;
-            txtCarbohidratos.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCarbohidratos.Location = new Point(324, 139);
-            txtCarbohidratos.Name = "txtCarbohidratos";
-            txtCarbohidratos.Size = new Size(276, 29);
-            txtCarbohidratos.TabIndex = 11;
             // 
             // tableLayoutPanel2
             // 
@@ -185,12 +191,12 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.Controls.Add(btnAceptar, 1, 0);
             tableLayoutPanel2.Controls.Add(btnVolver, 0, 0);
-            tableLayoutPanel2.Location = new Point(0, 272);
+            tableLayoutPanel2.Location = new Point(0, 336);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Size = new Size(624, 48);
+            tableLayoutPanel2.Size = new Size(664, 48);
             tableLayoutPanel2.TabIndex = 12;
             // 
             // btnAceptar
@@ -200,7 +206,7 @@
             btnAceptar.BackColor = SystemColors.ActiveCaptionText;
             btnAceptar.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAceptar.ForeColor = SystemColors.Control;
-            btnAceptar.Location = new Point(412, 6);
+            btnAceptar.Location = new Point(442, 6);
             btnAceptar.Name = "btnAceptar";
             btnAceptar.Size = new Size(112, 35);
             btnAceptar.TabIndex = 9;
@@ -215,7 +221,7 @@
             btnVolver.BackColor = SystemColors.ActiveCaptionText;
             btnVolver.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnVolver.ForeColor = SystemColors.Control;
-            btnVolver.Location = new Point(116, 6);
+            btnVolver.Location = new Point(126, 6);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(79, 35);
             btnVolver.TabIndex = 8;
@@ -223,11 +229,82 @@
             btnVolver.UseVisualStyleBackColor = false;
             btnVolver.Click += btnVolver_Click;
             // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 8;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 93.63636F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6.36363649F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 9F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 118F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 8F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 94F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 19F));
+            tableLayoutPanel4.Controls.Add(label5, 0, 0);
+            tableLayoutPanel4.Controls.Add(chkKeto, 2, 0);
+            tableLayoutPanel4.Controls.Add(chkVegetariano, 4, 0);
+            tableLayoutPanel4.Controls.Add(chkEstandar, 6, 0);
+            tableLayoutPanel4.Location = new Point(0, 248);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.Size = new Size(664, 44);
+            tableLayoutPanel4.TabIndex = 7;
+            // 
+            // label5
+            // 
+            label5.Anchor = AnchorStyles.Right;
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Location = new Point(181, 7);
+            label5.Name = "label5";
+            label5.Size = new Size(139, 30);
+            label5.TabIndex = 9;
+            label5.Text = "Tipo de dieta:";
+            // 
+            // chkKeto
+            // 
+            chkKeto.Anchor = AnchorStyles.None;
+            chkKeto.AutoSize = true;
+            chkKeto.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            chkKeto.Location = new Point(350, 10);
+            chkKeto.Name = "chkKeto";
+            chkKeto.Size = new Size(59, 24);
+            chkKeto.TabIndex = 10;
+            chkKeto.Text = "Keto";
+            chkKeto.UseVisualStyleBackColor = true;
+            // 
+            // chkVegetariano
+            // 
+            chkVegetariano.Anchor = AnchorStyles.None;
+            chkVegetariano.AutoSize = true;
+            chkVegetariano.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            chkVegetariano.Location = new Point(429, 10);
+            chkVegetariano.Name = "chkVegetariano";
+            chkVegetariano.Size = new Size(108, 24);
+            chkVegetariano.TabIndex = 11;
+            chkVegetariano.Text = "Vegetariano";
+            chkVegetariano.UseVisualStyleBackColor = true;
+            // 
+            // chkEstandar
+            // 
+            chkEstandar.Anchor = AnchorStyles.None;
+            chkEstandar.AutoSize = true;
+            chkEstandar.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            chkEstandar.Location = new Point(554, 10);
+            chkEstandar.Name = "chkEstandar";
+            chkEstandar.Size = new Size(85, 24);
+            chkEstandar.TabIndex = 12;
+            chkEstandar.Text = "Estandar";
+            chkEstandar.UseVisualStyleBackColor = true;
+            // 
             // EditarAlimentoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(624, 321);
+            ClientSize = new Size(664, 381);
+            Controls.Add(tableLayoutPanel4);
             Controls.Add(tableLayoutPanel2);
             Controls.Add(tableLayoutPanel3);
             Controls.Add(tableLayoutPanel1);
@@ -243,6 +320,8 @@
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -262,5 +341,10 @@
         private TableLayoutPanel tableLayoutPanel2;
         private Button btnAceptar;
         private Button btnVolver;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Label label5;
+        private CheckBox chkKeto;
+        private CheckBox chkVegetariano;
+        private CheckBox chkEstandar;
     }
 }

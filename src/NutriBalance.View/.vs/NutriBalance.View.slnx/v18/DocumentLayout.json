@@ -1,100 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.view\\alimentosform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|solutionrelative:alimentosform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.view\\alimentosform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|solutionrelative:alimentosform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8594C8B6-A247-A8A3-938D-F6569B7D02FF}|..\\NutriBalance.Model\\NutriBalance.Model.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.model\\services\\alimentovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\registroalimentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|solutionrelative:registroalimentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.view\\registroalimentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6778C615-F8E6-2C08-5935-A6F0E2D754F0}|NutriBalance.View.csproj|solutionrelative:registroalimentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AlimentosForm.cs",
-              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\AlimentosForm.cs",
-              "RelativeDocumentMoniker": "AlimentosForm.cs",
-              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\AlimentosForm.cs",
-              "RelativeToolTip": "AlimentosForm.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAwwFcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-22T05:29:03.058Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AlimentosForm.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\AlimentosForm.cs",
-              "RelativeDocumentMoniker": "AlimentosForm.cs",
-              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\AlimentosForm.cs [Dise\u00F1o]",
-              "RelativeToolTip": "AlimentosForm.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-22T05:28:59.622Z",
-              "EditorCaption": " [Dise\u00F1o]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AlimentoValidator.cs",
-              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Model\\Services\\AlimentoValidator.cs",
-              "RelativeDocumentMoniker": "..\\NutriBalance.Model\\Services\\AlimentoValidator.cs",
-              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Model\\Services\\AlimentoValidator.cs",
-              "RelativeToolTip": "..\\NutriBalance.Model\\Services\\AlimentoValidator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-22T05:28:39.573Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RegistroAlimentoForm.cs",
-              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\RegistroAlimentoForm.cs",
-              "RelativeDocumentMoniker": "RegistroAlimentoForm.cs",
-              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\RegistroAlimentoForm.cs",
-              "RelativeToolTip": "RegistroAlimentoForm.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAYwGUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-22T05:27:48.318Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RegistroAlimentoForm.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\RegistroAlimentoForm.cs",
-              "RelativeDocumentMoniker": "RegistroAlimentoForm.cs",
-              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\RegistroAlimentoForm.cs [Dise\u00F1o]",
-              "RelativeToolTip": "RegistroAlimentoForm.cs [Dise\u00F1o]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-22T05:23:30.152Z"
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

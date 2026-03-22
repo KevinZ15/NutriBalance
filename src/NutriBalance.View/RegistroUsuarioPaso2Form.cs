@@ -8,6 +8,7 @@ public partial class RegistroUsuarioPaso2Form : Form
 {
     private readonly UsuarioController _usuarioController;
     private readonly AlimentoController _alimentoController;
+    private readonly MenuDiarioController _menuDiarioController;
     private readonly string _nombreUsuario;
     private readonly string _nombre;
     private readonly string _contrasena;
@@ -15,6 +16,7 @@ public partial class RegistroUsuarioPaso2Form : Form
     public RegistroUsuarioPaso2Form(
         UsuarioController usuarioController,
         AlimentoController alimentoController,
+        MenuDiarioController menuDiarioController,
         string nombreUsuario,
         string nombre,
         string contrasena)
@@ -22,6 +24,7 @@ public partial class RegistroUsuarioPaso2Form : Form
         InitializeComponent();
         _usuarioController = usuarioController;
         _alimentoController = alimentoController;
+        _menuDiarioController = menuDiarioController;
         _nombreUsuario = nombreUsuario;
         _nombre = nombre;
         _contrasena = contrasena;

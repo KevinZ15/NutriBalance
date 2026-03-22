@@ -9,4 +9,8 @@ public class Alimento
     public decimal Proteinas { get; set; }
     public decimal Carbohidratos { get; set; }
     public decimal Grasas { get; set; }
+
+    public bool EsKeto { get; set; }
+    public bool EsVegetariano { get; set; }
+    public bool EsEstandar { get; set; }
 }

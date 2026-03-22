@@ -4,10 +4,21 @@
     "NombreUsuario": "kevin",
     "Contrasena": "1234",
     "Nombre": "kevin",
-    "Peso": 143213,
-    "Estatura": 123,
+    "Peso": 140,
+    "Estatura": 185,
     "NivelActividad": 0,
     "Objetivo": 0,
+    "TipoDieta": 1
+  },
+  {
+    "Id": "5e3f9404-c996-4732-8081-04dcc7bf183c",
+    "NombreUsuario": "emanuel",
+    "Contrasena": "1234",
+    "Nombre": "emanuel",
+    "Peso": 87,
+    "Estatura": 179,
+    "NivelActividad": 1,
+    "Objetivo": 1,
     "TipoDieta": 0
   }
 ]

@@ -6,12 +6,17 @@ public partial class RegistroUsuarioPaso1Form : Form
 {
     private readonly UsuarioController _usuarioController;
     private readonly AlimentoController _alimentoController;
+    private readonly MenuDiarioController _menuDiarioController;
 
-    public RegistroUsuarioPaso1Form(UsuarioController usuarioController, AlimentoController alimentoController)
+    public RegistroUsuarioPaso1Form(
+        UsuarioController usuarioController,
+        AlimentoController alimentoController,
+        MenuDiarioController menuDiarioController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
         _alimentoController = alimentoController;
+        _menuDiarioController = menuDiarioController;
     }
 
     private void btnVolver_Click(object sender, EventArgs e)
@@ -46,6 +51,7 @@ public partial class RegistroUsuarioPaso1Form : Form
         using RegistroUsuarioPaso2Form form = new(
             _usuarioController,
             _alimentoController,
+            _menuDiarioController,
             nombreUsuario,
             nombre,
             contrasena

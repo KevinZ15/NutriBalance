@@ -50,6 +50,10 @@ public partial class EditarAlimentoForm : Form
         txtGrasas.Text = alimentoSeleccionado.Grasas.ToString();
         txtProteinas.Text = alimentoSeleccionado.Proteinas.ToString();
         txtCarbohidratos.Text = alimentoSeleccionado.Carbohidratos.ToString();
+
+        chkKeto.Checked = alimentoSeleccionado.EsKeto;
+        chkVegetariano.Checked = alimentoSeleccionado.EsVegetariano;
+        chkEstandar.Checked = alimentoSeleccionado.EsEstandar;
     }
 
     private void LimpiarCampos()
@@ -57,6 +61,10 @@ public partial class EditarAlimentoForm : Form
         txtGrasas.Text = string.Empty;
         txtProteinas.Text = string.Empty;
         txtCarbohidratos.Text = string.Empty;
+
+        chkKeto.Checked = false;
+        chkVegetariano.Checked = false;
+        chkEstandar.Checked = false;
     }
 
     private void cmbAlimentos_SelectedIndexChanged(object sender, EventArgs e)
@@ -110,6 +118,17 @@ public partial class EditarAlimentoForm : Form
             return;
         }
 
+        if (!chkKeto.Checked && !chkVegetariano.Checked && !chkEstandar.Checked)
+        {
+            MessageBox.Show(
+                "Debe seleccionar al menos una clasificación para el alimento.",
+                "NutriBalance",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+            return;
+        }
+
         decimal calorias = (proteinas * 4) + (carbohidratos * 4) + (grasas * 9);
 
         Alimento alimentoActualizado = new()
@@ -120,7 +139,10 @@ public partial class EditarAlimentoForm : Form
             Grasas = grasas,
             Proteinas = proteinas,
             Carbohidratos = carbohidratos,
-            Calorias = calorias
+            Calorias = calorias,
+            EsKeto = chkKeto.Checked,
+            EsVegetariano = chkVegetariano.Checked,
+            EsEstandar = chkEstandar.Checked
         };
 
         var resultado = _alimentoController.ActualizarAlimento(alimentoActualizado);

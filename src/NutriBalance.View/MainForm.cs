@@ -6,12 +6,17 @@ public partial class MainForm : Form
 {
     private readonly UsuarioController _usuarioController;
     private readonly AlimentoController _alimentoController;
+    private readonly MenuDiarioController _menuDiarioController;
 
-    public MainForm(UsuarioController usuarioController, AlimentoController alimentoController)
+    public MainForm(
+        UsuarioController usuarioController,
+        AlimentoController alimentoController,
+        MenuDiarioController menuDiarioController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
         _alimentoController = alimentoController;
+        _menuDiarioController = menuDiarioController;
     }
 
     private void btnMiPerfil_Click(object sender, EventArgs e)
@@ -29,7 +34,7 @@ public partial class MainForm : Form
     private void btnResumenDiario_Click(object sender, EventArgs e)
     {
         MessageBox.Show(
-            "Pantalla de resumen diario aún no implementada.",
+            "Pantalla de resumen diario aún no está implementada.",
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
@@ -38,18 +43,14 @@ public partial class MainForm : Form
 
     private void btnMiDieta_Click(object sender, EventArgs e)
     {
-        MessageBox.Show(
-            "Pantalla de mi dieta aún no implementada.",
-            "NutriBalance",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        );
+        using MiDietaForm form = new(_menuDiarioController, _alimentoController, _usuarioController);
+        form.ShowDialog();
     }
 
     private void btnActividadesFisicas_Click(object sender, EventArgs e)
     {
         MessageBox.Show(
-            "Pantalla de actividades físicas aún no implementada.",
+            "Pantalla de actividades físicas aún no está implementada.",
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
@@ -59,7 +60,7 @@ public partial class MainForm : Form
     private void btnHistorico_Click(object sender, EventArgs e)
     {
         MessageBox.Show(
-            "Pantalla de histórico aún no implementada.",
+            "Pantalla de histórico aún no está implementada.",
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
