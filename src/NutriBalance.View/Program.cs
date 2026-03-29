@@ -11,41 +11,31 @@ internal static class Program
     {
         ApplicationConfiguration.Initialize();
 
-        string rutaUsuarios = Path.GetFullPath(
+        string rutaData = Path.GetFullPath(
             Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 "..", "..", "..", "..", "..",
-                "data",
-                "usuarios.json"
+                "data"
             )
         );
 
-        string rutaAlimentos = Path.GetFullPath(
-            Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "..", "..", "..", "..", "..",
-                "data",
-                "alimentos.json"
-            )
-        );
-
-        string rutaMenus = Path.GetFullPath(
-            Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "..", "..", "..", "..", "..",
-                "data",
-                "menus.json"
-            )
-        );
+        string rutaUsuarios = Path.Combine(rutaData, "usuarios.json");
+        string rutaAlimentosGlobal = Path.Combine(rutaData, "alimentos.json");
+        string rutaMenus = Path.Combine(rutaData, "menus.json");
 
         IUsuarioRepository usuarioRepository = new UsuarioJsonRepository(rutaUsuarios);
-        IAlimentoRepository alimentoRepository = new AlimentoJsonRepository(rutaAlimentos);
         IMenuDiarioRepository menuDiarioRepository = new MenuDiarioJsonRepository(rutaMenus);
 
         UsuarioController usuarioController = new(usuarioRepository);
-        AlimentoController alimentoController = new(alimentoRepository);
         MenuDiarioController menuDiarioController = new(menuDiarioRepository);
+        NutricionController nutricionController = new();
 
-        Application.Run(new InicioForm(usuarioController, alimentoController, menuDiarioController));
+        Application.Run(new InicioForm(
+            usuarioController,
+            menuDiarioController,
+            nutricionController,
+            rutaAlimentosGlobal,
+            rutaData
+        ));
     }
 }

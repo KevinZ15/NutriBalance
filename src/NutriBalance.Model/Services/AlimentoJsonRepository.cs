@@ -12,12 +12,25 @@ public class AlimentoJsonRepository : IAlimentoRepository
     public AlimentoJsonRepository(string rutaArchivo)
     {
         _rutaArchivo = rutaArchivo;
-        _jsonOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true
-        };
-
+        _jsonOptions = new JsonSerializerOptions { WriteIndented = true };
         InicializarArchivo();
+    }
+
+    public static void InicializarCatalogoUsuario(string rutaGlobal, string rutaUsuario)
+    {
+        if (File.Exists(rutaUsuario))
+        {
+            return;
+        }
+
+        if (File.Exists(rutaGlobal))
+        {
+            File.Copy(rutaGlobal, rutaUsuario);
+        }
+        else
+        {
+            File.WriteAllText(rutaUsuario, "[]");
+        }
     }
 
     public List<Alimento> ObtenerTodos()
@@ -29,7 +42,7 @@ public class AlimentoJsonRepository : IAlimentoRepository
 
     public Alimento? ObtenerPorId(Guid id)
     {
-        return ObtenerTodos().FirstOrDefault(alimento => alimento.Id == id);
+        return ObtenerTodos().FirstOrDefault(a => a.Id == id);
     }
 
     public void Agregar(Alimento alimento)
@@ -42,20 +55,22 @@ public class AlimentoJsonRepository : IAlimentoRepository
     public void Actualizar(Alimento alimentoActualizado)
     {
         List<Alimento> alimentos = ObtenerTodos();
+        Alimento? existente = alimentos.FirstOrDefault(a => a.Id == alimentoActualizado.Id);
 
-        Alimento? alimentoExistente = alimentos.FirstOrDefault(a => a.Id == alimentoActualizado.Id);
-
-        if (alimentoExistente is null)
+        if (existente is null)
         {
             throw new InvalidOperationException("El alimento no existe en el archivo JSON.");
         }
 
-        alimentoExistente.Nombre = alimentoActualizado.Nombre;
-        alimentoExistente.Porcion = alimentoActualizado.Porcion;
-        alimentoExistente.Calorias = alimentoActualizado.Calorias;
-        alimentoExistente.Proteinas = alimentoActualizado.Proteinas;
-        alimentoExistente.Carbohidratos = alimentoActualizado.Carbohidratos;
-        alimentoExistente.Grasas = alimentoActualizado.Grasas;
+        existente.Nombre = alimentoActualizado.Nombre;
+        existente.Porcion = alimentoActualizado.Porcion;
+        existente.Calorias = alimentoActualizado.Calorias;
+        existente.Proteinas = alimentoActualizado.Proteinas;
+        existente.Carbohidratos = alimentoActualizado.Carbohidratos;
+        existente.Grasas = alimentoActualizado.Grasas;
+        existente.EsKeto = alimentoActualizado.EsKeto;
+        existente.EsVegetariano = alimentoActualizado.EsVegetariano;
+        existente.EsEstandar = alimentoActualizado.EsEstandar;
 
         GuardarTodos(alimentos);
     }
@@ -63,7 +78,6 @@ public class AlimentoJsonRepository : IAlimentoRepository
     public void Eliminar(Guid id)
     {
         List<Alimento> alimentos = ObtenerTodos();
-
         Alimento? alimento = alimentos.FirstOrDefault(a => a.Id == id);
 
         if (alimento is not null)

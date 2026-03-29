@@ -6,6 +6,7 @@ namespace NutriBalance.View;
 public partial class AlimentosForm : Form
 {
     private readonly AlimentoController _alimentoController;
+    private List<Alimento> _todosLosAlimentos = new();
 
     public AlimentosForm(AlimentoController alimentoController)
     {
@@ -63,9 +64,25 @@ public partial class AlimentosForm : Form
 
     private void CargarAlimentos()
     {
-        List<Alimento> alimentos = _alimentoController.ObtenerTodos();
+        _todosLosAlimentos = _alimentoController.ObtenerTodos();
+        FiltrarAlimentos(string.Empty);
+    }
+
+    private void FiltrarAlimentos(string filtro)
+    {
+        List<Alimento> resultado = string.IsNullOrWhiteSpace(filtro)
+            ? _todosLosAlimentos
+            : _todosLosAlimentos
+                .Where(a => a.Nombre.Contains(filtro, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
         dgvAlimentos.DataSource = null;
-        dgvAlimentos.DataSource = alimentos;
+        dgvAlimentos.DataSource = resultado;
+    }
+
+    private void txtBuscar_TextChanged(object sender, EventArgs e)
+    {
+        FiltrarAlimentos(txtBuscar.Text);
     }
 
     private void btnAgregarAlimento_Click(object sender, EventArgs e)

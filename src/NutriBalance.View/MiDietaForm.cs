@@ -51,8 +51,22 @@ public partial class MiDietaForm : Form
 
         dgvMiDieta.Columns.Add(new DataGridViewTextBoxColumn
         {
+            Name = "CantidadUnidades",
+            HeaderText = "Unidades",
+            DataPropertyName = "CantidadUnidades"
+        });
+
+        dgvMiDieta.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Name = "GramosPorUnidad",
+            HeaderText = "g/unidad",
+            DataPropertyName = "GramosPorUnidad"
+        });
+
+        dgvMiDieta.Columns.Add(new DataGridViewTextBoxColumn
+        {
             Name = "Cantidad",
-            HeaderText = "Cantidad",
+            HeaderText = "Total (g)",
             DataPropertyName = "Cantidad"
         });
 
@@ -216,20 +230,9 @@ public partial class MiDietaForm : Form
 
     private void dgvMiDieta_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
-        if (_menuActual is null)
-        {
-            return;
-        }
-
-        if (e.RowIndex < 0)
-        {
-            return;
-        }
-
-        if (dgvMiDieta.Columns[e.ColumnIndex].Name != "Eliminar")
-        {
-            return;
-        }
+        if (_menuActual is null) return;
+        if (e.RowIndex < 0) return;
+        if (dgvMiDieta.Columns[e.ColumnIndex].Name != "Eliminar") return;
 
         object? valorId = dgvMiDieta.Rows[e.RowIndex].Cells["Id"].Value;
 
@@ -264,10 +267,7 @@ public partial class MiDietaForm : Form
             MessageBoxIcon.Question
         );
 
-        if (confirmacion != DialogResult.Yes)
-        {
-            return;
-        }
+        if (confirmacion != DialogResult.Yes) return;
 
         _menuActual.Detalles.Remove(detalle);
         RefrescarPantalla();

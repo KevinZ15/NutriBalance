@@ -64,7 +64,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(680, 48);
+            tableLayoutPanel2.Size = new Size(872, 48);
             tableLayoutPanel2.TabIndex = 4;
             // 
             // btnGuardar
@@ -74,7 +74,7 @@
             btnGuardar.BackColor = SystemColors.ActiveCaptionText;
             btnGuardar.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.ForeColor = SystemColors.Control;
-            btnGuardar.Location = new Point(477, 6);
+            btnGuardar.Location = new Point(637, 6);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(178, 35);
             btnGuardar.TabIndex = 10;
@@ -89,7 +89,7 @@
             btnAgregarAlimento.BackColor = SystemColors.ActiveCaptionText;
             btnAgregarAlimento.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAgregarAlimento.ForeColor = SystemColors.Control;
-            btnAgregarAlimento.Location = new Point(250, 6);
+            btnAgregarAlimento.Location = new Point(346, 6);
             btnAgregarAlimento.Name = "btnAgregarAlimento";
             btnAgregarAlimento.Size = new Size(178, 35);
             btnAgregarAlimento.TabIndex = 9;
@@ -104,7 +104,7 @@
             btnVolver.BackColor = SystemColors.ActiveCaptionText;
             btnVolver.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnVolver.ForeColor = SystemColors.Control;
-            btnVolver.Location = new Point(69, 6);
+            btnVolver.Location = new Point(101, 6);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(88, 35);
             btnVolver.TabIndex = 8;
@@ -123,7 +123,7 @@
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(680, 48);
+            tableLayoutPanel1.Size = new Size(880, 48);
             tableLayoutPanel1.TabIndex = 3;
             // 
             // lblTitulo
@@ -131,7 +131,7 @@
             lblTitulo.Anchor = AnchorStyles.None;
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(276, 5);
+            lblTitulo.Location = new Point(376, 5);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(127, 37);
             lblTitulo.TabIndex = 3;
@@ -139,7 +139,7 @@
             // 
             // dtpFecha
             // 
-            dtpFecha.Location = new Point(424, 72);
+            dtpFecha.Location = new Point(624, 72);
             dtpFecha.Name = "dtpFecha";
             dtpFecha.Size = new Size(248, 23);
             dtpFecha.TabIndex = 10;
@@ -150,7 +150,7 @@
             dgvMiDieta.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvMiDieta.Location = new Point(16, 104);
             dgvMiDieta.Name = "dgvMiDieta";
-            dgvMiDieta.Size = new Size(656, 256);
+            dgvMiDieta.Size = new Size(856, 256);
             dgvMiDieta.TabIndex = 11;
             dgvMiDieta.CellContentClick += dgvMiDieta_CellContentClick;
             // 
@@ -175,7 +175,7 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel3.Size = new Size(656, 144);
+            tableLayoutPanel3.Size = new Size(856, 144);
             tableLayoutPanel3.TabIndex = 12;
             // 
             // label1
@@ -183,7 +183,7 @@
             label1.Anchor = AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(174, 3);
+            label1.Location = new Point(274, 3);
             label1.Name = "label1";
             label1.Size = new Size(141, 30);
             label1.TabIndex = 3;
@@ -194,7 +194,7 @@
             label2.Anchor = AnchorStyles.Right;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(161, 39);
+            label2.Location = new Point(261, 39);
             label2.Name = "label2";
             label2.Size = new Size(154, 30);
             label2.TabIndex = 4;
@@ -205,7 +205,7 @@
             label3.Anchor = AnchorStyles.Right;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(186, 75);
+            label3.Location = new Point(286, 75);
             label3.Name = "label3";
             label3.Size = new Size(129, 30);
             label3.TabIndex = 5;
@@ -216,7 +216,7 @@
             label4.Anchor = AnchorStyles.Right;
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(122, 111);
+            label4.Location = new Point(222, 111);
             label4.Name = "label4";
             label4.Size = new Size(193, 30);
             label4.TabIndex = 6;
@@ -227,7 +227,7 @@
             lblTotalCaloriasValor.Anchor = AnchorStyles.Left;
             lblTotalCaloriasValor.AutoSize = true;
             lblTotalCaloriasValor.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTotalCaloriasValor.Location = new Point(341, 3);
+            lblTotalCaloriasValor.Location = new Point(441, 3);
             lblTotalCaloriasValor.Name = "lblTotalCaloriasValor";
             lblTotalCaloriasValor.Size = new Size(21, 30);
             lblTotalCaloriasValor.TabIndex = 7;
@@ -238,7 +238,7 @@
             lblTotalProteinasValor.Anchor = AnchorStyles.Left;
             lblTotalProteinasValor.AutoSize = true;
             lblTotalProteinasValor.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTotalProteinasValor.Location = new Point(341, 39);
+            lblTotalProteinasValor.Location = new Point(441, 39);
             lblTotalProteinasValor.Name = "lblTotalProteinasValor";
             lblTotalProteinasValor.Size = new Size(21, 30);
             lblTotalProteinasValor.TabIndex = 8;
@@ -249,7 +249,7 @@
             lblTotalGrasasValor.Anchor = AnchorStyles.Left;
             lblTotalGrasasValor.AutoSize = true;
             lblTotalGrasasValor.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTotalGrasasValor.Location = new Point(341, 75);
+            lblTotalGrasasValor.Location = new Point(441, 75);
             lblTotalGrasasValor.Name = "lblTotalGrasasValor";
             lblTotalGrasasValor.Size = new Size(21, 30);
             lblTotalGrasasValor.TabIndex = 9;
@@ -260,7 +260,7 @@
             lblTotalCarbohidratosValor.Anchor = AnchorStyles.Left;
             lblTotalCarbohidratosValor.AutoSize = true;
             lblTotalCarbohidratosValor.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTotalCarbohidratosValor.Location = new Point(341, 111);
+            lblTotalCarbohidratosValor.Location = new Point(441, 111);
             lblTotalCarbohidratosValor.Name = "lblTotalCarbohidratosValor";
             lblTotalCarbohidratosValor.Size = new Size(21, 30);
             lblTotalCarbohidratosValor.TabIndex = 10;
@@ -270,7 +270,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(684, 601);
+            ClientSize = new Size(884, 601);
             Controls.Add(tableLayoutPanel3);
             Controls.Add(dgvMiDieta);
             Controls.Add(tableLayoutPanel2);

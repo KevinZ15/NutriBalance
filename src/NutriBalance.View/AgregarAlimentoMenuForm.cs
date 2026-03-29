@@ -49,10 +49,10 @@ public partial class AgregarAlimentoMenuForm : Form
             return;
         }
 
-        if (!decimal.TryParse(txtCantidad.Text, out decimal cantidad))
+        if (!decimal.TryParse(txtCantidadUnidades.Text, out decimal cantidadUnidades) || cantidadUnidades <= 0)
         {
             MessageBox.Show(
-                "La cantidad debe ser numérica.",
+                "La cantidad de unidades debe ser un número mayor a cero.",
                 "NutriBalance",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Warning
@@ -60,10 +60,10 @@ public partial class AgregarAlimentoMenuForm : Form
             return;
         }
 
-        if (cantidad <= 0)
+        if (!decimal.TryParse(txtGramosPorUnidad.Text, out decimal gramosPorUnidad) || gramosPorUnidad <= 0)
         {
             MessageBox.Show(
-                "La cantidad debe ser mayor a cero.",
+                "Los gramos por unidad deben ser un número mayor a cero.",
                 "NutriBalance",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Warning
@@ -108,7 +108,8 @@ public partial class AgregarAlimentoMenuForm : Form
             }
         }
 
-        decimal factor = cantidad / 100m;
+        decimal totalGramos = cantidadUnidades * gramosPorUnidad;
+        decimal factor = totalGramos / 100m;
 
         decimal proteinas = Math.Round(alimentoSeleccionado.Proteinas * factor, 2);
         decimal grasas = Math.Round(alimentoSeleccionado.Grasas * factor, 2);
@@ -119,7 +120,9 @@ public partial class AgregarAlimentoMenuForm : Form
         {
             AlimentoId = alimentoSeleccionado.Id,
             NombreAlimento = alimentoSeleccionado.Nombre,
-            Cantidad = cantidad,
+            CantidadUnidades = cantidadUnidades,
+            GramosPorUnidad = gramosPorUnidad,
+            Cantidad = totalGramos,
             Proteinas = proteinas,
             Grasas = grasas,
             Carbohidratos = carbohidratos,
@@ -134,25 +137,11 @@ public partial class AgregarAlimentoMenuForm : Form
     {
         List<string> clasificaciones = new();
 
-        if (alimento.EsKeto)
-        {
-            clasificaciones.Add("Keto");
-        }
+        if (alimento.EsKeto) clasificaciones.Add("Keto");
+        if (alimento.EsVegetariano) clasificaciones.Add("Vegetariano");
+        if (alimento.EsEstandar) clasificaciones.Add("Estándar");
 
-        if (alimento.EsVegetariano)
-        {
-            clasificaciones.Add("Vegetariano");
-        }
-
-        if (alimento.EsEstandar)
-        {
-            clasificaciones.Add("Estandar");
-        }
-
-        if (clasificaciones.Count == 0)
-        {
-            return "Sin clasificación";
-        }
+        if (clasificaciones.Count == 0) return "Sin clasificación";
 
         return string.Join(", ", clasificaciones);
     }

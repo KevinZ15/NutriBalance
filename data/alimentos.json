@@ -59,7 +59,6 @@
     "EsVegetariano": false,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0006-4a1b-8c1d-000000000006",
     "Nombre": "huevo",
@@ -96,7 +95,6 @@
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0009-4a1b-8c1d-000000000009",
     "Nombre": "mantequilla",
@@ -121,7 +119,6 @@
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0011-4a1b-8c1d-000000000011",
     "Nombre": "aceite de coco",
@@ -134,7 +131,6 @@
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0012-4a1b-8c1d-000000000012",
     "Nombre": "tocino",
@@ -147,7 +143,6 @@
     "EsVegetariano": false,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0013-4a1b-8c1d-000000000013",
     "Nombre": "chorizo",
@@ -160,7 +155,6 @@
     "EsVegetariano": false,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0014-4a1b-8c1d-000000000014",
     "Nombre": "costilla de cerdo",
@@ -173,7 +167,6 @@
     "EsVegetariano": false,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0015-4a1b-8c1d-000000000015",
     "Nombre": "pechuga de pavo",
@@ -186,7 +179,6 @@
     "EsVegetariano": false,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0016-4a1b-8c1d-000000000016",
     "Nombre": "sardinas",
@@ -199,7 +191,6 @@
     "EsVegetariano": false,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0017-4a1b-8c1d-000000000017",
     "Nombre": "jamon",
@@ -212,7 +203,6 @@
     "EsVegetariano": false,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0018-4a1b-8c1d-000000000018",
     "Nombre": "almendras",
@@ -221,11 +211,10 @@
     "Proteinas": 21,
     "Carbohidratos": 22,
     "Grasas": 50,
-    "EsKeto": true,
+    "EsKeto": false,
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0019-4a1b-8c1d-000000000019",
     "Nombre": "nueces",
@@ -238,7 +227,6 @@
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0020-4a1b-8c1d-000000000020",
     "Nombre": "semillas de chia",
@@ -247,11 +235,10 @@
     "Proteinas": 17,
     "Carbohidratos": 42,
     "Grasas": 31,
-    "EsKeto": true,
+    "EsKeto": false,
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0021-4a1b-8c1d-000000000021",
     "Nombre": "semillas de linaza",
@@ -260,11 +247,10 @@
     "Proteinas": 18,
     "Carbohidratos": 29,
     "Grasas": 42,
-    "EsKeto": true,
+    "EsKeto": false,
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0022-4a1b-8c1d-000000000022",
     "Nombre": "crema de leche",
@@ -277,7 +263,6 @@
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0023-4a1b-8c1d-000000000023",
     "Nombre": "mayonesa",
@@ -290,7 +275,6 @@
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0024-4a1b-8c1d-000000000024",
     "Nombre": "aceitunas",
@@ -303,7 +287,6 @@
     "EsVegetariano": true,
     "EsEstandar": true
   },
-
   {
     "Id": "a1b2c3d4-0025-4a1b-8c1d-000000000025",
     "Nombre": "berenjena",
@@ -882,7 +865,7 @@
   },
   {
     "Id": "a1b2c3d4-0073-4a1b-8c1d-000000000073",
-    "Nombre": "zapalllo",
+    "Nombre": "zapallo",
     "Porcion": 100,
     "Calorias": 26,
     "Proteinas": 1,

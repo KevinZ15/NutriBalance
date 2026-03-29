@@ -5,6 +5,8 @@ public class MenuDiarioDetalle
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid AlimentoId { get; set; }
     public string NombreAlimento { get; set; } = string.Empty;
+    public decimal CantidadUnidades { get; set; }
+    public decimal GramosPorUnidad { get; set; }
     public decimal Cantidad { get; set; }
     public decimal Proteinas { get; set; }
     public decimal Grasas { get; set; }

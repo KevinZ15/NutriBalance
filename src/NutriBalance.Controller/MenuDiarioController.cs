@@ -65,4 +65,74 @@ public class MenuDiarioController
 
         return (totalCalorias, totalProteinas, totalGrasas, totalCarbohidratos);
     }
+
+    public EstadoMetaDiaria EvaluarMetaCalorica(decimal caloriasConsumidas, decimal caloriasObjetivo)
+    {
+        decimal minimo = caloriasObjetivo * 0.9m;
+        decimal maximo = caloriasObjetivo * 1.1m;
+
+        if (caloriasConsumidas > maximo)
+        {
+            return EstadoMetaDiaria.Excedida;
+        }
+
+        if (caloriasConsumidas < minimo)
+        {
+            return EstadoMetaDiaria.PorDebajo;
+        }
+
+        return EstadoMetaDiaria.Cumplida;
+    }
+
+    public List<ResumenDiaMes> ObtenerResumenMensual(Guid usuarioId, int anio, int mes, decimal caloriasObjetivo)
+    {
+        List<MenuDiario> menus = _menuDiarioRepository.ObtenerTodos()
+            .Where(m => m.UsuarioId == usuarioId && m.Fecha.Year == anio && m.Fecha.Month == mes)
+            .OrderBy(m => m.Fecha)
+            .ToList();
+
+        List<ResumenDiaMes> resumen = new();
+
+        foreach (MenuDiario menu in menus)
+        {
+            var totales = CalcularTotales(menu);
+            EstadoMetaDiaria estado = EvaluarMetaCalorica(totales.Calorias, caloriasObjetivo);
+
+            resumen.Add(new ResumenDiaMes
+            {
+                Fecha = menu.Fecha,
+                CaloriasConsumidas = totales.Calorias,
+                CaloriasObjetivo = caloriasObjetivo,
+                DiferenciaCalorica = totales.Calorias - caloriasObjetivo,
+                Estado = estado
+            });
+        }
+
+        return resumen;
+    }
+}
+
+public enum EstadoMetaDiaria
+{
+    Cumplida,
+    PorDebajo,
+    Excedida
+}
+
+public class ResumenDiaMes
+{
+    public DateTime Fecha { get; set; }
+    public decimal CaloriasConsumidas { get; set; }
+    public decimal CaloriasObjetivo { get; set; }
+    public decimal DiferenciaCalorica { get; set; }
+    public EstadoMetaDiaria Estado { get; set; }
+    public bool CumplioMeta => Estado == EstadoMetaDiaria.Cumplida;
+
+    public string EstadoMeta =>
+        Estado switch
+        {
+            EstadoMetaDiaria.Cumplida => "✔ Cumplida",
+            EstadoMetaDiaria.Excedida => "▲ Se excedió",
+            _ => "▼ Por debajo"
+        };
 }
