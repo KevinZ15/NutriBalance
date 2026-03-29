@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "DAiIP/NoR7A=",
+  "dgSpecHash": "MjiMiefrgQ8=",
   "success": true,
   "projectFilePath": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Controller\\NutriBalance.Controller.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\zamor\\.nuget\\packages\\sonaranalyzer.csharp\\10.22.0.136894\\sonaranalyzer.csharp.10.22.0.136894.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -75,7 +75,7 @@
             });
             cmbMes.Size = new Size(180, 29);
             cmbMes.TabIndex = 1;
-            cmbMes.SelectedIndexChanged += cmbMes_SelectedIndexChanged;
+            cmbMes.SelectedIndexChanged += CmbMes_SelectedIndexChanged;
 
             lblAnio.Anchor = AnchorStyles.Right;
             lblAnio.AutoSize = true;
@@ -89,7 +89,7 @@
             nudAnio.Maximum = 2100;
             nudAnio.Size = new Size(100, 29);
             nudAnio.TabIndex = 3;
-            nudAnio.ValueChanged += nudAnio_ValueChanged;
+            nudAnio.ValueChanged += NudAnio_ValueChanged;
 
             dgvHistorico.AllowUserToAddRows = false;
             dgvHistorico.AllowUserToDeleteRows = false;
@@ -120,7 +120,7 @@
             btnVolver.TabIndex = 4;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
+            btnVolver.Click += BtnVolver_Click;
 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;

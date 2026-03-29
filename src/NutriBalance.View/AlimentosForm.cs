@@ -3,11 +3,18 @@ using NutriBalance.Model.Entities;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to manage food items in the system.
+/// </summary>
 public partial class AlimentosForm : Form
 {
     private readonly AlimentoController _alimentoController;
-    private List<Alimento> _todosLosAlimentos = new();
+    private List<Alimento> _todosLosAlimentos = [];
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required food controller.
+    /// </summary>
+    /// <param name="alimentoController">Controller used to manage food data.</param>
     public AlimentosForm(AlimentoController alimentoController)
     {
         InitializeComponent();
@@ -72,20 +79,19 @@ public partial class AlimentosForm : Form
     {
         List<Alimento> resultado = string.IsNullOrWhiteSpace(filtro)
             ? _todosLosAlimentos
-            : _todosLosAlimentos
-                .Where(a => a.Nombre.Contains(filtro, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            : [.. _todosLosAlimentos
+                .Where(a => a.Nombre.Contains(filtro, StringComparison.OrdinalIgnoreCase))];
 
         dgvAlimentos.DataSource = null;
         dgvAlimentos.DataSource = resultado;
     }
 
-    private void txtBuscar_TextChanged(object sender, EventArgs e)
+    private void TxtBuscar_TextChanged(object sender, EventArgs e)
     {
         FiltrarAlimentos(txtBuscar.Text);
     }
 
-    private void btnAgregarAlimento_Click(object sender, EventArgs e)
+    private void BtnAgregarAlimento_Click(object sender, EventArgs e)
     {
         using RegistroAlimentoForm form = new(_alimentoController);
 
@@ -95,7 +101,7 @@ public partial class AlimentosForm : Form
         }
     }
 
-    private void btnEditarAlimentos_Click(object sender, EventArgs e)
+    private void BtnEditarAlimentos_Click(object sender, EventArgs e)
     {
         using EditarAlimentoForm form = new(_alimentoController);
 
@@ -105,7 +111,7 @@ public partial class AlimentosForm : Form
         }
     }
 
-    private void btnEliminarAlimento_Click(object sender, EventArgs e)
+    private void BtnEliminarAlimento_Click(object sender, EventArgs e)
     {
         if (dgvAlimentos.CurrentRow is null)
         {
@@ -145,12 +151,12 @@ public partial class AlimentosForm : Form
             return;
         }
 
-        var resultado = _alimentoController.EliminarAlimento(id);
+        var (exito, mensaje) = _alimentoController.EliminarAlimento(id);
 
-        if (!resultado.Exito)
+        if (!exito)
         {
             MessageBox.Show(
-                resultado.Mensaje,
+                mensaje,
                 "NutriBalance",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Warning
@@ -159,7 +165,7 @@ public partial class AlimentosForm : Form
         }
 
         MessageBox.Show(
-            resultado.Mensaje,
+            mensaje,
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
@@ -168,7 +174,7 @@ public partial class AlimentosForm : Form
         CargarAlimentos();
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

@@ -3,17 +3,24 @@ using NutriBalance.Model.Entities;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to register a new food item.
+/// </summary>
 public partial class RegistroAlimentoForm : Form
 {
     private readonly AlimentoController _alimentoController;
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required food controller.
+    /// </summary>
+    /// <param name="alimentoController">Controller used to manage food data.</param>
     public RegistroAlimentoForm(AlimentoController alimentoController)
     {
         InitializeComponent();
         _alimentoController = alimentoController;
     }
 
-    private void btnGuardar_Click(object sender, EventArgs e)
+    private void BtnGuardar_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(txtNombre.Text))
         {
@@ -85,12 +92,12 @@ public partial class RegistroAlimentoForm : Form
             EsEstandar = chkEstandar.Checked
         };
 
-        var resultado = _alimentoController.RegistrarAlimento(nuevoAlimento);
+        var (Exito, Mensaje) = _alimentoController.RegistrarAlimento(nuevoAlimento);
 
-        if (!resultado.Exito)
+        if (!Exito)
         {
             MessageBox.Show(
-                resultado.Mensaje,
+                Mensaje,
                 "NutriBalance",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Warning
@@ -99,7 +106,7 @@ public partial class RegistroAlimentoForm : Form
         }
 
         MessageBox.Show(
-            resultado.Mensaje,
+            Mensaje,
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
@@ -109,7 +116,7 @@ public partial class RegistroAlimentoForm : Form
         Close();
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

@@ -3,21 +3,26 @@ using NutriBalance.Model.Entities;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to display the user's monthly nutrition history.
+/// </summary>
 public partial class HistoricoForm : Form
 {
     private readonly UsuarioController _usuarioController;
     private readonly MenuDiarioController _menuDiarioController;
-    private readonly NutricionController _nutricionController;
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required controllers.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to access authenticated user data.</param>
+    /// <param name="menuDiarioController">Controller used to manage daily menu history.</param>
     public HistoricoForm(
         UsuarioController usuarioController,
-        MenuDiarioController menuDiarioController,
-        NutricionController nutricionController)
+        MenuDiarioController menuDiarioController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
         _menuDiarioController = menuDiarioController;
-        _nutricionController = nutricionController;
     }
 
     private void HistoricoForm_Load(object sender, EventArgs e)
@@ -90,7 +95,7 @@ public partial class HistoricoForm : Form
 
         int anio = (int)nudAnio.Value;
         int mes = cmbMes.SelectedIndex + 1;
-        decimal caloriasObjetivo = _nutricionController.CalcularCaloriasObjetivo(usuario);
+        decimal caloriasObjetivo = NutricionController.CalcularCaloriasObjetivo(usuario);
 
         List<ResumenDiaMes> resumen = _menuDiarioController.ObtenerResumenMensual(
             usuario.Id,
@@ -136,17 +141,17 @@ public partial class HistoricoForm : Form
         }
     }
 
-    private void cmbMes_SelectedIndexChanged(object sender, EventArgs e)
+    private void CmbMes_SelectedIndexChanged(object sender, EventArgs e)
     {
         CargarHistorico();
     }
 
-    private void nudAnio_ValueChanged(object sender, EventArgs e)
+    private void NudAnio_ValueChanged(object sender, EventArgs e)
     {
         CargarHistorico();
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

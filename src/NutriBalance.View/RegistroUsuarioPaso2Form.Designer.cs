@@ -75,7 +75,7 @@
             btnAceptar.TabIndex = 9;
             btnAceptar.Text = "Completar Registro";
             btnAceptar.UseVisualStyleBackColor = false;
-            btnAceptar.Click += btnAceptar_Click;
+            btnAceptar.Click += BtnAceptar_Click;
             // 
             // tableLayoutPanel1
             // 

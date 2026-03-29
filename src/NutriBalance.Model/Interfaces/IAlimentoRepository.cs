@@ -2,6 +2,9 @@
 
 namespace NutriBalance.Model.Interfaces;
 
+/// <summary>
+/// Defines the contract for food data persistence operations.
+/// </summary>
 public interface IAlimentoRepository
 {
     List<Alimento> ObtenerTodos();

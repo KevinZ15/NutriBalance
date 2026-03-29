@@ -131,7 +131,7 @@
             btnIngresar.TabIndex = 9;
             btnIngresar.Text = "Ingresar";
             btnIngresar.UseVisualStyleBackColor = false;
-            btnIngresar.Click += btnIngresar_Click;
+            btnIngresar.Click += BtnIngresar_Click;
             // 
             // btnVolver
             // 
@@ -146,7 +146,7 @@
             btnVolver.TabIndex = 8;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
+            btnVolver.Click += BtnVolver_Click;
             // 
             // tableLayoutPanel1
             // 

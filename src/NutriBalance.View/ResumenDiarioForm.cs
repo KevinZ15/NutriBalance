@@ -3,20 +3,25 @@ using NutriBalance.Model.Entities;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to display the user's daily nutritional summary.
+/// </summary>
 public partial class ResumenDiarioForm : Form
 {
     private readonly UsuarioController _usuarioController;
-    private readonly NutricionController _nutricionController;
     private readonly MenuDiarioController _menuDiarioController;
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required controllers.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to access authenticated user data.</param>
+    /// <param name="menuDiarioController">Controller used to manage daily menu data.</param>
     public ResumenDiarioForm(
         UsuarioController usuarioController,
-        NutricionController nutricionController,
         MenuDiarioController menuDiarioController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
-        _nutricionController = nutricionController;
         _menuDiarioController = menuDiarioController;
     }
 
@@ -41,29 +46,29 @@ public partial class ResumenDiarioForm : Form
             return;
         }
 
-        decimal imc = _nutricionController.CalcularIMC(usuario);
-        string clasificacion = _nutricionController.ClasificarIMC(imc);
-        decimal caloriasObjetivo = _nutricionController.CalcularCaloriasObjetivo(usuario);
-        var macros = _nutricionController.CalcularMacros(usuario);
+        decimal imc = NutricionController.CalcularIMC(usuario);
+        string clasificacion = NutricionController.ClasificarIMC(imc);
+        decimal caloriasObjetivo = NutricionController.CalcularCaloriasObjetivo(usuario);
+        var (Proteinas, Grasas, Carbohidratos, NombreDieta) = NutricionController.CalcularMacros(usuario);
 
         lblIMCValor.Text = $"{imc:F2} ({clasificacion})";
         lblCaloriasObjetivoValor.Text = $"{caloriasObjetivo:F2} kcal/día";
-        lblDietaValor.Text = macros.NombreDieta;
-        lblProteinasObjetivoValor.Text = $"{macros.Proteinas:F2} g/día";
-        lblGrasasObjetivoValor.Text = $"{macros.Grasas:F2} g/día";
-        lblCarbohidratosObjetivoValor.Text = $"{macros.Carbohidratos:F2} g/día";
+        lblDietaValor.Text = NombreDieta;
+        lblProteinasObjetivoValor.Text = $"{Proteinas:F2} g/día";
+        lblGrasasObjetivoValor.Text = $"{Grasas:F2} g/día";
+        lblCarbohidratosObjetivoValor.Text = $"{Carbohidratos:F2} g/día";
 
         MenuDiario menuHoy = _menuDiarioController.ObtenerMenuPorUsuarioYFecha(
             usuario.Id,
             DateTime.Today
         );
 
-        var totales = _menuDiarioController.CalcularTotales(menuHoy);
+        var totales = MenuDiarioController.CalcularTotales(menuHoy);
 
         decimal caloriasRestantes = caloriasObjetivo - totales.Calorias;
-        decimal proteinasRestantes = macros.Proteinas - totales.Proteinas;
-        decimal grasasRestantes = macros.Grasas - totales.Grasas;
-        decimal carbohidratosRestantes = macros.Carbohidratos - totales.Carbohidratos;
+        decimal proteinasRestantes = Proteinas - totales.Proteinas;
+        decimal grasasRestantes = Grasas - totales.Grasas;
+        decimal carbohidratosRestantes = Carbohidratos - totales.Carbohidratos;
 
         lblCaloriasConsumidasValor.Text = $"{totales.Calorias:F2} kcal";
         lblProteinasConsumidasValor.Text = $"{totales.Proteinas:F2} g";
@@ -80,7 +85,7 @@ public partial class ResumenDiarioForm : Form
         lblGrasasRestantesValor.ForeColor = ObtenerColorResultado(grasasRestantes);
         lblCarbohidratosRestantesValor.ForeColor = ObtenerColorResultado(carbohidratosRestantes);
 
-        EstadoMetaDiaria estadoCalorias = _menuDiarioController.EvaluarMetaCalorica(totales.Calorias, caloriasObjetivo);
+        EstadoMetaDiaria estadoCalorias = MenuDiarioController.EvaluarMetaCalorica(totales.Calorias, caloriasObjetivo);
 
         string mensajeEstado =
             estadoCalorias switch
@@ -93,7 +98,7 @@ public partial class ResumenDiarioForm : Form
         lblCaloriasRestantes.Text = mensajeEstado;
     }
 
-    private string FormatearResultadoMeta(decimal diferencia, string unidad)
+    private static string FormatearResultadoMeta(decimal diferencia, string unidad)
     {
         if (diferencia < 0)
         {
@@ -108,7 +113,7 @@ public partial class ResumenDiarioForm : Form
         return $"Faltan {diferencia:F2} {unidad}";
     }
 
-    private Color ObtenerColorResultado(decimal diferencia)
+    private static Color ObtenerColorResultado(decimal diferencia)
     {
         if (diferencia < 0)
         {
@@ -123,7 +128,7 @@ public partial class ResumenDiarioForm : Form
         return Color.Green;
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

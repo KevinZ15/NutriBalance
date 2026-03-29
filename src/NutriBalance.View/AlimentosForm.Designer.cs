@@ -75,7 +75,7 @@
             txtBuscar.Name = "txtBuscar";
             txtBuscar.Size = new Size(500, 29);
             txtBuscar.TabIndex = 1;
-            txtBuscar.TextChanged += txtBuscar_TextChanged;
+            txtBuscar.TextChanged += TxtBuscar_TextChanged;
 
             dgvAlimentos.AllowUserToAddRows = false;
             dgvAlimentos.AllowUserToDeleteRows = false;
@@ -115,7 +115,7 @@
             btnVolver.TabIndex = 0;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
+            btnVolver.Click += BtnVolver_Click;
 
             btnEditarAlimentos.Anchor = AnchorStyles.None;
             btnEditarAlimentos.AutoSize = true;
@@ -127,7 +127,7 @@
             btnEditarAlimentos.TabIndex = 1;
             btnEditarAlimentos.Text = "Editar";
             btnEditarAlimentos.UseVisualStyleBackColor = false;
-            btnEditarAlimentos.Click += btnEditarAlimentos_Click;
+            btnEditarAlimentos.Click += BtnEditarAlimentos_Click;
 
             btnEliminarAlimento.Anchor = AnchorStyles.None;
             btnEliminarAlimento.AutoSize = true;
@@ -139,7 +139,7 @@
             btnEliminarAlimento.TabIndex = 2;
             btnEliminarAlimento.Text = "Eliminar";
             btnEliminarAlimento.UseVisualStyleBackColor = false;
-            btnEliminarAlimento.Click += btnEliminarAlimento_Click;
+            btnEliminarAlimento.Click += BtnEliminarAlimento_Click;
 
             btnAgregarAlimento.Anchor = AnchorStyles.None;
             btnAgregarAlimento.AutoSize = true;
@@ -151,7 +151,7 @@
             btnAgregarAlimento.TabIndex = 3;
             btnAgregarAlimento.Text = "Agregar";
             btnAgregarAlimento.UseVisualStyleBackColor = false;
-            btnAgregarAlimento.Click += btnAgregarAlimento_Click;
+            btnAgregarAlimento.Click += BtnAgregarAlimento_Click;
 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;

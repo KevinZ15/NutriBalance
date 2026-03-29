@@ -80,7 +80,7 @@
             btnGuardar.TabIndex = 10;
             btnGuardar.Text = "Guardar Menú";
             btnGuardar.UseVisualStyleBackColor = false;
-            btnGuardar.Click += btnGuardar_Click;
+            btnGuardar.Click += BtnGuardar_Click;
             // 
             // btnAgregarAlimento
             // 
@@ -95,7 +95,7 @@
             btnAgregarAlimento.TabIndex = 9;
             btnAgregarAlimento.Text = "Agregar alimento";
             btnAgregarAlimento.UseVisualStyleBackColor = false;
-            btnAgregarAlimento.Click += btnAgregarAlimento_Click;
+            btnAgregarAlimento.Click += BtnAgregarAlimento_Click;
             // 
             // btnVolver
             // 
@@ -110,7 +110,7 @@
             btnVolver.TabIndex = 8;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
+            btnVolver.Click += BtnVolver_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -143,7 +143,7 @@
             dtpFecha.Name = "dtpFecha";
             dtpFecha.Size = new Size(248, 23);
             dtpFecha.TabIndex = 10;
-            dtpFecha.ValueChanged += dtpFecha_ValueChanged;
+            dtpFecha.ValueChanged += DtpFecha_ValueChanged;
             // 
             // dgvMiDieta
             // 
@@ -152,7 +152,7 @@
             dgvMiDieta.Name = "dgvMiDieta";
             dgvMiDieta.Size = new Size(856, 256);
             dgvMiDieta.TabIndex = 11;
-            dgvMiDieta.CellContentClick += dgvMiDieta_CellContentClick;
+            dgvMiDieta.CellContentClick += DgvMiDieta_CellContentClick;
             // 
             // tableLayoutPanel3
             // 

@@ -2,29 +2,29 @@
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to collect the first step of user registration data.
+/// </summary>
 public partial class RegistroUsuarioPaso1Form : Form
 {
     private readonly UsuarioController _usuarioController;
-    private readonly AlimentoController _alimentoController;
-    private readonly MenuDiarioController _menuDiarioController;
 
-    public RegistroUsuarioPaso1Form(
-        UsuarioController usuarioController,
-        AlimentoController alimentoController,
-        MenuDiarioController menuDiarioController)
+    /// <summary>
+    /// Initializes a new instance of the form with the required user controller.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to manage user data.</param>
+    public RegistroUsuarioPaso1Form(UsuarioController usuarioController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
-        _alimentoController = alimentoController;
-        _menuDiarioController = menuDiarioController;
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }
 
-    private void btnContinuar_Click(object sender, EventArgs e)
+    private void BtnContinuar_Click(object sender, EventArgs e)
     {
         string nombreUsuario = txtNombreUsuario.Text.Trim();
         string nombre = txtNombre.Text.Trim();
@@ -50,8 +50,6 @@ public partial class RegistroUsuarioPaso1Form : Form
 
         using RegistroUsuarioPaso2Form form = new(
             _usuarioController,
-            _alimentoController,
-            _menuDiarioController,
             nombreUsuario,
             nombre,
             contrasena

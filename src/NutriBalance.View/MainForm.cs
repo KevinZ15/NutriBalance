@@ -2,63 +2,59 @@
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Main application form that provides access to core features such as profile, foods, diet, and history.
+/// </summary>
 public partial class MainForm : Form
 {
     private readonly UsuarioController _usuarioController;
     private readonly AlimentoController _alimentoController;
     private readonly MenuDiarioController _menuDiarioController;
-    private readonly NutricionController _nutricionController;
 
+    /// <summary>
+    /// Initializes a new instance of the main form with the required controllers.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to manage user data.</param>
+    /// <param name="alimentoController">Controller used to manage food data.</param>
+    /// <param name="menuDiarioController">Controller used to manage daily menu data.</param>
     public MainForm(
         UsuarioController usuarioController,
         AlimentoController alimentoController,
-        MenuDiarioController menuDiarioController,
-        NutricionController nutricionController)
+        MenuDiarioController menuDiarioController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
         _alimentoController = alimentoController;
         _menuDiarioController = menuDiarioController;
-        _nutricionController = nutricionController;
     }
 
-    private void btnMiPerfil_Click(object sender, EventArgs e)
+    private void BtnMiPerfil_Click(object sender, EventArgs e)
     {
         using MiPerfilForm form = new(_usuarioController);
         form.ShowDialog();
     }
 
-    private void btnAlimentos_Click(object sender, EventArgs e)
+    private void BtnAlimentos_Click(object sender, EventArgs e)
     {
         using AlimentosForm form = new(_alimentoController);
         form.ShowDialog();
     }
 
-    private void btnResumenDiario_Click(object sender, EventArgs e)
+    private void BtnResumenDiario_Click(object sender, EventArgs e)
     {
-        using ResumenDiarioForm form = new(_usuarioController, _nutricionController, _menuDiarioController);
+        using ResumenDiarioForm form = new(_usuarioController, _menuDiarioController);
         form.ShowDialog();
     }
 
-    private void btnMiDieta_Click(object sender, EventArgs e)
+    private void BtnMiDieta_Click(object sender, EventArgs e)
     {
         using MiDietaForm form = new(_menuDiarioController, _alimentoController, _usuarioController);
         form.ShowDialog();
     }
 
-    private void btnActividadesFisicas_Click(object sender, EventArgs e)
+    private void BtnHistorico_Click(object sender, EventArgs e)
     {
-        MessageBox.Show(
-            "Pantalla de actividades físicas aún no está implementada.",
-            "NutriBalance",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Information
-        );
-    }
-
-    private void btnHistorico_Click(object sender, EventArgs e)
-    {
-        using HistoricoForm form = new(_usuarioController, _menuDiarioController, _nutricionController);
+        using HistoricoForm form = new(_usuarioController, _menuDiarioController);
         form.ShowDialog();
     }
 }

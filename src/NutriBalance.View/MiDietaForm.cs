@@ -3,6 +3,9 @@ using NutriBalance.Model.Entities;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to manage and track the user's daily diet.
+/// </summary>
 public partial class MiDietaForm : Form
 {
     private readonly MenuDiarioController _menuDiarioController;
@@ -11,6 +14,12 @@ public partial class MiDietaForm : Form
 
     private MenuDiario? _menuActual;
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required controllers.
+    /// </summary>
+    /// <param name="menuDiarioController">Controller used to manage daily menu data.</param>
+    /// <param name="alimentoController">Controller used to manage food data.</param>
+    /// <param name="usuarioController">Controller used to access authenticated user data.</param>
     public MiDietaForm(
         MenuDiarioController menuDiarioController,
         AlimentoController alimentoController,
@@ -100,7 +109,7 @@ public partial class MiDietaForm : Form
         });
     }
 
-    private void dtpFecha_ValueChanged(object sender, EventArgs e)
+    private void DtpFecha_ValueChanged(object sender, EventArgs e)
     {
         CargarMenuPorFecha();
     }
@@ -150,12 +159,12 @@ public partial class MiDietaForm : Form
             return;
         }
 
-        var totales = _menuDiarioController.CalcularTotales(_menuActual);
+        var (Calorias, Proteinas, Grasas, Carbohidratos) = MenuDiarioController.CalcularTotales(_menuActual);
 
-        lblTotalCaloriasValor.Text = $"{totales.Calorias:F2} kcal";
-        lblTotalProteinasValor.Text = $"{totales.Proteinas:F2} g";
-        lblTotalGrasasValor.Text = $"{totales.Grasas:F2} g";
-        lblTotalCarbohidratosValor.Text = $"{totales.Carbohidratos:F2} g";
+        lblTotalCaloriasValor.Text = $"{Calorias:F2} kcal";
+        lblTotalProteinasValor.Text = $"{Proteinas:F2} g";
+        lblTotalGrasasValor.Text = $"{Grasas:F2} g";
+        lblTotalCarbohidratosValor.Text = $"{Carbohidratos:F2} g";
     }
 
     private void LimpiarTotales()
@@ -166,7 +175,7 @@ public partial class MiDietaForm : Form
         lblTotalCarbohidratosValor.Text = "0.00 g";
     }
 
-    private void btnAgregarAlimento_Click(object sender, EventArgs e)
+    private void BtnAgregarAlimento_Click(object sender, EventArgs e)
     {
         if (_menuActual is null)
         {
@@ -190,7 +199,7 @@ public partial class MiDietaForm : Form
         RefrescarPantalla();
     }
 
-    private void btnGuardar_Click(object sender, EventArgs e)
+    private void BtnGuardar_Click(object sender, EventArgs e)
     {
         if (_menuActual is null)
         {
@@ -205,12 +214,12 @@ public partial class MiDietaForm : Form
 
         _menuActual.Fecha = dtpFecha.Value.Date;
 
-        var resultado = _menuDiarioController.GuardarMenu(_menuActual);
+        var (Exito, Mensaje) = _menuDiarioController.GuardarMenu(_menuActual);
 
-        if (!resultado.Exito)
+        if (!Exito)
         {
             MessageBox.Show(
-                resultado.Mensaje,
+                Mensaje,
                 "NutriBalance",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Warning
@@ -219,7 +228,7 @@ public partial class MiDietaForm : Form
         }
 
         MessageBox.Show(
-            resultado.Mensaje,
+            Mensaje,
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
@@ -228,7 +237,7 @@ public partial class MiDietaForm : Form
         CargarMenuPorFecha();
     }
 
-    private void dgvMiDieta_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    private void DgvMiDieta_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
         if (_menuActual is null) return;
         if (e.RowIndex < 0) return;
@@ -273,7 +282,7 @@ public partial class MiDietaForm : Form
         RefrescarPantalla();
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

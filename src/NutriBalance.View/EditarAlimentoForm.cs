@@ -3,11 +3,18 @@ using NutriBalance.Model.Entities;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to edit existing food items.
+/// </summary>
 public partial class EditarAlimentoForm : Form
 {
     private readonly AlimentoController _alimentoController;
-    private List<Alimento> _alimentos = new();
+    private List<Alimento> _alimentos = [];
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required food controller.
+    /// </summary>
+    /// <param name="alimentoController">Controller used to manage food data.</param>
     public EditarAlimentoForm(AlimentoController alimentoController)
     {
         InitializeComponent();
@@ -67,12 +74,12 @@ public partial class EditarAlimentoForm : Form
         chkEstandar.Checked = false;
     }
 
-    private void cmbAlimentos_SelectedIndexChanged(object sender, EventArgs e)
+    private void CmbAlimentos_SelectedIndexChanged(object sender, EventArgs e)
     {
         CargarDatosAlimentoSeleccionado();
     }
 
-    private void btnAceptar_Click(object sender, EventArgs e)
+    private void BtnAceptar_Click(object sender, EventArgs e)
     {
         if (cmbAlimentos.SelectedItem is not Alimento alimentoSeleccionado)
         {
@@ -145,12 +152,12 @@ public partial class EditarAlimentoForm : Form
             EsEstandar = chkEstandar.Checked
         };
 
-        var resultado = _alimentoController.ActualizarAlimento(alimentoActualizado);
+        var (exito, mensaje) = _alimentoController.ActualizarAlimento(alimentoActualizado);
 
-        if (!resultado.Exito)
+        if (!exito)
         {
             MessageBox.Show(
-                resultado.Mensaje,
+                mensaje,
                 "NutriBalance",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Warning
@@ -159,7 +166,7 @@ public partial class EditarAlimentoForm : Form
         }
 
         MessageBox.Show(
-            resultado.Mensaje,
+            mensaje,
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
@@ -169,7 +176,7 @@ public partial class EditarAlimentoForm : Form
         Close();
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

@@ -241,7 +241,7 @@
             btnEditarPerfil.TabIndex = 9;
             btnEditarPerfil.Text = "Editar Perfil";
             btnEditarPerfil.UseVisualStyleBackColor = false;
-            btnEditarPerfil.Click += btnEditarPerfil_Click;
+            btnEditarPerfil.Click += BtnEditarPerfil_Click;
             // 
             // btnVolver
             // 
@@ -256,7 +256,7 @@
             btnVolver.TabIndex = 8;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
+            btnVolver.Click += BtnVolver_Click;
             // 
             // tableLayoutPanel1
             // 

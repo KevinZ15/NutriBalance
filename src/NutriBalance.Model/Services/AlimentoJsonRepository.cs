@@ -4,6 +4,9 @@ using NutriBalance.Model.Interfaces;
 
 namespace NutriBalance.Model.Services;
 
+/// <summary>
+/// JSON-based implementation of the food repository for data persistence.
+/// </summary>
 public class AlimentoJsonRepository : IAlimentoRepository
 {
     private readonly string _rutaArchivo;
@@ -16,6 +19,11 @@ public class AlimentoJsonRepository : IAlimentoRepository
         InicializarArchivo();
     }
 
+    /// <summary>
+    /// Initializes a user-specific food catalog by copying a global catalog or creating a new empty file.
+    /// </summary>
+    /// <param name="rutaGlobal">Path to the global catalog file.</param>
+    /// <param name="rutaUsuario">Path to the user-specific catalog file.</param>
     public static void InicializarCatalogoUsuario(string rutaGlobal, string rutaUsuario)
     {
         if (File.Exists(rutaUsuario))
@@ -33,18 +41,31 @@ public class AlimentoJsonRepository : IAlimentoRepository
         }
     }
 
+    /// <summary>
+    /// Retrieves all food items from the JSON file.
+    /// </summary>
+    /// <returns>A list of all food entities.</returns>
     public List<Alimento> ObtenerTodos()
     {
         string contenido = File.ReadAllText(_rutaArchivo);
         List<Alimento>? alimentos = JsonSerializer.Deserialize<List<Alimento>>(contenido, _jsonOptions);
-        return alimentos ?? new List<Alimento>();
+        return alimentos ?? [];
     }
 
+    /// <summary>
+    /// Retrieves a food item by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the food.</param>
+    /// <returns>The food entity if found; otherwise, null.</returns>
     public Alimento? ObtenerPorId(Guid id)
     {
         return ObtenerTodos().FirstOrDefault(a => a.Id == id);
     }
 
+    /// <summary>
+    /// Adds a new food item to the JSON file.
+    /// </summary>
+    /// <param name="alimento">The food entity to add.</param>
     public void Agregar(Alimento alimento)
     {
         List<Alimento> alimentos = ObtenerTodos();
@@ -52,29 +73,31 @@ public class AlimentoJsonRepository : IAlimentoRepository
         GuardarTodos(alimentos);
     }
 
-    public void Actualizar(Alimento alimentoActualizado)
+    /// <summary>
+    /// Updates an existing food item in the JSON file.
+    /// </summary>
+    /// <param name="alimento">The food entity with updated information.</param>
+    public void Actualizar(Alimento alimento)
     {
         List<Alimento> alimentos = ObtenerTodos();
-        Alimento? existente = alimentos.FirstOrDefault(a => a.Id == alimentoActualizado.Id);
-
-        if (existente is null)
-        {
-            throw new InvalidOperationException("El alimento no existe en el archivo JSON.");
-        }
-
-        existente.Nombre = alimentoActualizado.Nombre;
-        existente.Porcion = alimentoActualizado.Porcion;
-        existente.Calorias = alimentoActualizado.Calorias;
-        existente.Proteinas = alimentoActualizado.Proteinas;
-        existente.Carbohidratos = alimentoActualizado.Carbohidratos;
-        existente.Grasas = alimentoActualizado.Grasas;
-        existente.EsKeto = alimentoActualizado.EsKeto;
-        existente.EsVegetariano = alimentoActualizado.EsVegetariano;
-        existente.EsEstandar = alimentoActualizado.EsEstandar;
+        Alimento? existente = alimentos.FirstOrDefault(a => a.Id == alimento.Id) ?? throw new InvalidOperationException("El alimento no existe en el archivo JSON.");
+        existente.Nombre = alimento.Nombre;
+        existente.Porcion = alimento.Porcion;
+        existente.Calorias = alimento.Calorias;
+        existente.Proteinas = alimento.Proteinas;
+        existente.Carbohidratos = alimento.Carbohidratos;
+        existente.Grasas = alimento.Grasas;
+        existente.EsKeto = alimento.EsKeto;
+        existente.EsVegetariano = alimento.EsVegetariano;
+        existente.EsEstandar = alimento.EsEstandar;
 
         GuardarTodos(alimentos);
     }
 
+    /// <summary>
+    /// Deletes a food item by its unique identifier from the JSON file.
+    /// </summary>
+    /// <param name="id">The unique identifier of the food to delete.</param>
     public void Eliminar(Guid id)
     {
         List<Alimento> alimentos = ObtenerTodos();

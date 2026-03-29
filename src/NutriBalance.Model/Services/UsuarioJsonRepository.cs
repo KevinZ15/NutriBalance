@@ -4,6 +4,9 @@ using NutriBalance.Model.Interfaces;
 
 namespace NutriBalance.Model.Services;
 
+/// <summary>
+/// JSON-based implementation of the user repository for data persistence and authentication.
+/// </summary>
 public class UsuarioJsonRepository : IUsuarioRepository
 {
     private readonly string _rutaArchivo;
@@ -20,6 +23,10 @@ public class UsuarioJsonRepository : IUsuarioRepository
         InicializarArchivo();
     }
 
+    /// <summary>
+    /// Retrieves all users from the JSON file.
+    /// </summary>
+    /// <returns>A list of all user entities.</returns>
     public List<Usuario> ObtenerTodos()
     {
         string contenido = File.ReadAllText(_rutaArchivo);
@@ -27,11 +34,22 @@ public class UsuarioJsonRepository : IUsuarioRepository
         return usuarios ?? new List<Usuario>();
     }
 
+    /// <summary>
+    /// Retrieves a user by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user.</param>
+    /// <returns>The user if found; otherwise, null.</returns>
     public Usuario? ObtenerPorId(Guid id)
     {
         return ObtenerTodos().FirstOrDefault(usuario => usuario.Id == id);
     }
 
+    /// <summary>
+    /// Retrieves a user by matching credentials.
+    /// </summary>
+    /// <param name="nombreUsuario">The username.</param>
+    /// <param name="contrasena">The password.</param>
+    /// <returns>The user if credentials match; otherwise, null.</returns>
     public Usuario? ObtenerPorCredenciales(string nombreUsuario, string contrasena)
     {
         return ObtenerTodos().FirstOrDefault(usuario =>
@@ -39,12 +57,21 @@ public class UsuarioJsonRepository : IUsuarioRepository
             usuario.Contrasena == contrasena);
     }
 
+    /// <summary>
+    /// Retrieves a user by username.
+    /// </summary>
+    /// <param name="nombreUsuario">The username to search.</param>
+    /// <returns>The user if found; otherwise, null.</returns>
     public Usuario? ObtenerPorNombreUsuario(string nombreUsuario)
     {
         return ObtenerTodos().FirstOrDefault(usuario =>
             usuario.NombreUsuario.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Adds a new user to the JSON file.
+    /// </summary>
+    /// <param name="usuario">The user entity to add.</param>
     public void Agregar(Usuario usuario)
     {
         List<Usuario> usuarios = ObtenerTodos();
@@ -52,25 +79,29 @@ public class UsuarioJsonRepository : IUsuarioRepository
         GuardarTodos(usuarios);
     }
 
-    public void Actualizar(Usuario usuarioActualizado)
+    /// <summary>
+    /// Updates an existing user in the JSON file.
+    /// </summary>
+    /// <param name="usuario">The user entity with updated information.</param>
+    public void Actualizar(Usuario usuario)
     {
         List<Usuario> usuarios = ObtenerTodos();
 
-        Usuario? usuarioExistente = usuarios.FirstOrDefault(usuario => usuario.Id == usuarioActualizado.Id);
+        Usuario? usuarioExistente = usuarios.FirstOrDefault(u => u.Id == usuario.Id);
 
         if (usuarioExistente is null)
         {
             throw new InvalidOperationException("El usuario no existe en el archivo JSON.");
         }
 
-        usuarioExistente.NombreUsuario = usuarioActualizado.NombreUsuario;
-        usuarioExistente.Contrasena = usuarioActualizado.Contrasena;
-        usuarioExistente.Nombre = usuarioActualizado.Nombre;
-        usuarioExistente.Peso = usuarioActualizado.Peso;
-        usuarioExistente.Estatura = usuarioActualizado.Estatura;
-        usuarioExistente.NivelActividad = usuarioActualizado.NivelActividad;
-        usuarioExistente.Objetivo = usuarioActualizado.Objetivo;
-        usuarioExistente.TipoDieta = usuarioActualizado.TipoDieta;
+        usuarioExistente.NombreUsuario = usuario.NombreUsuario;
+        usuarioExistente.Contrasena = usuario.Contrasena;
+        usuarioExistente.Nombre = usuario.Nombre;
+        usuarioExistente.Peso = usuario.Peso;
+        usuarioExistente.Estatura = usuario.Estatura;
+        usuarioExistente.NivelActividad = usuario.NivelActividad;
+        usuarioExistente.Objetivo = usuario.Objetivo;
+        usuarioExistente.TipoDieta = usuario.TipoDieta;
 
         GuardarTodos(usuarios);
     }

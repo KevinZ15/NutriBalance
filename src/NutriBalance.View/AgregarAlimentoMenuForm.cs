@@ -4,14 +4,25 @@ using NutriBalance.Model.Enums;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to add a food item to the daily menu.
+/// </summary>
 public partial class AgregarAlimentoMenuForm : Form
 {
     private readonly AlimentoController _alimentoController;
     private readonly UsuarioController _usuarioController;
-    private List<Alimento> _alimentos = new();
+    private List<Alimento> _alimentos = [];
 
+    /// <summary>
+    /// Gets the generated menu detail after selecting and confirming a food item.
+    /// </summary>
     public MenuDiarioDetalle? DetalleGenerado { get; private set; }
 
+    /// <summary>
+    /// Initializes a new instance of the form with required controllers.
+    /// </summary>
+    /// <param name="alimentoController">Controller for managing food data.</param>
+    /// <param name="usuarioController">Controller for managing user data.</param>
     public AgregarAlimentoMenuForm(
         AlimentoController alimentoController,
         UsuarioController usuarioController)
@@ -36,7 +47,7 @@ public partial class AgregarAlimentoMenuForm : Form
         cmbAlimentos.DataSource = _alimentos;
     }
 
-    private void btnAceptar_Click(object sender, EventArgs e)
+    private void BtnAceptar_Click(object sender, EventArgs e)
     {
         if (cmbAlimentos.SelectedItem is not Alimento alimentoSeleccionado)
         {
@@ -133,9 +144,9 @@ public partial class AgregarAlimentoMenuForm : Form
         Close();
     }
 
-    private string ObtenerClasificacionesTexto(Alimento alimento)
+    private static string ObtenerClasificacionesTexto(Alimento alimento)
     {
-        List<string> clasificaciones = new();
+        List<string> clasificaciones = [];
 
         if (alimento.EsKeto) clasificaciones.Add("Keto");
         if (alimento.EsVegetariano) clasificaciones.Add("Vegetariano");
@@ -146,7 +157,7 @@ public partial class AgregarAlimentoMenuForm : Form
         return string.Join(", ", clasificaciones);
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

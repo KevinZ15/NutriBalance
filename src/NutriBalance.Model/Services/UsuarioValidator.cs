@@ -2,8 +2,16 @@
 
 namespace NutriBalance.Model.Services;
 
+/// <summary>
+/// Provides validation rules for user entities.
+/// </summary>
 public static class UsuarioValidator
 {
+    /// <summary>
+    /// Validates a user entity and returns a list of validation errors.
+    /// </summary>
+    /// <param name="usuario">The user entity to validate.</param>
+    /// <returns>A list of validation error messages. Empty if valid.</returns>
     public static List<string> Validar(Usuario usuario)
     {
         List<string> errores = new();

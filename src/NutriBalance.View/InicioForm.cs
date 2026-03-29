@@ -4,46 +4,47 @@ using NutriBalance.Model.Services;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Main startup form that provides access to registration and login features.
+/// </summary>
 public partial class InicioForm : Form
 {
     private readonly UsuarioController _usuarioController;
     private readonly MenuDiarioController _menuDiarioController;
-    private readonly NutricionController _nutricionController;
     private readonly string _rutaAlimentosGlobal;
     private readonly string _rutaData;
 
+    /// <summary>
+    /// Initializes a new instance of the startup form with the required dependencies.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to manage user operations.</param>
+    /// <param name="menuDiarioController">Controller used to manage daily menu operations.</param>
+    /// <param name="rutaAlimentosGlobal">Path to the global food catalog file.</param>
+    /// <param name="rutaData">Path to the application's data directory.</param>
     public InicioForm(
         UsuarioController usuarioController,
         MenuDiarioController menuDiarioController,
-        NutricionController nutricionController,
         string rutaAlimentosGlobal,
         string rutaData)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
         _menuDiarioController = menuDiarioController;
-        _nutricionController = nutricionController;
         _rutaAlimentosGlobal = rutaAlimentosGlobal;
         _rutaData = rutaData;
     }
 
-    private void btnRegistrarse_Click(object sender, EventArgs e)
+    private void BtnRegistrarse_Click(object sender, EventArgs e)
     {
-        IAlimentoRepository alimentoRepositoryTemp = new AlimentoJsonRepository(_rutaAlimentosGlobal);
-        AlimentoController alimentoControllerTemp = new(alimentoRepositoryTemp);
-
-        using RegistroUsuarioPaso1Form form = new(_usuarioController, alimentoControllerTemp, _menuDiarioController);
+        using RegistroUsuarioPaso1Form form = new(_usuarioController);
         Hide();
         form.ShowDialog();
         Show();
     }
 
-    private void btnIniciarSesion_Click(object sender, EventArgs e)
+    private void BtnIniciarSesion_Click(object sender, EventArgs e)
     {
-        IAlimentoRepository alimentoRepositoryTemp = new AlimentoJsonRepository(_rutaAlimentosGlobal);
-        AlimentoController alimentoControllerTemp = new(alimentoRepositoryTemp);
-
-        using LoginForm form = new(_usuarioController, alimentoControllerTemp, _menuDiarioController);
+        using LoginForm form = new(_usuarioController);
         Hide();
         form.ShowDialog();
 
@@ -62,8 +63,7 @@ public partial class InicioForm : Form
             using MainForm mainForm = new(
                 _usuarioController,
                 alimentoControllerUsuario,
-                _menuDiarioController,
-                _nutricionController
+                _menuDiarioController
             );
             mainForm.ShowDialog();
         }

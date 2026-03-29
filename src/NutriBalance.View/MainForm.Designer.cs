@@ -75,7 +75,7 @@
             btnMiPerfil.TabIndex = 12;
             btnMiPerfil.Text = "Mi Perfil";
             btnMiPerfil.UseVisualStyleBackColor = false;
-            btnMiPerfil.Click += btnMiPerfil_Click;
+            btnMiPerfil.Click += BtnMiPerfil_Click;
             // 
             // btnResumenDiario
             // 
@@ -89,7 +89,7 @@
             btnResumenDiario.TabIndex = 13;
             btnResumenDiario.Text = "Resumen Diario";
             btnResumenDiario.UseVisualStyleBackColor = false;
-            btnResumenDiario.Click += btnResumenDiario_Click;
+            btnResumenDiario.Click += BtnResumenDiario_Click;
             // 
             // btnAlimentos
             // 
@@ -103,7 +103,7 @@
             btnAlimentos.TabIndex = 14;
             btnAlimentos.Text = "Alimentos";
             btnAlimentos.UseVisualStyleBackColor = false;
-            btnAlimentos.Click += btnAlimentos_Click;
+            btnAlimentos.Click += BtnAlimentos_Click;
             // 
             // btnMiDieta
             // 
@@ -117,7 +117,7 @@
             btnMiDieta.TabIndex = 15;
             btnMiDieta.Text = "Mi Dieta";
             btnMiDieta.UseVisualStyleBackColor = false;
-            btnMiDieta.Click += btnMiDieta_Click;
+            btnMiDieta.Click += BtnMiDieta_Click;
             // 
             // btnHistorico
             // 
@@ -131,7 +131,7 @@
             btnHistorico.TabIndex = 16;
             btnHistorico.Text = "Historico";
             btnHistorico.UseVisualStyleBackColor = false;
-            btnHistorico.Click += btnHistorico_Click;
+            btnHistorico.Click += BtnHistorico_Click;
             // 
             // tableLayoutPanel1
             // 

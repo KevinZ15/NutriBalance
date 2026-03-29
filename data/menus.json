@@ -29301,5 +29301,96 @@
         "Calorias": 465.0
       }
     ]
+  },
+  {
+    "Id": "548beff2-ca94-44c4-a995-ab346560de68",
+    "UsuarioId": "3639e121-844c-4010-8c67-24b1bf56da8d",
+    "Fecha": "2026-03-29T00:00:00-06:00",
+    "Detalles": [
+      {
+        "Id": "5b60fbb3-2132-438c-a5bb-2aa2e37f961a",
+        "AlimentoId": "a1b2c3d4-0002-4a1b-8c1d-000000000002",
+        "NombreAlimento": "salmon",
+        "CantidadUnidades": 1,
+        "GramosPorUnidad": 20,
+        "Cantidad": 20,
+        "Proteinas": 4.0,
+        "Grasas": 2.6,
+        "Carbohidratos": 0.0,
+        "Calorias": 39.4
+      },
+      {
+        "Id": "973728f1-4fa6-4bd1-b8e8-9fb60b1dd697",
+        "AlimentoId": "a1b2c3d4-0006-4a1b-8c1d-000000000006",
+        "NombreAlimento": "huevo",
+        "CantidadUnidades": 8,
+        "GramosPorUnidad": 10,
+        "Cantidad": 80,
+        "Proteinas": 10.4,
+        "Grasas": 8.8,
+        "Carbohidratos": 0.8,
+        "Calorias": 124.0
+      },
+      {
+        "Id": "624e03a7-b83d-4686-a83d-4cb17f591920",
+        "AlimentoId": "a1b2c3d4-0004-4a1b-8c1d-000000000004",
+        "NombreAlimento": "carne de res",
+        "CantidadUnidades": 2,
+        "GramosPorUnidad": 300,
+        "Cantidad": 600,
+        "Proteinas": 156,
+        "Grasas": 102,
+        "Carbohidratos": 0,
+        "Calorias": 1542
+      },
+      {
+        "Id": "a9e44a46-7a33-43c8-9d85-6e3cd6f26f61",
+        "AlimentoId": "a1b2c3d4-0041-4a1b-8c1d-000000000041",
+        "NombreAlimento": "papa",
+        "CantidadUnidades": 5,
+        "GramosPorUnidad": 20,
+        "Cantidad": 100,
+        "Proteinas": 2,
+        "Grasas": 0.1,
+        "Carbohidratos": 17,
+        "Calorias": 76.9
+      },
+      {
+        "Id": "4f770dd2-32e0-4a02-a8ab-f04ae73077bc",
+        "AlimentoId": "a1b2c3d4-0009-4a1b-8c1d-000000000009",
+        "NombreAlimento": "mantequilla",
+        "CantidadUnidades": 1,
+        "GramosPorUnidad": 100,
+        "Cantidad": 100,
+        "Proteinas": 0.8,
+        "Grasas": 81,
+        "Carbohidratos": 0,
+        "Calorias": 732.2
+      },
+      {
+        "Id": "1e325064-5ba4-46e5-b297-8f845c9a5bbe",
+        "AlimentoId": "a1b2c3d4-0012-4a1b-8c1d-000000000012",
+        "NombreAlimento": "tocino",
+        "CantidadUnidades": 10,
+        "GramosPorUnidad": 10,
+        "Cantidad": 100,
+        "Proteinas": 37,
+        "Grasas": 42,
+        "Carbohidratos": 1.4,
+        "Calorias": 531.6
+      },
+      {
+        "Id": "d3b2ab7e-929c-4e34-b07a-f068b06c357e",
+        "AlimentoId": "a1b2c3d4-0012-4a1b-8c1d-000000000012",
+        "NombreAlimento": "tocino",
+        "CantidadUnidades": 20,
+        "GramosPorUnidad": 10,
+        "Cantidad": 200,
+        "Proteinas": 74,
+        "Grasas": 84,
+        "Carbohidratos": 2.8,
+        "Calorias": 1063.2
+      }
+    ]
   }
 ]

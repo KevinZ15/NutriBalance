@@ -4,6 +4,9 @@ using NutriBalance.Model.Interfaces;
 
 namespace NutriBalance.Model.Services;
 
+/// <summary>
+/// JSON-based implementation of the daily menu repository for data persistence.
+/// </summary>
 public class MenuDiarioJsonRepository : IMenuDiarioRepository
 {
     private readonly string _rutaArchivo;
@@ -20,6 +23,10 @@ public class MenuDiarioJsonRepository : IMenuDiarioRepository
         InicializarArchivo();
     }
 
+    /// <summary>
+    /// Retrieves all daily menus from the JSON file.
+    /// </summary>
+    /// <returns>A list of all daily menus.</returns>
     public List<MenuDiario> ObtenerTodos()
     {
         string contenido = File.ReadAllText(_rutaArchivo);
@@ -27,11 +34,22 @@ public class MenuDiarioJsonRepository : IMenuDiarioRepository
         return menus ?? new List<MenuDiario>();
     }
 
+    /// <summary>
+    /// Retrieves a daily menu by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the menu.</param>
+    /// <returns>The daily menu if found; otherwise, null.</returns>
     public MenuDiario? ObtenerPorId(Guid id)
     {
         return ObtenerTodos().FirstOrDefault(menu => menu.Id == id);
     }
 
+    /// <summary>
+    /// Retrieves a daily menu for a specific user and date.
+    /// </summary>
+    /// <param name="usuarioId">The unique identifier of the user.</param>
+    /// <param name="fecha">The date of the menu.</param>
+    /// <returns>The daily menu if found; otherwise, null.</returns>
     public MenuDiario? ObtenerPorUsuarioYFecha(Guid usuarioId, DateTime fecha)
     {
         DateTime fechaBuscada = fecha.Date;
@@ -41,6 +59,10 @@ public class MenuDiarioJsonRepository : IMenuDiarioRepository
             menu.Fecha.Date == fechaBuscada);
     }
 
+    /// <summary>
+    /// Adds a new daily menu to the JSON file.
+    /// </summary>
+    /// <param name="menu">The daily menu to add.</param>
     public void Agregar(MenuDiario menu)
     {
         List<MenuDiario> menus = ObtenerTodos();
@@ -48,24 +70,32 @@ public class MenuDiarioJsonRepository : IMenuDiarioRepository
         GuardarTodos(menus);
     }
 
-    public void Actualizar(MenuDiario menuActualizado)
+    /// <summary>
+    /// Updates an existing daily menu in the JSON file.
+    /// </summary>
+    /// <param name="menu">The daily menu with updated information.</param>
+    public void Actualizar(MenuDiario menu)
     {
         List<MenuDiario> menus = ObtenerTodos();
 
-        MenuDiario? menuExistente = menus.FirstOrDefault(menu => menu.Id == menuActualizado.Id);
+        MenuDiario? menuExistente = menus.FirstOrDefault(m => m.Id == menu.Id);
 
         if (menuExistente is null)
         {
             throw new InvalidOperationException("El menú no existe en el archivo JSON.");
         }
 
-        menuExistente.UsuarioId = menuActualizado.UsuarioId;
-        menuExistente.Fecha = menuActualizado.Fecha;
-        menuExistente.Detalles = menuActualizado.Detalles;
+        menuExistente.UsuarioId = menu.UsuarioId;
+        menuExistente.Fecha = menu.Fecha;
+        menuExistente.Detalles = menu.Detalles;
 
         GuardarTodos(menus);
     }
 
+    /// <summary>
+    /// Deletes a daily menu by its unique identifier from the JSON file.
+    /// </summary>
+    /// <param name="id">The unique identifier of the menu to delete.</param>
     public void Eliminar(Guid id)
     {
         List<MenuDiario> menus = ObtenerTodos();

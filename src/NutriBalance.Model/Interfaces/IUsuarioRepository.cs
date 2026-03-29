@@ -2,6 +2,9 @@
 
 namespace NutriBalance.Model.Interfaces;
 
+/// <summary>
+/// Defines the contract for user data persistence and authentication operations.
+/// </summary>
 public interface IUsuarioRepository
 {
     List<Usuario> ObtenerTodos();

@@ -4,17 +4,22 @@ using NutriBalance.Model.Services;
 
 namespace NutriBalance.Controller;
 
-public class UsuarioController
+public class UsuarioController(IUsuarioRepository usuarioRepository)
 {
-    private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IUsuarioRepository _usuarioRepository = usuarioRepository;
 
+    /// <summary>
+    /// Gets the currently authenticated user.
+    /// </summary>
     public Usuario? UsuarioAutenticado { get; private set; }
 
-    public UsuarioController(IUsuarioRepository usuarioRepository)
-    {
-        _usuarioRepository = usuarioRepository;
-    }
-
+    /// <summary>
+    /// Registers a new user after validating the input data and ensuring username uniqueness.
+    /// </summary>
+    /// <param name="usuario">The user entity to be registered.</param>
+    /// <returns>
+    /// A tuple indicating whether the registration was successful and a message describing the result.
+    /// </returns>
     public (bool Exito, string Mensaje) RegistrarUsuario(Usuario usuario)
     {
         List<string> errores = UsuarioValidator.Validar(usuario);
@@ -36,6 +41,14 @@ public class UsuarioController
         return (true, "Usuario registrado correctamente.");
     }
 
+    /// <summary>
+    /// Authenticates a user using the provided username and password.
+    /// </summary>
+    /// <param name="nombreUsuario">The username.</param>
+    /// <param name="contrasena">The password.</param>
+    /// <returns>
+    /// A tuple indicating whether authentication was successful and a message describing the result.
+    /// </returns>
     public (bool Exito, string Mensaje) IniciarSesion(string nombreUsuario, string contrasena)
     {
         if (string.IsNullOrWhiteSpace(nombreUsuario) || string.IsNullOrWhiteSpace(contrasena))
@@ -54,6 +67,13 @@ public class UsuarioController
         return (true, "Inicio de sesión correcto.");
     }
 
+    /// <summary>
+    /// Updates the user's profile after validation and username uniqueness check.
+    /// </summary>
+    /// <param name="usuario">The user entity with updated information.</param>
+    /// <returns>
+    /// A tuple indicating whether the update was successful and a message describing the result.
+    /// </returns>
     public (bool Exito, string Mensaje) ActualizarPerfil(Usuario usuario)
     {
         List<string> errores = UsuarioValidator.Validar(usuario);

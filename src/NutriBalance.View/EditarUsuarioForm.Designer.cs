@@ -257,7 +257,7 @@
             btnCancelar.TabIndex = 10;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = false;
-            btnCancelar.Click += btnCancelar_Click;
+            btnCancelar.Click += BtnCancelar_Click;
             // 
             // btnGuardar
             // 
@@ -272,7 +272,7 @@
             btnGuardar.TabIndex = 9;
             btnGuardar.Text = "Guardar";
             btnGuardar.UseVisualStyleBackColor = false;
-            btnGuardar.Click += btnGuardar_Click;
+            btnGuardar.Click += BtnGuardar_Click;
             // 
             // tableLayoutPanel1
             // 

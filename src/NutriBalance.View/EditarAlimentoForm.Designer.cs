@@ -212,7 +212,7 @@
             btnAceptar.TabIndex = 9;
             btnAceptar.Text = "Aceptar";
             btnAceptar.UseVisualStyleBackColor = false;
-            btnAceptar.Click += btnAceptar_Click;
+            btnAceptar.Click += BtnAceptar_Click;
             // 
             // btnVolver
             // 
@@ -227,7 +227,7 @@
             btnVolver.TabIndex = 8;
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
+            btnVolver.Click += BtnVolver_Click;
             // 
             // tableLayoutPanel4
             // 

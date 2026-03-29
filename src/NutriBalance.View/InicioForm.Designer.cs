@@ -49,7 +49,7 @@
             btnRegistrarse.TabIndex = 1;
             btnRegistrarse.Text = "Registrarse";
             btnRegistrarse.UseVisualStyleBackColor = false;
-            btnRegistrarse.Click += btnRegistrarse_Click;
+            btnRegistrarse.Click += BtnRegistrarse_Click;
             // 
             // btnIniciarSesion
             // 
@@ -64,7 +64,7 @@
             btnIniciarSesion.TabIndex = 2;
             btnIniciarSesion.Text = "Iniciar sesion";
             btnIniciarSesion.UseVisualStyleBackColor = false;
-            btnIniciarSesion.Click += btnIniciarSesion_Click;
+            btnIniciarSesion.Click += BtnIniciarSesion_Click;
             // 
             // tableLayoutPanel1
             // 

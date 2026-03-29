@@ -4,27 +4,31 @@ using NutriBalance.Model.Enums;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to collect the second step of user registration data.
+/// </summary>
 public partial class RegistroUsuarioPaso2Form : Form
 {
     private readonly UsuarioController _usuarioController;
-    private readonly AlimentoController _alimentoController;
-    private readonly MenuDiarioController _menuDiarioController;
     private readonly string _nombreUsuario;
     private readonly string _nombre;
     private readonly string _contrasena;
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required registration data and user controller.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to manage user data.</param>
+    /// <param name="nombreUsuario">The username entered in the first registration step.</param>
+    /// <param name="nombre">The name entered in the first registration step.</param>
+    /// <param name="contrasena">The password entered in the first registration step.</param>
     public RegistroUsuarioPaso2Form(
         UsuarioController usuarioController,
-        AlimentoController alimentoController,
-        MenuDiarioController menuDiarioController,
         string nombreUsuario,
         string nombre,
         string contrasena)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
-        _alimentoController = alimentoController;
-        _menuDiarioController = menuDiarioController;
         _nombreUsuario = nombreUsuario;
         _nombre = nombre;
         _contrasena = contrasena;
@@ -33,20 +37,20 @@ public partial class RegistroUsuarioPaso2Form : Form
     private void RegistroUsuarioPaso2Form_Load(object sender, EventArgs e)
     {
         cmbObjetivo.Items.Clear();
-        cmbObjetivo.Items.AddRange(Enum.GetNames(typeof(ObjetivoUsuario)));
+        cmbObjetivo.Items.AddRange(Enum.GetNames<ObjetivoUsuario>());
 
         cmbNivelActividad.Items.Clear();
-        cmbNivelActividad.Items.AddRange(Enum.GetNames(typeof(NivelActividad)));
+        cmbNivelActividad.Items.AddRange(Enum.GetNames<NivelActividad>());
 
         cmbTipoDieta.Items.Clear();
-        cmbTipoDieta.Items.AddRange(Enum.GetNames(typeof(TipoDieta)));
+        cmbTipoDieta.Items.AddRange(Enum.GetNames<TipoDieta>());
 
         cmbObjetivo.SelectedIndex = 0;
         cmbNivelActividad.SelectedIndex = 0;
         cmbTipoDieta.SelectedIndex = 0;
     }
 
-    private void btnAceptar_Click(object sender, EventArgs e)
+    private void BtnAceptar_Click(object sender, EventArgs e)
     {
         if (!decimal.TryParse(txtPeso.Text, out decimal peso))
         {
@@ -72,15 +76,15 @@ public partial class RegistroUsuarioPaso2Form : Form
             TipoDieta = Enum.Parse<TipoDieta>(cmbTipoDieta.SelectedItem!.ToString()!)
         };
 
-        var resultado = _usuarioController.RegistrarUsuario(usuario);
+        var (exito, mensaje) = _usuarioController.RegistrarUsuario(usuario);
 
-        if (!resultado.Exito)
+        if (!exito)
         {
-            MessageBox.Show(resultado.Mensaje, "Registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(mensaje, "Registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
-        MessageBox.Show(resultado.Mensaje, "Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show(mensaje, "Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         DialogResult = DialogResult.OK;
         Close();

@@ -1,7 +1,11 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.View\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FBCC3715-8A38-5080-47DE-E2515EBB8A76}|..\\NutriBalance.Controller\\NutriBalance.Controller.csproj|c:\\users\\zamor\\desktop\\proyectonutribalancevs\\nutribalance\\src\\nutribalance.controller\\alimentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +13,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AlimentoController.cs",
+              "DocumentMoniker": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Controller\\AlimentoController.cs",
+              "RelativeDocumentMoniker": "..\\NutriBalance.Controller\\AlimentoController.cs",
+              "ToolTip": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Controller\\AlimentoController.cs",
+              "RelativeToolTip": "..\\NutriBalance.Controller\\AlimentoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T04:25:22.729Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             }
           ]
         }

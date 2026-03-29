@@ -3,10 +3,17 @@ using NutriBalance.Model.Entities;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to display the authenticated user's profile information.
+/// </summary>
 public partial class MiPerfilForm : Form
 {
     private readonly UsuarioController _usuarioController;
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required user controller.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to manage user data.</param>
     public MiPerfilForm(UsuarioController usuarioController)
     {
         InitializeComponent();
@@ -42,7 +49,7 @@ public partial class MiPerfilForm : Form
         lblNivelActividadValor.Text = usuario.NivelActividad.ToString();
     }
 
-    private void btnEditarPerfil_Click(object sender, EventArgs e)
+    private void BtnEditarPerfil_Click(object sender, EventArgs e)
     {
         using EditarUsuarioForm form = new(_usuarioController);
         form.ShowDialog();
@@ -50,7 +57,7 @@ public partial class MiPerfilForm : Form
         CargarInformacionUsuario();
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }

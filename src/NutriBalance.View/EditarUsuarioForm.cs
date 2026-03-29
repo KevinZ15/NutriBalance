@@ -4,10 +4,17 @@ using NutriBalance.Model.Enums;
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to edit the currently authenticated user's profile.
+/// </summary>
 public partial class EditarUsuarioForm : Form
 {
     private readonly UsuarioController _usuarioController;
 
+    /// <summary>
+    /// Initializes a new instance of the form with the required user controller.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to manage user data.</param>
     public EditarUsuarioForm(UsuarioController usuarioController)
     {
         InitializeComponent();
@@ -23,13 +30,13 @@ public partial class EditarUsuarioForm : Form
     private void CargarCombos()
     {
         cmbObjetivo.Items.Clear();
-        cmbObjetivo.Items.AddRange(Enum.GetNames(typeof(ObjetivoUsuario)));
+        cmbObjetivo.Items.AddRange(Enum.GetNames<ObjetivoUsuario>());
 
         cmbNivelActividad.Items.Clear();
-        cmbNivelActividad.Items.AddRange(Enum.GetNames(typeof(NivelActividad)));
+        cmbNivelActividad.Items.AddRange(Enum.GetNames<NivelActividad>());
 
         cmbTipoDieta.Items.Clear();
-        cmbTipoDieta.Items.AddRange(Enum.GetNames(typeof(TipoDieta)));
+        cmbTipoDieta.Items.AddRange(Enum.GetNames<TipoDieta>());
     }
 
     private void CargarUsuarioActual()
@@ -58,7 +65,7 @@ public partial class EditarUsuarioForm : Form
         cmbTipoDieta.SelectedItem = usuario.TipoDieta.ToString();
     }
 
-    private void btnGuardar_Click(object sender, EventArgs e)
+    private void BtnGuardar_Click(object sender, EventArgs e)
     {
         Usuario? usuarioActual = _usuarioController.UsuarioAutenticado;
 
@@ -141,12 +148,12 @@ public partial class EditarUsuarioForm : Form
             TipoDieta = Enum.Parse<TipoDieta>(cmbTipoDieta.SelectedItem.ToString()!)
         };
 
-        var resultado = _usuarioController.ActualizarPerfil(usuarioActualizado);
+        var (exito, mensaje) = _usuarioController.ActualizarPerfil(usuarioActualizado);
 
-        if (!resultado.Exito)
+        if (!exito)
         {
             MessageBox.Show(
-                resultado.Mensaje,
+                mensaje,
                 "NutriBalance",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Warning
@@ -155,7 +162,7 @@ public partial class EditarUsuarioForm : Form
         }
 
         MessageBox.Show(
-            resultado.Mensaje,
+            mensaje,
             "NutriBalance",
             MessageBoxButtons.OK,
             MessageBoxIcon.Information
@@ -165,7 +172,7 @@ public partial class EditarUsuarioForm : Form
         Close();
     }
 
-    private void btnCancelar_Click(object sender, EventArgs e)
+    private void BtnCancelar_Click(object sender, EventArgs e)
     {
         Close();
     }

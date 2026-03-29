@@ -2,38 +2,38 @@
 
 namespace NutriBalance.View;
 
+/// <summary>
+/// Form used to authenticate a user into the system.
+/// </summary>
 public partial class LoginForm : Form
 {
     private readonly UsuarioController _usuarioController;
-    private readonly AlimentoController _alimentoController;
-    private readonly MenuDiarioController _menuDiarioController;
 
-    public LoginForm(
-        UsuarioController usuarioController,
-        AlimentoController alimentoController,
-        MenuDiarioController menuDiarioController)
+    /// <summary>
+    /// Initializes a new instance of the login form with the required user controller.
+    /// </summary>
+    /// <param name="usuarioController">Controller used to manage user authentication.</param>
+    public LoginForm(UsuarioController usuarioController)
     {
         InitializeComponent();
         _usuarioController = usuarioController;
-        _alimentoController = alimentoController;
-        _menuDiarioController = menuDiarioController;
     }
 
-    private void btnVolver_Click(object sender, EventArgs e)
+    private void BtnVolver_Click(object sender, EventArgs e)
     {
         Close();
     }
 
-    private void btnIngresar_Click(object sender, EventArgs e)
+    private void BtnIngresar_Click(object sender, EventArgs e)
     {
-        var resultado = _usuarioController.IniciarSesion(
+        var (Exito, Mensaje) = _usuarioController.IniciarSesion(
             txtUsuario.Text.Trim(),
             txtContrasena.Text
         );
 
-        if (!resultado.Exito)
+        if (!Exito)
         {
-            MessageBox.Show(resultado.Mensaje, "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(Mensaje, "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
