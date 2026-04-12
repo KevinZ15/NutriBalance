@@ -1,0 +1,52 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="Página-1" id="HBlCR--vbSBM_x38LuUG">
+    <mxGraphModel dx="1426" dy="849" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="px86r3d-8WU8kL6_v21W-2" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;swimlaneFillColor=default;" value="MenuDiarioDetalles" vertex="1">
+          <mxGeometry height="204" width="144" x="60" y="190" as="geometry">
+            <mxRectangle height="30" width="160" x="60" y="190" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-3" parent="px86r3d-8WU8kL6_v21W-2" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" value="&lt;div style=&quot;padding-top: 0px;&quot;&gt;Id&lt;/div&gt;MenuDiarioId&lt;div&gt;AlimentoId&lt;/div&gt;&lt;div&gt;NombreAlimento&lt;/div&gt;&lt;div&gt;CantidadUnidades&lt;/div&gt;&lt;div&gt;GramosPorUnidad&lt;/div&gt;&lt;div&gt;Cantidad&lt;/div&gt;&lt;div&gt;Proteinas&lt;/div&gt;&lt;div&gt;Grasas&lt;/div&gt;&lt;div&gt;Carbohidratos&lt;/div&gt;&lt;div&gt;Calorias&lt;/div&gt;" vertex="1">
+          <mxGeometry height="174" width="144" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-4" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;swimlaneFillColor=default;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" value="MenusDIarios" vertex="1">
+          <mxGeometry height="98" width="142" x="332" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-5" parent="px86r3d-8WU8kL6_v21W-4" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" value="&lt;div&gt;Id&lt;br&gt;&lt;/div&gt;UsuarioId&lt;br&gt;Fecha" vertex="1">
+          <mxGeometry height="68" width="142" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-6" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;fillStyle=solid;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;gradientColor=none;swimlaneFillColor=default;swimlaneLine=1;" value="Alimentos" vertex="1">
+          <mxGeometry height="189" width="142" x="321" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-7" parent="px86r3d-8WU8kL6_v21W-6" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" value="&lt;div&gt;Id&lt;/div&gt;Nombre&lt;div&gt;Porcion&lt;br&gt;Calorias&lt;/div&gt;&lt;div&gt;Proteinas&lt;/div&gt;&lt;div&gt;Carbohidratos&lt;/div&gt;&lt;div&gt;Grasas&lt;/div&gt;&lt;div&gt;EsKeto&lt;/div&gt;&lt;div&gt;EsVegetariano&lt;/div&gt;&lt;div&gt;EsEstandar&lt;/div&gt;" vertex="1">
+          <mxGeometry height="159" width="142" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-10" edge="1" parent="1" source="px86r3d-8WU8kL6_v21W-8" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classicThin;endFill=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="px86r3d-8WU8kL6_v21W-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-8" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;swimlaneFillColor=default;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;glass=0;perimeterSpacing=0;" value="Usuarios" vertex="1">
+          <mxGeometry height="177" width="146" x="568" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-9" parent="px86r3d-8WU8kL6_v21W-8" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" value="&lt;div&gt;Id&lt;/div&gt;&lt;div&gt;NombreUsuario&lt;/div&gt;Contrasena&lt;br&gt;Nombre&lt;br&gt;Peso&lt;br&gt;Estatura&lt;br&gt;NivelActividad&lt;br&gt;Objetivo&lt;div&gt;TipoDieta&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="147" width="146" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-41" edge="1" parent="px86r3d-8WU8kL6_v21W-8" source="px86r3d-8WU8kL6_v21W-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="px86r3d-8WU8kL6_v21W-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-11" edge="1" parent="1" source="px86r3d-8WU8kL6_v21W-5" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="px86r3d-8WU8kL6_v21W-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="px86r3d-8WU8kL6_v21W-12" edge="1" parent="1" source="px86r3d-8WU8kL6_v21W-7" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=blockThin;endFill=1;entryX=0.979;entryY=0.69;entryDx=0;entryDy=0;entryPerimeter=0;" target="px86r3d-8WU8kL6_v21W-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
