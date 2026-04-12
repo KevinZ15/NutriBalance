@@ -10,3 +10,4 @@ C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Mode
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Model\obj\Debug\net10.0\refint\NutriBalance.Model.dll
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Model\obj\Debug\net10.0\NutriBalance.Model.pdb
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Model\obj\Debug\net10.0\ref\NutriBalance.Model.dll
+C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Model\obj\Debug\net10.0\NutriBalance.Model.csproj.AssemblyReference.cache

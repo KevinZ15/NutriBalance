@@ -1,7 +1,6 @@
 using NutriBalance.Controller;
 using NutriBalance.Model.Interfaces;
-using NutriBalance.Model.Services;
-using NutriBalance.View;
+using NutriBalance.Model.Services.SQLite;
 
 namespace NutriBalance.View;
 
@@ -18,22 +17,23 @@ internal static class Program
 
         Directory.CreateDirectory(rutaData);
 
-        string rutaUsuarios = Path.Combine(rutaData, "usuarios.json");
-        string rutaMenus = Path.Combine(rutaData, "menus.json");
-        string rutaAlimentosGlobal = Path.Combine(rutaData, "alimentos.json");
+        string rutaBaseDatos = Path.Combine(rutaData, "nutribalance.db");
 
-        IUsuarioRepository usuarioRepository = new UsuarioJsonRepository(rutaUsuarios);
-        IMenuDiarioRepository menuDiarioRepository = new MenuDiarioJsonRepository(rutaMenus);
+        SqliteDatabaseInitializer.Inicializar(rutaBaseDatos);
+
+        IUsuarioRepository usuarioRepository = new UsuarioSqliteRepository(rutaBaseDatos);
+        IAlimentoRepository alimentoRepository = new AlimentoSqliteRepository(rutaBaseDatos);
+        IMenuDiarioRepository menuDiarioRepository = new MenuDiarioSqliteRepository(rutaBaseDatos);
 
         UsuarioController usuarioController = new(usuarioRepository);
+        AlimentoController alimentoController = new(alimentoRepository);
         MenuDiarioController menuDiarioController = new(menuDiarioRepository);
 
         Application.Run(
             new InicioForm(
                 usuarioController,
-                menuDiarioController,
-                rutaAlimentosGlobal,
-                rutaData
+                alimentoController,
+                menuDiarioController
             )
         );
     }
