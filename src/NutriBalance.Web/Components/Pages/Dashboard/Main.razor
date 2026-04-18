@@ -1,0 +1,70 @@
+﻿@page "/main"
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Menú principal</PageTitle>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-sm p-4" style="width: 600px;">
+        <h1 class="mb-4">Menú principal</h1>
+
+        @if (!UserSession.HaySesionActiva())
+        {
+            <div class="alert alert-warning">Debes iniciar sesión.</div>
+            <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                Bienvenido, @UserSession.UsuarioAutenticado!.Nombre
+            </div>
+
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary" @onclick="IrMiPerfil">Mi perfil</button>
+                <button class="btn btn-outline-primary" @onclick="IrAlimentos">Alimentos</button>
+                <button class="btn btn-outline-primary" @onclick="IrResumenDiario">Resumen diario</button>
+                <button class="btn btn-outline-primary" @onclick="IrMiDieta">Mi dieta</button>
+                <button class="btn btn-outline-primary" @onclick="IrHistorico">Histórico</button>
+                <button class="btn btn-danger" @onclick="CerrarSesion">Cerrar sesión</button>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    private void IrMiPerfil()
+    {
+        Navigation.NavigateTo("/perfil");
+    }
+
+    private void IrAlimentos()
+    {
+        Navigation.NavigateTo("/alimentos");
+    }
+
+    private void IrResumenDiario()
+    {
+        Navigation.NavigateTo("/resumen");
+    }
+
+    private void IrMiDieta()
+    {
+        Navigation.NavigateTo("/dieta");
+    }
+
+    private void IrHistorico()
+    {
+        Navigation.NavigateTo("/historico");
+    }
+
+    private void CerrarSesion()
+    {
+        UserSession.CerrarSesion();
+        Navigation.NavigateTo("/");
+    }
+}

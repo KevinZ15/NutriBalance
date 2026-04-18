@@ -1,0 +1,57 @@
+﻿@page "/"
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Inicio</PageTitle>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-sm p-4" style="width: 520px;">
+        <h1 class="mb-4">NutriBalance</h1>
+
+        @if (!UserSession.HaySesionActiva())
+        {
+            <div class="alert alert-info">
+                Bienvenido a NutriBalance.
+            </div>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" @onclick="IrLogin">Iniciar sesión</button>
+                <button class="btn btn-success" @onclick="IrRegistro">Registrarse</button>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                Sesión activa: @UserSession.UsuarioAutenticado!.Nombre
+            </div>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" @onclick="IrMain">Ir al menú principal</button>
+                <button class="btn btn-danger" @onclick="CerrarSesion">Cerrar sesión</button>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    private void IrRegistro()
+    {
+        Navigation.NavigateTo("/registro/paso1");
+    }
+
+    private void IrMain()
+    {
+        Navigation.NavigateTo("/main");
+    }
+
+    private void CerrarSesion()
+    {
+        UserSession.CerrarSesion();
+        Navigation.NavigateTo("/");
+    }
+}

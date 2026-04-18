@@ -1,0 +1,123 @@
+﻿@page "/alimentos"
+@inject AlimentoController AlimentoController
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Alimentos</PageTitle>
+
+<h1>Alimentos</h1>
+
+@if (!UserSession.HaySesionActiva())
+{
+    <div class="alert alert-warning">Debes iniciar sesión.</div>
+    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+}
+else
+{
+    <div class="mb-3">
+        <label class="form-label">Buscar alimento</label>
+        <input class="form-control" @bind="textoBusqueda" />
+    </div>
+
+    <div class="d-flex gap-2 mb-3">
+        <button class="btn btn-success" @onclick="NuevoAlimento">Agregar alimento</button>
+        <button class="btn btn-primary" @onclick="EditarAlimento">Editar alimento</button>
+        <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(mensaje))
+    {
+        <div class="alert @(exito ? "alert-success" : "alert-warning")">@mensaje</div>
+    }
+
+    @if (alimentosFiltrados.Count == 0)
+    {
+        <p>No hay alimentos registrados.</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Alimento</th>
+                    <th>Grasas</th>
+                    <th>Proteína</th>
+                    <th>Carbohidratos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alimento in alimentosFiltrados)
+                {
+                    <tr>
+                        <td>@alimento.Nombre</td>
+                        <td>@alimento.Grasas</td>
+                        <td>@alimento.Proteinas</td>
+                        <td>@alimento.Carbohidratos</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary" @onclick="() => IrEditarConId(alimento.Id)">Editar</button>
+                                <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(alimento.Id)">Eliminar</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private List<Alimento> alimentos = [];
+    private string textoBusqueda = string.Empty;
+    private string mensaje = string.Empty;
+    private bool exito;
+
+    private List<Alimento> alimentosFiltrados =>
+        string.IsNullOrWhiteSpace(textoBusqueda)
+            ? alimentos
+            : [.. alimentos.Where(a => a.Nombre.Contains(textoBusqueda, StringComparison.OrdinalIgnoreCase))];
+
+    protected override void OnInitialized()
+    {
+        CargarAlimentos();
+    }
+
+    private void CargarAlimentos()
+    {
+        alimentos = AlimentoController.ObtenerTodos();
+    }
+
+    private void NuevoAlimento()
+    {
+        Navigation.NavigateTo("/alimentos/nuevo");
+    }
+
+    private void EditarAlimento()
+    {
+        Navigation.NavigateTo("/alimentos/editar");
+    }
+
+    private void IrEditarConId(Guid id)
+    {
+        Navigation.NavigateTo($"/alimentos/editar?id={id}");
+    }
+
+    private void Eliminar(Guid id)
+    {
+        var resultado = AlimentoController.EliminarAlimento(id);
+        exito = resultado.Exito;
+        mensaje = resultado.Mensaje;
+        CargarAlimentos();
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/main");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

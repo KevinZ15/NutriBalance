@@ -1,0 +1,130 @@
+﻿@page "/registro/paso2"
+@inject UsuarioController UsuarioController
+@inject RegistroUsuarioState RegistroState
+@inject NavigationManager Navigation
+
+<PageTitle>Registro - Paso 2</PageTitle>
+
+<h1>Registro de usuario - Paso 2</h1>
+
+@if (!RegistroState.HayDatosPaso1())
+{
+    <div class="alert alert-warning">Primero debes completar el paso 1.</div>
+    <button class="btn btn-primary" @onclick="IrPaso1">Ir al paso 1</button>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Peso (kg)</label>
+                        <input class="form-control" @bind="pesoTexto" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Estatura (cm)</label>
+                        <input class="form-control" @bind="estaturaTexto" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Objetivo</label>
+                        <select class="form-select" @bind="objetivoSeleccionado">
+                            @foreach (var item in Enum.GetNames<ObjetivoUsuario>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nivel de actividad</label>
+                        <select class="form-select" @bind="nivelActividadSeleccionado">
+                            @foreach (var item in Enum.GetNames<NivelActividad>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de dieta</label>
+                        <select class="form-select" @bind="tipoDietaSeleccionado">
+                            @foreach (var item in Enum.GetNames<TipoDieta>())
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-primary" @onclick="Registrar">Aceptar</button>
+                        <button class="btn btn-secondary" @onclick="IrPaso1">Volver</button>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(mensaje))
+                    {
+                        <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
+                            @mensaje
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private string pesoTexto = string.Empty;
+    private string estaturaTexto = string.Empty;
+    private string objetivoSeleccionado = Enum.GetNames<ObjetivoUsuario>()[0];
+    private string nivelActividadSeleccionado = Enum.GetNames<NivelActividad>()[0];
+    private string tipoDietaSeleccionado = Enum.GetNames<TipoDieta>()[0];
+    private string mensaje = string.Empty;
+    private bool exito;
+
+    private void Registrar()
+    {
+        if (!decimal.TryParse(pesoTexto, out decimal peso))
+        {
+            mensaje = "El peso debe ser numérico.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(estaturaTexto, out decimal estatura))
+        {
+            mensaje = "La altura debe ser numérica.";
+            exito = false;
+            return;
+        }
+
+        Usuario usuario = new()
+        {
+            NombreUsuario = RegistroState.NombreUsuario,
+            Nombre = RegistroState.Nombre,
+            Contrasena = RegistroState.Contrasena,
+            Peso = peso,
+            Estatura = estatura,
+            Objetivo = Enum.Parse<ObjetivoUsuario>(objetivoSeleccionado),
+            NivelActividad = Enum.Parse<NivelActividad>(nivelActividadSeleccionado),
+            TipoDieta = Enum.Parse<TipoDieta>(tipoDietaSeleccionado)
+        };
+
+        var resultado = UsuarioController.RegistrarUsuario(usuario);
+
+        exito = resultado.Exito;
+        mensaje = resultado.Mensaje;
+
+        if (!resultado.Exito) return;
+
+        RegistroState.Limpiar();
+        Navigation.NavigateTo("/login");
+    }
+
+    private void IrPaso1()
+    {
+        Navigation.NavigateTo("/registro/paso1");
+    }
+}

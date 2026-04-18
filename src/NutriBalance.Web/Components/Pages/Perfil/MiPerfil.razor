@@ -1,0 +1,49 @@
+﻿@page "/perfil"
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Mi perfil</PageTitle>
+
+<h1>Mi perfil</h1>
+
+@if (!UserSession.HaySesionActiva())
+{
+    <div class="alert alert-warning">No hay usuario autenticado.</div>
+    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+}
+else
+{
+    var usuario = UserSession.UsuarioAutenticado!;
+
+    <div class="card p-4 shadow-sm">
+        <div class="mb-2"><strong>Nombre:</strong> @usuario.Nombre</div>
+        <div class="mb-2"><strong>Usuario:</strong> @usuario.NombreUsuario</div>
+        <div class="mb-2"><strong>Peso:</strong> @usuario.Peso kg</div>
+        <div class="mb-2"><strong>Estatura:</strong> @usuario.Estatura cm</div>
+        <div class="mb-2"><strong>Objetivo:</strong> @usuario.Objetivo</div>
+        <div class="mb-2"><strong>Nivel de actividad:</strong> @usuario.NivelActividad</div>
+        <div class="mb-2"><strong>Tipo de dieta:</strong> @usuario.TipoDieta</div>
+
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-primary" @onclick="EditarPerfil">Editar perfil</button>
+            <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+        </div>
+    </div>
+}
+
+@code {
+    private void EditarPerfil()
+    {
+        Navigation.NavigateTo("/perfil/editar");
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/main");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

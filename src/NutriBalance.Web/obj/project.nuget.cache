@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZAdqe9EXU5I=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\zamor\\Desktop\\ProyectoNutriBalanceVS\\NutriBalance\\src\\NutriBalance.Web\\NutriBalance.Web.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\zamor\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.6\\microsoft.aspnetcore.app.internal.assets.10.0.6.nupkg.sha512",
+    "C:\\Users\\zamor\\.nuget\\packages\\microsoft.data.sqlite\\10.0.0-preview.3.25171.6\\microsoft.data.sqlite.10.0.0-preview.3.25171.6.nupkg.sha512",
+    "C:\\Users\\zamor\\.nuget\\packages\\microsoft.data.sqlite.core\\10.0.0-preview.3.25171.6\\microsoft.data.sqlite.core.10.0.0-preview.3.25171.6.nupkg.sha512",
+    "C:\\Users\\zamor\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.10\\sqlitepclraw.bundle_e_sqlite3.2.1.10.nupkg.sha512",
+    "C:\\Users\\zamor\\.nuget\\packages\\sqlitepclraw.core\\2.1.10\\sqlitepclraw.core.2.1.10.nupkg.sha512",
+    "C:\\Users\\zamor\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.10\\sqlitepclraw.lib.e_sqlite3.2.1.10.nupkg.sha512",
+    "C:\\Users\\zamor\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.10\\sqlitepclraw.provider.e_sqlite3.2.1.10.nupkg.sha512"
+  ],
+  "logs": []
+}

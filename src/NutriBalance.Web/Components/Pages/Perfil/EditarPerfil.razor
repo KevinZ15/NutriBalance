@@ -1,0 +1,179 @@
+﻿@page "/perfil/editar"
+@inject UsuarioController UsuarioController
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Editar perfil</PageTitle>
+
+<h1>Editar perfil</h1>
+
+@if (!UserSession.HaySesionActiva())
+{
+    <div class="alert alert-warning">No hay usuario autenticado.</div>
+    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+}
+else
+{
+    <div class="card p-4 shadow-sm">
+        <div class="mb-3">
+            <label class="form-label">Nombre de usuario</label>
+            <input class="form-control" value="@nombreUsuario" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" @bind="nombre" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input class="form-control" type="password" @bind="contrasena" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Peso</label>
+            <input class="form-control" @bind="pesoTexto" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Estatura</label>
+            <input class="form-control" @bind="estaturaTexto" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Objetivo</label>
+            <select class="form-select" @bind="objetivoSeleccionado">
+                @foreach (var item in Enum.GetNames<ObjetivoUsuario>())
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nivel de actividad</label>
+            <select class="form-select" @bind="nivelActividadSeleccionado">
+                @foreach (var item in Enum.GetNames<NivelActividad>())
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tipo de dieta</label>
+            <select class="form-select" @bind="tipoDietaSeleccionado">
+                @foreach (var item in Enum.GetNames<TipoDieta>())
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" @onclick="Guardar">Guardar</button>
+            <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(mensaje))
+        {
+            <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
+                @mensaje
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private string nombreUsuario = string.Empty;
+    private string nombre = string.Empty;
+    private string contrasena = string.Empty;
+    private string pesoTexto = string.Empty;
+    private string estaturaTexto = string.Empty;
+    private string objetivoSeleccionado = Enum.GetNames<ObjetivoUsuario>()[0];
+    private string nivelActividadSeleccionado = Enum.GetNames<NivelActividad>()[0];
+    private string tipoDietaSeleccionado = Enum.GetNames<TipoDieta>()[0];
+    private string mensaje = string.Empty;
+    private bool exito;
+
+    protected override void OnInitialized()
+    {
+        if (!UserSession.HaySesionActiva())
+        {
+            return;
+        }
+
+        Usuario usuario = UserSession.UsuarioAutenticado!;
+
+        nombreUsuario = usuario.NombreUsuario;
+        nombre = usuario.Nombre;
+        contrasena = usuario.Contrasena;
+        pesoTexto = usuario.Peso.ToString();
+        estaturaTexto = usuario.Estatura.ToString();
+        objetivoSeleccionado = usuario.Objetivo.ToString();
+        nivelActividadSeleccionado = usuario.NivelActividad.ToString();
+        tipoDietaSeleccionado = usuario.TipoDieta.ToString();
+    }
+
+    private void Guardar()
+    {
+        if (!UserSession.HaySesionActiva())
+        {
+            mensaje = "No hay usuario autenticado.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(pesoTexto, out decimal peso))
+        {
+            mensaje = "El peso debe ser numérico.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(estaturaTexto, out decimal estatura))
+        {
+            mensaje = "La estatura debe ser numérica.";
+            exito = false;
+            return;
+        }
+
+        Usuario usuarioActual = UserSession.UsuarioAutenticado!;
+
+        Usuario usuarioActualizado = new()
+        {
+            Id = usuarioActual.Id,
+            NombreUsuario = usuarioActual.NombreUsuario,
+            Nombre = nombre.Trim(),
+            Contrasena = contrasena,
+            Peso = peso,
+            Estatura = estatura,
+            Objetivo = Enum.Parse<ObjetivoUsuario>(objetivoSeleccionado),
+            NivelActividad = Enum.Parse<NivelActividad>(nivelActividadSeleccionado),
+            TipoDieta = Enum.Parse<TipoDieta>(tipoDietaSeleccionado)
+        };
+
+        var resultado = UsuarioController.ActualizarPerfil(usuarioActualizado);
+
+        exito = resultado.Exito;
+        mensaje = resultado.Mensaje;
+
+        if (!resultado.Exito)
+        {
+            return;
+        }
+
+        UserSession.ActualizarUsuario(usuarioActualizado);
+        Navigation.NavigateTo("/perfil");
+    }
+
+    private void Cancelar()
+    {
+        Navigation.NavigateTo("/perfil");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

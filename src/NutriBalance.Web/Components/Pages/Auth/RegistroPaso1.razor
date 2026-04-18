@@ -1,0 +1,81 @@
+﻿@page "/registro/paso1"
+@inject RegistroUsuarioState RegistroState
+@inject NavigationManager Navigation
+
+<PageTitle>Registro - Paso 1</PageTitle>
+
+<h1>Registro de usuario - Paso 1</h1>
+
+<div class="row">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Nombre de usuario</label>
+                    <input class="form-control" @bind="nombreUsuario" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre completo</label>
+                    <input class="form-control" @bind="nombre" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input class="form-control" type="password" @bind="contrasena" />
+                </div>
+
+                <div class="d-flex gap-2 flex-wrap">
+                    <button class="btn btn-primary" @onclick="Continuar">Continuar</button>
+                    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/")'>Volver</button>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(mensaje))
+                {
+                    <div class="alert alert-warning mt-3">@mensaje</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string nombreUsuario = string.Empty;
+    private string nombre = string.Empty;
+    private string contrasena = string.Empty;
+    private string mensaje = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        nombreUsuario = RegistroState.NombreUsuario;
+        nombre = RegistroState.Nombre;
+        contrasena = RegistroState.Contrasena;
+    }
+
+    private void Continuar()
+    {
+        if (string.IsNullOrWhiteSpace(nombreUsuario))
+        {
+            mensaje = "El nombre de usuario es obligatorio.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(nombre))
+        {
+            mensaje = "El nombre es obligatorio.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(contrasena))
+        {
+            mensaje = "La contraseña es obligatoria.";
+            return;
+        }
+
+        RegistroState.NombreUsuario = nombreUsuario.Trim();
+        RegistroState.Nombre = nombre.Trim();
+        RegistroState.Contrasena = contrasena;
+
+        Navigation.NavigateTo("/registro/paso2");
+    }
+}

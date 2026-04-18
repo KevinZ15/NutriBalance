@@ -1,0 +1,165 @@
+﻿@page "/resumen"
+@inject UserSessionService UserSession
+@inject MenuDiarioController MenuDiarioController
+@inject NavigationManager Navigation
+
+<PageTitle>Resumen diario</PageTitle>
+
+<h1>Resumen diario</h1>
+
+@if (!UserSession.HaySesionActiva())
+{
+    <div class="alert alert-warning">No hay usuario autenticado.</div>
+    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+}
+else
+{
+    <div class="mb-2"><strong>IMC:</strong> @imcTexto</div>
+    <div class="mb-2"><strong>Calorías objetivo:</strong> @caloriasObjetivoTexto</div>
+    <div class="mb-2"><strong>Dieta:</strong> @nombreDieta</div>
+    <div class="mb-2"><strong>Proteínas objetivo:</strong> @proteinasObjetivoTexto</div>
+    <div class="mb-2"><strong>Grasas objetivo:</strong> @grasasObjetivoTexto</div>
+    <div class="mb-2"><strong>Carbohidratos objetivo:</strong> @carbohidratosObjetivoTexto</div>
+
+    <hr />
+
+    <div class="mb-2"><strong>Calorías consumidas:</strong> @caloriasConsumidasTexto</div>
+    <div class="mb-2"><strong>Proteínas consumidas:</strong> @proteinasConsumidasTexto</div>
+    <div class="mb-2"><strong>Grasas consumidas:</strong> @grasasConsumidasTexto</div>
+    <div class="mb-2"><strong>Carbohidratos consumidos:</strong> @carbohidratosConsumidosTexto</div>
+
+    <div class="mb-2 @claseCaloriasRestantes"><strong>@tituloMetaCalorica:</strong> @caloriasRestantesTexto</div>
+    <div class="mb-2 @claseProteinasRestantes"><strong>Proteínas:</strong> @proteinasRestantesTexto</div>
+    <div class="mb-2 @claseGrasasRestantes"><strong>Grasas:</strong> @grasasRestantesTexto</div>
+    <div class="mb-2 @claseCarbohidratosRestantes"><strong>Carbohidratos:</strong> @carbohidratosRestantesTexto</div>
+
+    <div class="mt-3">
+        <button class="btn btn-secondary me-2" @onclick="Volver">Volver</button>
+        <button class="btn btn-primary" @onclick="IrHistorico">Ir a histórico</button>
+    </div>
+}
+
+@code {
+    private string imcTexto = string.Empty;
+    private string caloriasObjetivoTexto = string.Empty;
+    private string nombreDieta = string.Empty;
+    private string proteinasObjetivoTexto = string.Empty;
+    private string grasasObjetivoTexto = string.Empty;
+    private string carbohidratosObjetivoTexto = string.Empty;
+
+    private string caloriasConsumidasTexto = string.Empty;
+    private string proteinasConsumidasTexto = string.Empty;
+    private string grasasConsumidasTexto = string.Empty;
+    private string carbohidratosConsumidosTexto = string.Empty;
+
+    private string caloriasRestantesTexto = string.Empty;
+    private string proteinasRestantesTexto = string.Empty;
+    private string grasasRestantesTexto = string.Empty;
+    private string carbohidratosRestantesTexto = string.Empty;
+
+    private string claseCaloriasRestantes = string.Empty;
+    private string claseProteinasRestantes = string.Empty;
+    private string claseGrasasRestantes = string.Empty;
+    private string claseCarbohidratosRestantes = string.Empty;
+
+    private string tituloMetaCalorica = "Meta calórica del día";
+
+    protected override void OnInitialized()
+    {
+        if (!UserSession.HaySesionActiva())
+        {
+            return;
+        }
+
+        Usuario usuario = UserSession.UsuarioAutenticado!;
+
+        decimal imc = NutricionController.CalcularIMC(usuario);
+        string clasificacion = NutricionController.ClasificarIMC(imc);
+        decimal caloriasObjetivo = NutricionController.CalcularCaloriasObjetivo(usuario);
+        var macros = NutricionController.CalcularMacros(usuario);
+
+        imcTexto = $"{imc:F2} ({clasificacion})";
+        caloriasObjetivoTexto = $"{caloriasObjetivo:F2} kcal/día";
+        nombreDieta = macros.NombreDieta;
+        proteinasObjetivoTexto = $"{macros.Proteinas:F2} g/día";
+        grasasObjetivoTexto = $"{macros.Grasas:F2} g/día";
+        carbohidratosObjetivoTexto = $"{macros.Carbohidratos:F2} g/día";
+
+        MenuDiario menuHoy = MenuDiarioController.ObtenerMenuPorUsuarioYFecha(usuario.Id, DateTime.Today);
+        var totales = MenuDiarioController.CalcularTotales(menuHoy);
+
+        decimal caloriasRestantes = caloriasObjetivo - totales.Calorias;
+        decimal proteinasRestantes = macros.Proteinas - totales.Proteinas;
+        decimal grasasRestantes = macros.Grasas - totales.Grasas;
+        decimal carbohidratosRestantes = macros.Carbohidratos - totales.Carbohidratos;
+
+        caloriasConsumidasTexto = $"{totales.Calorias:F2} kcal";
+        proteinasConsumidasTexto = $"{totales.Proteinas:F2} g";
+        grasasConsumidasTexto = $"{totales.Grasas:F2} g";
+        carbohidratosConsumidosTexto = $"{totales.Carbohidratos:F2} g";
+
+        caloriasRestantesTexto = FormatearResultadoMeta(caloriasRestantes, "kcal");
+        proteinasRestantesTexto = FormatearResultadoMeta(proteinasRestantes, "g");
+        grasasRestantesTexto = FormatearResultadoMeta(grasasRestantes, "g");
+        carbohidratosRestantesTexto = FormatearResultadoMeta(carbohidratosRestantes, "g");
+
+        claseCaloriasRestantes = ObtenerClaseResultado(caloriasRestantes);
+        claseProteinasRestantes = ObtenerClaseResultado(proteinasRestantes);
+        claseGrasasRestantes = ObtenerClaseResultado(grasasRestantes);
+        claseCarbohidratosRestantes = ObtenerClaseResultado(carbohidratosRestantes);
+
+        EstadoMetaDiaria estadoCalorias = MenuDiarioController.EvaluarMetaCalorica(totales.Calorias, caloriasObjetivo);
+
+        tituloMetaCalorica = estadoCalorias switch
+        {
+            EstadoMetaDiaria.Cumplida => "Meta calórica del día: cumplida",
+            EstadoMetaDiaria.Excedida => "Meta calórica del día: excedida",
+            _ => "Meta calórica del día: por debajo"
+        };
+    }
+
+    private static string FormatearResultadoMeta(decimal diferencia, string unidad)
+    {
+        if (diferencia < 0)
+        {
+            return $"Excedido por {Math.Abs(diferencia):F2} {unidad}";
+        }
+
+        if (diferencia == 0)
+        {
+            return $"Meta exacta: 0.00 {unidad}";
+        }
+
+        return $"Faltan {diferencia:F2} {unidad}";
+    }
+
+    private static string ObtenerClaseResultado(decimal diferencia)
+    {
+        if (diferencia < 0)
+        {
+            return "text-danger";
+        }
+
+        if (diferencia == 0)
+        {
+            return "text-primary";
+        }
+
+        return "text-success";
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/main");
+    }
+
+    private void IrHistorico()
+    {
+        Navigation.NavigateTo("/historico");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

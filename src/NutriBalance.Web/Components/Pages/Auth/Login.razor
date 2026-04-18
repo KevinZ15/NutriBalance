@@ -1,0 +1,64 @@
+﻿@page "/login"
+@inject UsuarioController UsuarioController
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Iniciar sesión</PageTitle>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-sm p-4" style="width: 420px;">
+        <h1 class="mb-4">Iniciar sesión</h1>
+
+        <div class="mb-3">
+            <label class="form-label">Nombre de usuario</label>
+            <input class="form-control" @bind="nombreUsuario" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input class="form-control" type="password" @bind="contrasena" />
+        </div>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" @onclick="IniciarSesion">Iniciar sesión</button>
+            <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/")'>Volver</button>
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(mensaje))
+        {
+            <div class="alert alert-warning mt-3">@mensaje</div>
+        }
+    </div>
+</div>
+
+@code {
+    private string nombreUsuario = string.Empty;
+    private string contrasena = string.Empty;
+    private string mensaje = string.Empty;
+
+    private void IniciarSesion()
+    {
+        if (string.IsNullOrWhiteSpace(nombreUsuario))
+        {
+            mensaje = "El nombre de usuario es obligatorio.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(contrasena))
+        {
+            mensaje = "La contraseña es obligatoria.";
+            return;
+        }
+
+        var resultado = UsuarioController.IniciarSesion(nombreUsuario.Trim(), contrasena);
+
+        if (!resultado.Exito)
+        {
+            mensaje = resultado.Mensaje;
+            return;
+        }
+
+        UserSession.IniciarSesion(UsuarioController.UsuarioAutenticado!);
+        Navigation.NavigateTo("/main");
+    }
+}

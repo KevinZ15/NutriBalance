@@ -1,0 +1,149 @@
+﻿@page "/alimentos/nuevo"
+@inject AlimentoController AlimentoController
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Nuevo alimento</PageTitle>
+
+<h1>Registrar alimento</h1>
+
+@if (!UserSession.HaySesionActiva())
+{
+    <div class="alert alert-warning">Debes iniciar sesión.</div>
+    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+}
+else
+{
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input class="form-control" @bind="nombre" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Grasas</label>
+        <input class="form-control" @bind="grasasTexto" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Proteínas</label>
+        <input class="form-control" @bind="proteinasTexto" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Carbohidratos</label>
+        <input class="form-control" @bind="carbohidratosTexto" />
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" @bind="esKeto" />
+        <label class="form-check-label">Keto</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" @bind="esVegetariano" />
+        <label class="form-check-label">Vegetariano</label>
+    </div>
+
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" @bind="esEstandar" />
+        <label class="form-check-label">Estándar</label>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary" @onclick="Guardar">Guardar</button>
+        <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(mensaje))
+    {
+        <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
+            @mensaje
+        </div>
+    }
+}
+
+@code {
+    private string nombre = string.Empty;
+    private string grasasTexto = string.Empty;
+    private string proteinasTexto = string.Empty;
+    private string carbohidratosTexto = string.Empty;
+    private bool esKeto;
+    private bool esVegetariano;
+    private bool esEstandar;
+    private string mensaje = string.Empty;
+    private bool exito;
+
+    private void Guardar()
+    {
+        if (string.IsNullOrWhiteSpace(nombre))
+        {
+            mensaje = "El nombre del alimento es obligatorio.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(grasasTexto, out decimal grasas))
+        {
+            mensaje = "Las grasas deben ser numéricas.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(proteinasTexto, out decimal proteinas))
+        {
+            mensaje = "Las proteínas deben ser numéricas.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(carbohidratosTexto, out decimal carbohidratos))
+        {
+            mensaje = "Los carbohidratos deben ser numéricos.";
+            exito = false;
+            return;
+        }
+
+        if (!esKeto && !esVegetariano && !esEstandar)
+        {
+            mensaje = "Debe seleccionar al menos una clasificación para el alimento.";
+            exito = false;
+            return;
+        }
+
+        decimal calorias = (proteinas * 4) + (carbohidratos * 4) + (grasas * 9);
+
+        Alimento alimento = new()
+        {
+            Nombre = nombre.Trim(),
+            Porcion = 100,
+            Grasas = grasas,
+            Proteinas = proteinas,
+            Carbohidratos = carbohidratos,
+            Calorias = calorias,
+            EsKeto = esKeto,
+            EsVegetariano = esVegetariano,
+            EsEstandar = esEstandar
+        };
+
+        var resultado = AlimentoController.RegistrarAlimento(alimento);
+        exito = resultado.Exito;
+        mensaje = resultado.Mensaje;
+
+        if (!resultado.Exito)
+        {
+            return;
+        }
+
+        Navigation.NavigateTo("/alimentos");
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/alimentos");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

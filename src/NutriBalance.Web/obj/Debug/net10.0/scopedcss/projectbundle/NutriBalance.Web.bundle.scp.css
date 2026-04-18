@@ -1,0 +1,10 @@
+/* /Components/Layout/MainLayout.razor.rz.scp.css */
+html[b-vk19wh89eo], body[b-vk19wh89eo] {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container-fluid[b-vk19wh89eo] {
+    min-height: 100vh;
+}

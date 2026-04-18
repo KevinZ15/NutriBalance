@@ -1,0 +1,6 @@
+C:\Users\zamor\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\build\..\_framework\blazor.server.js
+C:\Users\zamor\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\build\..\_framework\blazor.web.js
+C:\Users\zamor\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\_framework\blazor.web.js
+C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\wwwroot\app.css
+C:\Users\zamor\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\_framework\blazor.server.js
+wwwroot\app.css

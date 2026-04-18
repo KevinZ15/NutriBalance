@@ -1,0 +1,234 @@
+﻿@page "/dieta/agregar"
+@inject AlimentoController AlimentoController
+@inject MenuDiarioController MenuDiarioController
+@inject UserSessionService UserSession
+@inject MenuDiarioDraftService DraftService
+@inject NavigationManager Navigation
+
+<PageTitle>Agregar alimento al menú</PageTitle>
+
+<h1>Agregar alimento al menú</h1>
+
+@if (!UserSession.HaySesionActiva())
+{
+    <div class="alert alert-warning">No hay usuario autenticado.</div>
+    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+}
+else
+{
+    <div class="mb-3">
+        <label class="form-label">Fecha</label>
+        <input class="form-control" type="date" @bind="fechaSeleccionada" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Alimento</label>
+        <select class="form-select" @onchange="AlCambiarAlimento">
+            @foreach (var alimento in alimentos)
+            {
+                <option value="@alimento.Id" selected="@(alimento.Id == alimentoIdSeleccionado)">
+                    @alimento.Nombre
+                </option>
+            }
+        </select>
+    </div>
+
+    @if (alimentoSeleccionado is not null)
+    {
+        <div class="mb-2"><strong>Clasificaciones:</strong> @ObtenerClasificacionesTexto(alimentoSeleccionado)</div>
+    }
+
+    <div class="mb-3">
+        <label class="form-label">Cantidad de unidades</label>
+        <input class="form-control" @bind="cantidadUnidadesTexto" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Gramos por unidad</label>
+        <input class="form-control" @bind="gramosPorUnidadTexto" />
+    </div>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+        <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(mensaje) && !mostrarConfirmacionIncompatible)
+    {
+        <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
+            @mensaje
+        </div>
+    }
+
+    @if (mostrarConfirmacionIncompatible)
+    {
+        <div class="alert alert-warning mt-3">
+            @mensaje
+            <div class="mt-2">
+                <button class="btn btn-warning" @onclick="AgregarDeTodosModos">Agregar de todos modos</button>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? Fecha { get; set; }
+
+    private DateTime fechaSeleccionada = DateTime.Today;
+    private List<Alimento> alimentos = [];
+    private Guid alimentoIdSeleccionado;
+    private Alimento? alimentoSeleccionado;
+    private string cantidadUnidadesTexto = string.Empty;
+    private string gramosPorUnidadTexto = string.Empty;
+    private string mensaje = string.Empty;
+    private bool exito;
+    private bool mostrarConfirmacionIncompatible;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrWhiteSpace(Fecha) && DateTime.TryParse(Fecha, out DateTime fechaQuery))
+        {
+            fechaSeleccionada = fechaQuery.Date;
+        }
+
+        alimentos = AlimentoController.ObtenerTodos();
+
+        if (alimentos.Count > 0)
+        {
+            alimentoIdSeleccionado = alimentos[0].Id;
+            alimentoSeleccionado = alimentos[0];
+        }
+    }
+
+    private void AlCambiarAlimento(ChangeEventArgs e)
+    {
+        if (Guid.TryParse(e.Value?.ToString(), out Guid id))
+        {
+            alimentoIdSeleccionado = id;
+            alimentoSeleccionado = alimentos.FirstOrDefault(a => a.Id == id);
+            mostrarConfirmacionIncompatible = false;
+            mensaje = string.Empty;
+        }
+    }
+
+    private void Aceptar()
+    {
+        mostrarConfirmacionIncompatible = false;
+        ProcesarAgregar(false);
+    }
+
+    private void AgregarDeTodosModos()
+    {
+        ProcesarAgregar(true);
+    }
+
+    private void ProcesarAgregar(bool omitirCompatibilidad)
+    {
+        if (!UserSession.HaySesionActiva())
+        {
+            mensaje = "No hay usuario autenticado.";
+            exito = false;
+            return;
+        }
+
+        if (alimentoSeleccionado is null)
+        {
+            mensaje = "Debe seleccionar un alimento.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(cantidadUnidadesTexto, out decimal cantidadUnidades) || cantidadUnidades <= 0)
+        {
+            mensaje = "La cantidad de unidades debe ser un número mayor a cero.";
+            exito = false;
+            return;
+        }
+
+        if (!decimal.TryParse(gramosPorUnidadTexto, out decimal gramosPorUnidad) || gramosPorUnidad <= 0)
+        {
+            mensaje = "Los gramos por unidad deben ser un número mayor a cero.";
+            exito = false;
+            return;
+        }
+
+        Usuario usuario = UserSession.UsuarioAutenticado!;
+
+        bool clasificacionCompatible = usuario.TipoDieta switch
+        {
+            TipoDieta.Keto => alimentoSeleccionado.EsKeto,
+            TipoDieta.Vegetariana => alimentoSeleccionado.EsVegetariano,
+            _ => alimentoSeleccionado.EsEstandar
+        };
+
+        if (!clasificacionCompatible && !omitirCompatibilidad)
+        {
+            mensaje = $"Este alimento pertenece a: {ObtenerClasificacionesTexto(alimentoSeleccionado)}. ¿Deseas agregarlo de todos modos?";
+            exito = false;
+            mostrarConfirmacionIncompatible = true;
+            return;
+        }
+
+        MenuDiario menu;
+
+        if (DraftService.EsMismoMenu(usuario.Id, fechaSeleccionada))
+        {
+            menu = DraftService.MenuActual!;
+        }
+        else
+        {
+            menu = MenuDiarioController.ObtenerMenuPorUsuarioYFecha(usuario.Id, fechaSeleccionada.Date);
+            DraftService.Establecer(menu);
+        }
+
+        decimal totalGramos = cantidadUnidades * gramosPorUnidad;
+        decimal factor = totalGramos / 100m;
+
+        decimal proteinas = Math.Round(alimentoSeleccionado.Proteinas * factor, 2);
+        decimal grasas = Math.Round(alimentoSeleccionado.Grasas * factor, 2);
+        decimal carbohidratos = Math.Round(alimentoSeleccionado.Carbohidratos * factor, 2);
+        decimal calorias = Math.Round((proteinas * 4) + (carbohidratos * 4) + (grasas * 9), 2);
+
+        MenuDiarioDetalle detalle = new()
+        {
+            AlimentoId = alimentoSeleccionado.Id,
+            NombreAlimento = alimentoSeleccionado.Nombre,
+            CantidadUnidades = cantidadUnidades,
+            GramosPorUnidad = gramosPorUnidad,
+            Cantidad = totalGramos,
+            Proteinas = proteinas,
+            Grasas = grasas,
+            Carbohidratos = carbohidratos,
+            Calorias = calorias
+        };
+
+        menu.Detalles.Add(detalle);
+        DraftService.Establecer(menu);
+
+        Navigation.NavigateTo($"/dieta?fecha={fechaSeleccionada:yyyy-MM-dd}");
+    }
+
+    private static string ObtenerClasificacionesTexto(Alimento alimento)
+    {
+        List<string> clasificaciones = [];
+
+        if (alimento.EsKeto) clasificaciones.Add("Keto");
+        if (alimento.EsVegetariano) clasificaciones.Add("Vegetariano");
+        if (alimento.EsEstandar) clasificaciones.Add("Estándar");
+
+        if (clasificaciones.Count == 0) return "Sin clasificación";
+
+        return string.Join(", ", clasificaciones);
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo($"/dieta?fecha={fechaSeleccionada:yyyy-MM-dd}");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

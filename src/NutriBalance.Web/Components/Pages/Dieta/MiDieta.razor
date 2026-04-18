@@ -1,0 +1,208 @@
+﻿@page "/dieta"
+@inject MenuDiarioController MenuDiarioController
+@inject UserSessionService UserSession
+@inject MenuDiarioDraftService DraftService
+@inject NavigationManager Navigation
+
+<PageTitle>Mi dieta</PageTitle>
+
+<h1>Mi dieta</h1>
+
+@if (!UserSession.HaySesionActiva())
+{
+    <div class="alert alert-warning">No hay usuario autenticado.</div>
+    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+}
+else
+{
+    <div class="mb-3">
+        <label class="form-label">Fecha</label>
+        <input class="form-control" type="date" @bind="fechaSeleccionada" />
+    </div>
+
+    <div class="d-flex gap-2 mb-3">
+        <button class="btn btn-primary" @onclick="CargarMenu">Cargar menú</button>
+        <button class="btn btn-success" @onclick="AgregarAlimento">Agregar alimento</button>
+        <button class="btn btn-primary" @onclick="GuardarMenu">Guardar</button>
+        <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(mensaje))
+    {
+        <div class="alert @(exito ? "alert-success" : "alert-warning")">@mensaje</div>
+    }
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Alimento</th>
+                <th>Unidades</th>
+                <th>g/unidad</th>
+                <th>Total (g)</th>
+                <th>Proteína</th>
+                <th>Grasas</th>
+                <th>Carbohidratos</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (menuActual is not null && menuActual.Detalles.Count > 0)
+            {
+                @foreach (var detalle in menuActual.Detalles)
+                {
+                    <tr>
+                        <td>@detalle.NombreAlimento</td>
+                        <td>@detalle.CantidadUnidades</td>
+                        <td>@detalle.GramosPorUnidad</td>
+                        <td>@detalle.Cantidad</td>
+                        <td>@detalle.Proteinas</td>
+                        <td>@detalle.Grasas</td>
+                        <td>@detalle.Carbohidratos</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" @onclick="() => EliminarDetalle(detalle.Id)">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8">No hay alimentos en el menú actual.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-3">
+        <div><strong>Total calorías:</strong> @totalCalorias.ToString("F2") kcal</div>
+        <div><strong>Total proteínas:</strong> @totalProteinas.ToString("F2") g</div>
+        <div><strong>Total grasas:</strong> @totalGrasas.ToString("F2") g</div>
+        <div><strong>Total carbohidratos:</strong> @totalCarbohidratos.ToString("F2") g</div>
+    </div>
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? Fecha { get; set; }
+
+    private DateTime fechaSeleccionada = DateTime.Today;
+    private MenuDiario? menuActual;
+    private string mensaje = string.Empty;
+    private bool exito;
+
+    private decimal totalCalorias;
+    private decimal totalProteinas;
+    private decimal totalGrasas;
+    private decimal totalCarbohidratos;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrWhiteSpace(Fecha) && DateTime.TryParse(Fecha, out DateTime fechaQuery))
+        {
+            fechaSeleccionada = fechaQuery.Date;
+        }
+
+        CargarMenu();
+    }
+
+    private void CargarMenu()
+    {
+        if (!UserSession.HaySesionActiva())
+        {
+            mensaje = "No hay usuario autenticado.";
+            exito = false;
+            return;
+        }
+
+        Usuario usuario = UserSession.UsuarioAutenticado!;
+
+        if (DraftService.EsMismoMenu(usuario.Id, fechaSeleccionada))
+        {
+            menuActual = DraftService.MenuActual;
+        }
+        else
+        {
+            menuActual = MenuDiarioController.ObtenerMenuPorUsuarioYFecha(usuario.Id, fechaSeleccionada.Date);
+            DraftService.Establecer(menuActual);
+        }
+
+        CalcularTotales();
+    }
+
+    private void CalcularTotales()
+    {
+        if (menuActual is null)
+        {
+            totalCalorias = 0;
+            totalProteinas = 0;
+            totalGrasas = 0;
+            totalCarbohidratos = 0;
+            return;
+        }
+
+        var totales = MenuDiarioController.CalcularTotales(menuActual);
+        totalCalorias = totales.Calorias;
+        totalProteinas = totales.Proteinas;
+        totalGrasas = totales.Grasas;
+        totalCarbohidratos = totales.Carbohidratos;
+    }
+
+    private void AgregarAlimento()
+    {
+        Navigation.NavigateTo($"/dieta/agregar?fecha={fechaSeleccionada:yyyy-MM-dd}");
+    }
+
+    private void EliminarDetalle(Guid detalleId)
+    {
+        if (menuActual is null)
+        {
+            return;
+        }
+
+        MenuDiarioDetalle? detalle = menuActual.Detalles.FirstOrDefault(d => d.Id == detalleId);
+
+        if (detalle is null)
+        {
+            mensaje = "No se encontró el alimento en el menú actual.";
+            exito = false;
+            return;
+        }
+
+        menuActual.Detalles.Remove(detalle);
+        DraftService.Establecer(menuActual);
+        CalcularTotales();
+    }
+
+    private void GuardarMenu()
+    {
+        if (menuActual is null)
+        {
+            mensaje = "No se pudo cargar el menú actual.";
+            exito = false;
+            return;
+        }
+
+        menuActual.Fecha = fechaSeleccionada.Date;
+
+        var resultado = MenuDiarioController.GuardarMenu(menuActual);
+        exito = resultado.Exito;
+        mensaje = resultado.Mensaje;
+
+        if (!resultado.Exito)
+        {
+            return;
+        }
+
+        DraftService.Establecer(menuActual);
+    }
+
+    private void Volver()
+    {
+        Navigation.NavigateTo("/main");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}
