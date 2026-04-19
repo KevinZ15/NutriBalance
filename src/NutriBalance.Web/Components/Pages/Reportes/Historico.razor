@@ -2,6 +2,7 @@
 @inject UserSessionService UserSession
 @inject MenuDiarioController MenuDiarioController
 @inject NavigationManager Navigation
+@inject IJSRuntime JS
 
 <PageTitle>Histórico</PageTitle>
 
@@ -33,6 +34,10 @@ else
 
     <div class="d-flex gap-2 mb-3">
         <button class="btn btn-primary" @onclick="CargarHistorico">Consultar</button>
+        @if (resumenMensual.Count > 0)
+        {
+            <button class="btn btn-success" @onclick="DescargarCSV">Descargar reporte</button>
+        }
         <button class="btn btn-secondary" @onclick="Volver">Volver</button>
     </div>
 
@@ -86,9 +91,7 @@ else
     private void CargarHistorico()
     {
         if (!UserSession.HaySesionActiva())
-        {
             return;
-        }
 
         Usuario usuario = UserSession.UsuarioAutenticado!;
         decimal caloriasObjetivo = NutricionController.CalcularCaloriasObjetivo(usuario);
@@ -107,6 +110,36 @@ else
         resumenTexto = totalDias == 0
             ? "Sin registros para este mes."
             : $"Días registrados: {totalDias} | Cumplidos: {diasCumplidos} | Excedidos: {diasExcedidos} | Por debajo: {diasPorDebajo}";
+    }
+
+    private async Task DescargarCSV()
+    {
+        var invariant = System.Globalization.CultureInfo.InvariantCulture;
+        var sb = new System.Text.StringBuilder();
+
+        sb.AppendLine("sep=;");
+        sb.AppendLine("Fecha;Calorias Consumidas;Calorias Objetivo;Diferencia;Meta");
+
+        foreach (var item in resumenMensual)
+        {
+            string meta = item.Estado switch
+            {
+                EstadoMetaDiaria.Cumplida => "Cumplida",
+                EstadoMetaDiaria.Excedida => "Se excedio",
+                _ => "Por debajo"
+            };
+
+            sb.AppendLine(string.Join(";",
+                item.Fecha.ToString("dd/MM/yyyy"),
+                item.CaloriasConsumidas.ToString("F2", invariant),
+                item.CaloriasObjetivo.ToString("F2", invariant),
+                item.DiferenciaCalorica.ToString("F2", invariant),
+                meta
+            ));
+        }
+
+        string nombreArchivo = $"historico_{ObtenerNombreMes(mes)}_{anio}.csv";
+        await JS.InvokeVoidAsync("descargarCSV", nombreArchivo, sb.ToString());
     }
 
     private static string ObtenerNombreMes(int numeroMes)

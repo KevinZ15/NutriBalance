@@ -26,6 +26,14 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Admin/AdminEstadisticas.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBZG1pbkVzdGFkaXN0aWNhcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Admin/AdminUsuarios.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBZG1pblVzdWFyaW9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Alimentos/Alimentos.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBbGltZW50b3NcQWxpbWVudG9zLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

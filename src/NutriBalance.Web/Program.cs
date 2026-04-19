@@ -9,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-string contentRoot = builder.Environment.ContentRootPath;
-string projectRoot = Path.GetFullPath(Path.Combine(contentRoot, @"..\.."));
+string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+string projectRoot = Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\..\..\"));
 string rutaData = Path.Combine(projectRoot, "data");
 string rutaBaseDatos = Path.Combine(rutaData, "nutribalance.db");
 
@@ -25,6 +25,7 @@ builder.Services.AddScoped<IMenuDiarioRepository>(_ => new MenuDiarioSqliteRepos
 builder.Services.AddScoped<UsuarioController>();
 builder.Services.AddScoped<AlimentoController>();
 builder.Services.AddScoped<MenuDiarioController>();
+builder.Services.AddScoped(_ => new AdminEstadisticasController(rutaBaseDatos));
 
 builder.Services.AddScoped<UserSessionService>();
 builder.Services.AddScoped<RegistroUsuarioState>();

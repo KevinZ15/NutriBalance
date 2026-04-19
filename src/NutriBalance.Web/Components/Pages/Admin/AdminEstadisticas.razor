@@ -1,0 +1,147 @@
+﻿@page "/admin/estadisticas"
+@inject AdminEstadisticasController EstadisticasController
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Estadísticas globales</PageTitle>
+
+<h1>Estadísticas globales</h1>
+
+@if (!UserSession.EsAdmin())
+{
+    <div class="alert alert-danger">Acceso denegado.</div>
+    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
+}
+else
+{
+    <button class="btn btn-secondary mb-4" @onclick='() => Navigation.NavigateTo("/main")'>← Volver</button>
+
+    @* ── PRODUCTO MÁS CONSUMIDO ── *@
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white fw-bold">
+            Producto más consumido por rango de fechas
+        </div>
+        <div class="card-body">
+            <div class="row g-3 align-items-end mb-3">
+                <div class="col-auto">
+                    <label class="form-label">Fecha inicio</label>
+                    <input type="date" class="form-control" @bind="fechaInicio" />
+                </div>
+                <div class="col-auto">
+                    <label class="form-label">Fecha fin</label>
+                    <input type="date" class="form-control" @bind="fechaFin" />
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" @onclick="BuscarProducto">Buscar</button>
+                </div>
+            </div>
+
+            @if (productoConsultado)
+            {
+                @if (productoMasConsumido.HasValue)
+                {
+                    <div class="alert alert-success">
+                        <strong>@productoMasConsumido.Value.NombreAlimento</strong>
+                        — @productoMasConsumido.Value.TotalUnidades unidades consumidas en el período
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning">No hay registros de consumo para ese rango de fechas.</div>
+                }
+            }
+        </div>
+    </div>
+
+    @* ── PORCENTAJE TIPOS DE DIETA ── *@
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-success text-white fw-bold">
+            Distribución de tipos de dieta (usuarios activos)
+        </div>
+        <div class="card-body">
+            @if (porcentajesDieta.Count == 0)
+            {
+                <p class="text-muted">No hay usuarios registrados.</p>
+            }
+            else
+            {
+                <table class="table table-sm table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tipo de dieta</th>
+                            <th>Distribución</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var (tipo, pct) in porcentajesDieta)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@tipo</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="progress flex-grow-1" style="height: 20px;">
+                                            <div class="progress-bar bg-success"
+                                                 style="width: @pct%">
+                                                @pct%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+    @* ── USUARIOS CON MÁS MENÚS ── *@
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white fw-bold">
+            Top 10 usuarios con más menús ingresados
+        </div>
+        <div class="card-body">
+            @if (topUsuarios.Count == 0)
+            {
+                <p class="text-muted">No hay datos de menús registrados.</p>
+            }
+            else
+            {
+                <ol class="list-group list-group-numbered">
+                    @foreach (var (nombre, total) in topUsuarios)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>@nombre</span>
+                            <span class="badge bg-info text-dark rounded-pill">@total menús</span>
+                        </li>
+                    }
+                </ol>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private DateTime fechaInicio = DateTime.Today.AddMonths(-1);
+    private DateTime fechaFin = DateTime.Today;
+    private (string NombreAlimento, double TotalUnidades)? productoMasConsumido;
+    private bool productoConsultado = false;
+
+    private List<(string TipoDieta, double Porcentaje)> porcentajesDieta = [];
+    private List<(string NombreUsuario, int TotalMenus)> topUsuarios = [];
+
+    protected override void OnInitialized()
+    {
+        porcentajesDieta = EstadisticasController.PorcentajeTiposDieta();
+        topUsuarios = EstadisticasController.UsuariosConMasMenus(10);
+    }
+
+    private void BuscarProducto()
+    {
+        productoMasConsumido = EstadisticasController.ProductoMasConsumido(
+            fechaInicio.ToString("yyyy-MM-dd"),
+            fechaFin.ToString("yyyy-MM-dd")
+        );
+        productoConsultado = true;
+    }
+}

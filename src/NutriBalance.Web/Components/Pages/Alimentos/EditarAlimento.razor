@@ -10,7 +10,12 @@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">Debes iniciar sesión.</div>
-    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+    <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>Ir a login</button>
+}
+else if (!UserSession.EsAdmin())
+{
+    <div class="alert alert-danger">Acceso restringido. Solo el administrador puede editar alimentos.</div>
+    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
 }
 else
 {
@@ -60,20 +65,18 @@ else
 
         <div class="d-flex gap-2">
             <button class="btn btn-primary" @onclick="Guardar">Guardar</button>
-            <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+            <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/alimentos")'>Volver</button>
         </div>
     }
     else
     {
         <p>No hay alimentos para editar.</p>
-        <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+        <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/alimentos")'>Volver</button>
     }
 
     @if (!string.IsNullOrWhiteSpace(mensaje))
     {
-        <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
-            @mensaje
-        </div>
+        <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">@mensaje</div>
     }
 }
 
@@ -98,9 +101,7 @@ else
         alimentos = AlimentoController.ObtenerTodos();
 
         if (alimentos.Count == 0)
-        {
             return;
-        }
 
         alimentoIdSeleccionado = Id.HasValue && alimentos.Any(a => a.Id == Id.Value)
             ? Id.Value
@@ -198,21 +199,7 @@ else
         exito = resultado.Exito;
         mensaje = resultado.Mensaje;
 
-        if (!resultado.Exito)
-        {
-            return;
-        }
-
-        Navigation.NavigateTo("/alimentos");
-    }
-
-    private void Volver()
-    {
-        Navigation.NavigateTo("/alimentos");
-    }
-
-    private void IrLogin()
-    {
-        Navigation.NavigateTo("/login");
+        if (resultado.Exito)
+            Navigation.NavigateTo("/alimentos");
     }
 }

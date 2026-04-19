@@ -10,7 +10,12 @@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">Debes iniciar sesión.</div>
-    <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+    <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>Ir a login</button>
+}
+else if (!UserSession.EsAdmin())
+{
+    <div class="alert alert-danger">Acceso restringido. Solo el administrador puede gestionar alimentos.</div>
+    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
 }
 else
 {
@@ -21,8 +26,7 @@ else
 
     <div class="d-flex gap-2 mb-3">
         <button class="btn btn-success" @onclick="NuevoAlimento">Agregar alimento</button>
-        <button class="btn btn-primary" @onclick="EditarAlimento">Editar alimento</button>
-        <button class="btn btn-secondary" @onclick="Volver">Volver</button>
+        <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
     </div>
 
     @if (!string.IsNullOrWhiteSpace(mensaje))
@@ -93,11 +97,6 @@ else
         Navigation.NavigateTo("/alimentos/nuevo");
     }
 
-    private void EditarAlimento()
-    {
-        Navigation.NavigateTo("/alimentos/editar");
-    }
-
     private void IrEditarConId(Guid id)
     {
         Navigation.NavigateTo($"/alimentos/editar?id={id}");
@@ -109,15 +108,5 @@ else
         exito = resultado.Exito;
         mensaje = resultado.Mensaje;
         CargarAlimentos();
-    }
-
-    private void Volver()
-    {
-        Navigation.NavigateTo("/main");
-    }
-
-    private void IrLogin()
-    {
-        Navigation.NavigateTo("/login");
     }
 }

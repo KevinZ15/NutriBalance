@@ -18,14 +18,12 @@ public static class SqliteDatabaseInitializer
         using SqliteConnection connection = new(connectionString);
         connection.Open();
 
-        // IMPORTANTE: habilitar foreign keys en SQLite
         using (SqliteCommand pragma = new("PRAGMA foreign_keys = ON;", connection))
         {
             pragma.ExecuteNonQuery();
         }
 
         string sql = @"
-
 CREATE TABLE IF NOT EXISTS Usuarios (
     Id TEXT PRIMARY KEY,
     NombreUsuario TEXT NOT NULL,
@@ -35,7 +33,9 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     Estatura REAL NOT NULL,
     NivelActividad INTEGER NOT NULL,
     Objetivo INTEGER NOT NULL,
-    TipoDieta INTEGER NOT NULL
+    TipoDieta INTEGER NOT NULL,
+    Rol INTEGER NOT NULL DEFAULT 0,
+    Activo INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS Alimentos (
@@ -73,10 +73,57 @@ CREATE TABLE IF NOT EXISTS MenuDiarioDetalles (
     FOREIGN KEY (MenuDiarioId) REFERENCES MenusDiarios(Id),
     FOREIGN KEY (AlimentoId) REFERENCES Alimentos(Id)
 );
-
 ";
 
-        using SqliteCommand command = new(sql, connection);
-        command.ExecuteNonQuery();
+        using (SqliteCommand command = new(sql, connection))
+        {
+            command.ExecuteNonQuery();
+        }
+
+        AgregarColumnasSiNoExisten(connection);
+
+        CrearAdminPorDefecto(connection);
+    }
+
+    private static void AgregarColumnasSiNoExisten(SqliteConnection connection)
+    {
+        var columnas = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        using (var cmd = new SqliteCommand("PRAGMA table_info(Usuarios);", connection))
+        using (var reader = cmd.ExecuteReader())
+        {
+            while (reader.Read())
+                columnas.Add(reader["name"].ToString()!);
+        }
+
+        if (!columnas.Contains("Rol"))
+        {
+            using var cmd = new SqliteCommand("ALTER TABLE Usuarios ADD COLUMN Rol INTEGER NOT NULL DEFAULT 0;", connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        if (!columnas.Contains("Activo"))
+        {
+            using var cmd = new SqliteCommand("ALTER TABLE Usuarios ADD COLUMN Activo INTEGER NOT NULL DEFAULT 1;", connection);
+            cmd.ExecuteNonQuery();
+        }
+    }
+
+    private static void CrearAdminPorDefecto(SqliteConnection connection)
+    {
+        // Solo crea el admin si no existe ningún usuario con Rol = 1
+        using var check = new SqliteCommand("SELECT COUNT(*) FROM Usuarios WHERE Rol = 1;", connection);
+        long count = (long)(check.ExecuteScalar() ?? 0L);
+
+        if (count == 0)
+        {
+            string id = Guid.NewGuid().ToString();
+            string sql = @"
+INSERT INTO Usuarios (Id, NombreUsuario, Contrasena, Nombre, Peso, Estatura, NivelActividad, Objetivo, TipoDieta, Rol, Activo)
+VALUES (@Id, 'admin', '1234', 'Administrador', 70, 1.70, 1, 1, 1, 1, 1);";
+
+            using var cmd = new SqliteCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@Id", id);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

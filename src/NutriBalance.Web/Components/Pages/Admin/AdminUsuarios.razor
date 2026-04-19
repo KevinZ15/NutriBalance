@@ -1,0 +1,164 @@
+﻿@page "/admin/usuarios"
+@inject UsuarioController UsuarioController
+@inject UserSessionService UserSession
+@inject NavigationManager Navigation
+
+<PageTitle>Gestión de usuarios</PageTitle>
+
+<h1>Gestión de usuarios</h1>
+
+@if (!UserSession.EsAdmin())
+{
+    <div class="alert alert-danger">Acceso denegado.</div>
+    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
+}
+else
+{
+    <button class="btn btn-secondary mb-3" @onclick='() => Navigation.NavigateTo("/main")'>← Volver</button>
+
+    @if (!string.IsNullOrWhiteSpace(mensaje))
+    {
+        <div class="alert @(exito ? "alert-success" : "alert-danger") mb-3">@mensaje</div>
+    }
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in usuarios)
+            {
+                <tr>
+                    <td>@u.NombreUsuario</td>
+                    <td>@u.Nombre</td>
+                    <td>
+                        @if (u.Rol == RolUsuario.Admin)
+                        {
+                            <span class="badge bg-danger">Admin</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Usuario</span>
+                        }
+                    </td>
+                    <td>
+                        @if (u.Activo)
+                        {
+                            <span class="badge bg-success">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Inactivo</span>
+                        }
+                    </td>
+                    <td>
+                        @if (u.Rol != RolUsuario.Admin)
+                        {
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-sm btn-warning"
+                                        @onclick="() => AbrirReset(u.Id)">
+                                    Reset contraseña
+                                </button>
+                                <button class="btn btn-sm btn-secondary"
+                                        @onclick="() => Desactivar(u.Id)"
+                                        disabled="@(!u.Activo)">
+                                    Desactivar
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                        @onclick="() => Eliminar(u.Id)">
+                                    Eliminar
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted fst-italic">Sin acciones</span>
+                        }
+                    </td>
+                </tr>
+
+                @* Fila inline de reset contraseña *@
+                @if (usuarioResetId == u.Id)
+                {
+                    <tr class="table-warning">
+                        <td colspan="5">
+                            <div class="d-flex gap-2 align-items-center">
+                                <span class="fw-bold me-2">Nueva contraseña para @u.NombreUsuario:</span>
+                                <input class="form-control" style="max-width: 250px;"
+                                       type="password"
+                                       placeholder="Mínimo 6 caracteres"
+                                       @bind="nuevaContrasena" />
+                                <button class="btn btn-success btn-sm" @onclick="ConfirmarReset">Confirmar</button>
+                                <button class="btn btn-outline-secondary btn-sm" @onclick="CancelarReset">Cancelar</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Usuario> usuarios = [];
+    private string mensaje = string.Empty;
+    private bool exito;
+    private Guid? usuarioResetId;
+    private string nuevaContrasena = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        Cargar();
+    }
+
+    private void Cargar()
+    {
+        usuarios = UsuarioController.ObtenerTodosLosUsuarios();
+    }
+
+    private void AbrirReset(Guid id)
+    {
+        usuarioResetId = id;
+        nuevaContrasena = string.Empty;
+        mensaje = string.Empty;
+    }
+
+    private void CancelarReset()
+    {
+        usuarioResetId = null;
+        nuevaContrasena = string.Empty;
+    }
+
+    private void ConfirmarReset()
+    {
+        if (usuarioResetId is null) return;
+
+        var result = UsuarioController.ResetearContrasena(usuarioResetId.Value, nuevaContrasena);
+        exito = result.Exito;
+        mensaje = result.Mensaje;
+        usuarioResetId = null;
+        nuevaContrasena = string.Empty;
+    }
+
+    private void Desactivar(Guid id)
+    {
+        var result = UsuarioController.DesactivarUsuario(id);
+        exito = result.Exito;
+        mensaje = result.Mensaje;
+        Cargar();
+    }
+
+    private void Eliminar(Guid id)
+    {
+        var result = UsuarioController.EliminarUsuario(id);
+        exito = result.Exito;
+        mensaje = result.Mensaje;
+        Cargar();
+    }
+}

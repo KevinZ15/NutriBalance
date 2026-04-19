@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Página-1" id="HBlCR--vbSBM_x38LuUG">
-    <mxGraphModel dx="1426" dy="849" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1188" dy="701" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -30,10 +30,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="px86r3d-8WU8kL6_v21W-8" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;swimlaneFillColor=default;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;glass=0;perimeterSpacing=0;" value="Usuarios" vertex="1">
-          <mxGeometry height="177" width="146" x="568" y="50" as="geometry" />
+          <mxGeometry height="202" width="146" x="568" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="px86r3d-8WU8kL6_v21W-9" parent="px86r3d-8WU8kL6_v21W-8" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" value="&lt;div&gt;Id&lt;/div&gt;&lt;div&gt;NombreUsuario&lt;/div&gt;Contrasena&lt;br&gt;Nombre&lt;br&gt;Peso&lt;br&gt;Estatura&lt;br&gt;NivelActividad&lt;br&gt;Objetivo&lt;div&gt;TipoDieta&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="147" width="146" y="30" as="geometry" />
+        <mxCell id="px86r3d-8WU8kL6_v21W-9" parent="px86r3d-8WU8kL6_v21W-8" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" value="&lt;div&gt;Id&lt;/div&gt;&lt;div&gt;NombreUsuario&lt;/div&gt;Contrasena&lt;br&gt;Nombre&lt;br&gt;Peso&lt;br&gt;Estatura&lt;br&gt;NivelActividad&lt;br&gt;Objetivo&lt;div&gt;TipoDieta&lt;/div&gt;&lt;div&gt;Rol&lt;/div&gt;&lt;div&gt;Activo&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="172" width="146" y="30" as="geometry" />
         </mxCell>
         <mxCell id="px86r3d-8WU8kL6_v21W-41" edge="1" parent="px86r3d-8WU8kL6_v21W-8" source="px86r3d-8WU8kL6_v21W-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="px86r3d-8WU8kL6_v21W-9">
           <mxGeometry relative="1" as="geometry" />

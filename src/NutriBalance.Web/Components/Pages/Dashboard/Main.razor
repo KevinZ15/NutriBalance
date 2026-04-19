@@ -11,20 +11,30 @@
         @if (!UserSession.HaySesionActiva())
         {
             <div class="alert alert-warning">Debes iniciar sesión.</div>
-            <button class="btn btn-primary" @onclick="IrLogin">Ir a login</button>
+            <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>Ir a login</button>
+        }
+        else if (UserSession.EsAdmin())
+        {
+            <div class="alert alert-danger fw-bold">
+                Panel de Administrador — @UserSession.UsuarioAutenticado!.Nombre
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-secondary" @onclick='() => Navigation.NavigateTo("/admin/usuarios")'>Gestión de usuarios</button>
+                <button class="btn btn-outline-primary" @onclick='() => Navigation.NavigateTo("/alimentos")'>Alimentos</button>
+                <button class="btn btn-outline-info" @onclick='() => Navigation.NavigateTo("/admin/estadisticas")'>Estadísticas globales</button>
+                <button class="btn btn-danger" @onclick="CerrarSesion">Cerrar sesión</button>
+            </div>
         }
         else
         {
             <div class="alert alert-success">
                 Bienvenido, @UserSession.UsuarioAutenticado!.Nombre
             </div>
-
             <div class="d-grid gap-2">
-                <button class="btn btn-outline-primary" @onclick="IrMiPerfil">Mi perfil</button>
-                <button class="btn btn-outline-primary" @onclick="IrAlimentos">Alimentos</button>
-                <button class="btn btn-outline-primary" @onclick="IrResumenDiario">Resumen diario</button>
-                <button class="btn btn-outline-primary" @onclick="IrMiDieta">Mi dieta</button>
-                <button class="btn btn-outline-primary" @onclick="IrHistorico">Histórico</button>
+                <button class="btn btn-outline-primary" @onclick='() => Navigation.NavigateTo("/perfil")'>Mi perfil</button>
+                <button class="btn btn-outline-primary" @onclick='() => Navigation.NavigateTo("/resumen")'>Resumen diario</button>
+                <button class="btn btn-outline-primary" @onclick='() => Navigation.NavigateTo("/dieta")'>Mi dieta</button>
+                <button class="btn btn-outline-primary" @onclick='() => Navigation.NavigateTo("/historico")'>Histórico</button>
                 <button class="btn btn-danger" @onclick="CerrarSesion">Cerrar sesión</button>
             </div>
         }
@@ -32,36 +42,6 @@
 </div>
 
 @code {
-    private void IrLogin()
-    {
-        Navigation.NavigateTo("/login");
-    }
-
-    private void IrMiPerfil()
-    {
-        Navigation.NavigateTo("/perfil");
-    }
-
-    private void IrAlimentos()
-    {
-        Navigation.NavigateTo("/alimentos");
-    }
-
-    private void IrResumenDiario()
-    {
-        Navigation.NavigateTo("/resumen");
-    }
-
-    private void IrMiDieta()
-    {
-        Navigation.NavigateTo("/dieta");
-    }
-
-    private void IrHistorico()
-    {
-        Navigation.NavigateTo("/historico");
-    }
-
     private void CerrarSesion()
     {
         UserSession.CerrarSesion();
