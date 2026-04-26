@@ -20,5 +20,5 @@ public class MenuDiario
     /// <summary>
     /// Collection of food items included in the daily menu.
     /// </summary>
-    public List<MenuDiarioDetalle> Detalles { get; set; } = new();
+    public List<MenuDiarioDetalle> Detalles { get; set; } = [];
 }

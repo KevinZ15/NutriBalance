@@ -1,13 +1,16 @@
-﻿@page "/"
+﻿@* Route for the application home page *@
+@page "/"
 @inject UserSessionService UserSession
 @inject NavigationManager Navigation
 
 <PageTitle>Inicio</PageTitle>
 
+@* Centered welcome card *@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card shadow-sm p-4" style="width: 520px;">
         <h1 class="mb-4">NutriBalance</h1>
 
+        @* Show login/register options if no session is active *@
         @if (!UserSession.HaySesionActiva())
         {
             <div class="alert alert-info">
@@ -21,6 +24,7 @@
         }
         else
         {
+            @* Show active session info and navigation options *@
             <div class="alert alert-success">
                 Sesión activa: @UserSession.UsuarioAutenticado!.Nombre
             </div>
@@ -34,21 +38,25 @@
 </div>
 
 @code {
+    @* Navigates to the login page *@
     private void IrLogin()
     {
         Navigation.NavigateTo("/login");
     }
 
+    @* Navigates to the first step of the registration flow *@
     private void IrRegistro()
     {
         Navigation.NavigateTo("/registro/paso1");
     }
 
+    @* Navigates to the main menu *@
     private void IrMain()
     {
         Navigation.NavigateTo("/main");
     }
 
+    @* Ends the current session and reloads the home page *@
     private void CerrarSesion()
     {
         UserSession.CerrarSesion();

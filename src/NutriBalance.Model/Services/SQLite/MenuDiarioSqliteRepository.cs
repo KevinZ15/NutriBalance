@@ -5,10 +5,17 @@ using System.Globalization;
 
 namespace NutriBalance.Model.Services.SQLite;
 
+/// <summary>
+/// SQLite implementation of the daily menu repository.
+/// </summary>
 public class MenuDiarioSqliteRepository(string rutaBaseDatos) : IMenuDiarioRepository
 {
     private readonly string _connectionString = $"Data Source={rutaBaseDatos}";
 
+    /// <summary>
+    /// Gets all daily menus ordered by date, including their details.
+    /// </summary>
+    /// <returns>A list of all daily menus.</returns>
     public List<MenuDiario> ObtenerTodos()
     {
         List<MenuDiario> menus = [];
@@ -27,7 +34,7 @@ public class MenuDiarioSqliteRepository(string rutaBaseDatos) : IMenuDiarioRepos
                 Id = Guid.Parse(readerMenus["Id"].ToString()!),
                 UsuarioId = Guid.Parse(readerMenus["UsuarioId"].ToString()!),
                 Fecha = DateTime.ParseExact(readerMenus["Fecha"].ToString()!,
-                "yyyy-MM-dd",CultureInfo.InvariantCulture),
+                "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 Detalles = []
             };
 
@@ -42,6 +49,11 @@ public class MenuDiarioSqliteRepository(string rutaBaseDatos) : IMenuDiarioRepos
         return menus;
     }
 
+    /// <summary>
+    /// Gets a daily menu by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the daily menu.</param>
+    /// <returns>The matching daily menu, or <c>null</c> if not found.</returns>
     public MenuDiario? ObtenerPorId(Guid id)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -63,7 +75,7 @@ public class MenuDiarioSqliteRepository(string rutaBaseDatos) : IMenuDiarioRepos
             Id = Guid.Parse(reader["Id"].ToString()!),
             UsuarioId = Guid.Parse(reader["UsuarioId"].ToString()!),
             Fecha = DateTime.ParseExact(reader["Fecha"].ToString()!,
-            "yyyy-MM-dd",CultureInfo.InvariantCulture),
+            "yyyy-MM-dd", CultureInfo.InvariantCulture),
             Detalles = []
         };
 
@@ -72,6 +84,12 @@ public class MenuDiarioSqliteRepository(string rutaBaseDatos) : IMenuDiarioRepos
         return menu;
     }
 
+    /// <summary>
+    /// Gets a daily menu for a specific user and date.
+    /// </summary>
+    /// <param name="usuarioId">The unique identifier of the user.</param>
+    /// <param name="fecha">The date of the menu.</param>
+    /// <returns>The matching daily menu, or <c>null</c> if not found.</returns>
     public MenuDiario? ObtenerPorUsuarioYFecha(Guid usuarioId, DateTime fecha)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -94,7 +112,7 @@ public class MenuDiarioSqliteRepository(string rutaBaseDatos) : IMenuDiarioRepos
             Id = Guid.Parse(reader["Id"].ToString()!),
             UsuarioId = Guid.Parse(reader["UsuarioId"].ToString()!),
             Fecha = DateTime.ParseExact(reader["Fecha"].ToString()!,
-            "yyyy-MM-dd",CultureInfo.InvariantCulture),
+            "yyyy-MM-dd", CultureInfo.InvariantCulture),
             Detalles = []
         };
 
@@ -103,6 +121,10 @@ public class MenuDiarioSqliteRepository(string rutaBaseDatos) : IMenuDiarioRepos
         return menu;
     }
 
+    /// <summary>
+    /// Adds a new daily menu and its details.
+    /// </summary>
+    /// <param name="menu">The daily menu to add.</param>
     public void Agregar(MenuDiario menu)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -130,6 +152,10 @@ VALUES (@Id, @UsuarioId, @Fecha)";
         transaction.Commit();
     }
 
+    /// <summary>
+    /// Updates an existing daily menu and its details.
+    /// </summary>
+    /// <param name="menu">The daily menu with updated values.</param>
     public void Actualizar(MenuDiario menu)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -166,6 +192,10 @@ WHERE Id = @Id";
         transaction.Commit();
     }
 
+    /// <summary>
+    /// Deletes a daily menu and its details by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the daily menu to delete.</param>
     public void Eliminar(Guid id)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -188,6 +218,12 @@ WHERE Id = @Id";
         transaction.Commit();
     }
 
+    /// <summary>
+    /// Gets all details for the specified daily menu.
+    /// </summary>
+    /// <param name="connection">The active database connection.</param>
+    /// <param name="menuId">The unique identifier of the daily menu.</param>
+    /// <returns>A list of menu details.</returns>
     private static List<MenuDiarioDetalle> ObtenerDetallesPorMenu(SqliteConnection connection, Guid menuId)
     {
         List<MenuDiarioDetalle> detalles = [];
@@ -218,6 +254,13 @@ WHERE Id = @Id";
         return detalles;
     }
 
+    /// <summary>
+    /// Inserts a single detail record into the specified daily menu.
+    /// </summary>
+    /// <param name="connection">The active database connection.</param>
+    /// <param name="transaction">The active transaction.</param>
+    /// <param name="menuId">The unique identifier of the parent menu.</param>
+    /// <param name="detalle">The menu detail to insert.</param>
     private static void InsertarDetalle(SqliteConnection connection, SqliteTransaction transaction, Guid menuId, MenuDiarioDetalle detalle)
     {
         string sql = @"

@@ -5,25 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
 
+    <!-- Application stylesheets -->
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["NutriBalance.Web.styles.css"]" />
+
+    <!-- Bootstrap CSS from CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
     <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 <body>
+    <!-- Root Blazor router component -->
     <Routes />
+
+    <!-- Blazor WebAssembly runtime script -->
     <script src="_framework/blazor.web.js"></script>
+
     <script>
+        /* Global function for triggering a CSV file download from Blazor via JS interop */
         window.descargarCSV = function (nombreArchivo, contenido) {
+        /* Prepend BOM for proper UTF-8 encoding in Excel */
         const BOM = '\uFEFF';
         const blob = new Blob([BOM + contenido], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
+
+        /* Create a temporary anchor element to trigger the download */
         const link = document.createElement('a');
         link.href = url;
         link.download = nombreArchivo;
         document.body.appendChild(link);
         link.click();
+
+        /* Clean up the temporary element and object URL **/
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
         };

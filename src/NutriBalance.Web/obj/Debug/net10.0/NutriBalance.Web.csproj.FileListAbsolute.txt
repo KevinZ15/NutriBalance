@@ -52,7 +52,6 @@ C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\scopedcss\bundle\NutriBalance.Web.styles.css
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\scopedcss\projectbundle\NutriBalance.Web.bundle.scp.css
-C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\compressed\611y526x0f-{0}-d689eweyop-d689eweyop.gz
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\staticwebassets.development.json
@@ -69,3 +68,4 @@ C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\compressed\4rpqwl02d6-{0}-44lbkkbmzh-44lbkkbmzh.gz
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\compressed\0plfn77rls-{0}-qcnkhbt5lj-qcnkhbt5lj.gz
 C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\compressed\6kooz3b4vc-{0}-12rnbzdyyc-12rnbzdyyc.gz
+C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\obj\Debug\net10.0\compressed\611y526x0f-{0}-bq2vmhigjk-bq2vmhigjk.gz

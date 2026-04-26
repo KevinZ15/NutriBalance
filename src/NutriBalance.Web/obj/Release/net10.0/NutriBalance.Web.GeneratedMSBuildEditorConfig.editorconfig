@@ -1,0 +1,107 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = NutriBalance.Web
+build_property.RootNamespace = NutriBalance.Web
+build_property.ProjectDir = C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\zamor\Desktop\ProyectoNutriBalanceVS\NutriBalance\src\NutriBalance.Web
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Admin/AdminEstadisticas.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBZG1pbkVzdGFkaXN0aWNhcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Admin/AdminUsuarios.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBZG1pblVzdWFyaW9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Alimentos/Alimentos.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBbGltZW50b3NcQWxpbWVudG9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Alimentos/EditarAlimento.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBbGltZW50b3NcRWRpdGFyQWxpbWVudG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Alimentos/NuevoAlimento.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBbGltZW50b3NcTnVldm9BbGltZW50by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Auth/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoXExvZ2luLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Auth/RegistroPaso1.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoXFJlZ2lzdHJvUGFzbzEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Auth/RegistroPaso2.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoXFJlZ2lzdHJvUGFzbzIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Dashboard/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEYXNoYm9hcmRcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Dashboard/Main.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEYXNoYm9hcmRcTWFpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Dieta/AgregarAlimentoMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEaWV0YVxBZ3JlZ2FyQWxpbWVudG9NZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Dieta/MiDieta.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEaWV0YVxNaURpZXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Perfil/EditarPerfil.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQZXJmaWxcRWRpdGFyUGVyZmlsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Perfil/MiPerfil.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQZXJmaWxcTWlQZXJmaWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Reportes/Historico.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXBvcnRlc1xIaXN0b3JpY28ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Pages/Reportes/ResumenDiario.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZXBvcnRlc1xSZXN1bWVuRGlhcmlvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zamor/Desktop/ProyectoNutriBalanceVS/NutriBalance/src/NutriBalance.Web/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-vk19wh89eo

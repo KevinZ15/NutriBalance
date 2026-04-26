@@ -1,4 +1,5 @@
-﻿@page "/dieta"
+﻿@* Route for the user's daily diet page *@
+@page "/dieta"
 @inject MenuDiarioController MenuDiarioController
 @inject UserSessionService UserSession
 @inject MenuDiarioDraftService DraftService
@@ -8,6 +9,7 @@
 
 <h1>Mi dieta</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">No hay usuario autenticado.</div>
@@ -15,11 +17,13 @@
 }
 else
 {
+    @* Date picker for selecting the target menu date *@
     <div class="mb-3">
         <label class="form-label">Fecha</label>
         <input class="form-control" type="date" @bind="fechaSeleccionada" />
     </div>
 
+    @* Action buttons for loading, adding, saving and navigating *@
     <div class="d-flex gap-2 mb-3">
         <button class="btn btn-primary" @onclick="CargarMenu">Cargar menú</button>
         <button class="btn btn-success" @onclick="AgregarAlimento">Agregar alimento</button>
@@ -27,11 +31,13 @@ else
         <button class="btn btn-secondary" @onclick="Volver">Volver</button>
     </div>
 
+    @* Feedback alert shown after any action *@
     @if (!string.IsNullOrWhiteSpace(mensaje))
     {
         <div class="alert @(exito ? "alert-success" : "alert-warning")">@mensaje</div>
     }
 
+    @* Menu details table with macronutrient breakdown per food item *@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -73,6 +79,7 @@ else
         </tbody>
     </table>
 
+    @* Daily macronutrient and calorie totals summary *@
     <div class="mt-3">
         <div><strong>Total calorías:</strong> @totalCalorias.ToString("F2") kcal</div>
         <div><strong>Total proteínas:</strong> @totalProteinas.ToString("F2") g</div>
@@ -82,6 +89,7 @@ else
 }
 
 @code {
+    @* Optional date query parameter passed from the previous page *@
     [SupplyParameterFromQuery]
     public string? Fecha { get; set; }
 
@@ -90,11 +98,13 @@ else
     private string mensaje = string.Empty;
     private bool exito;
 
+    @* Aggregated macronutrient totals for the current menu *@
     private decimal totalCalorias;
     private decimal totalProteinas;
     private decimal totalGrasas;
     private decimal totalCarbohidratos;
 
+    @* Parses the date query parameter and loads the menu on initialization *@
     protected override void OnInitialized()
     {
         if (!string.IsNullOrWhiteSpace(Fecha) && DateTime.TryParse(Fecha, out DateTime fechaQuery))
@@ -105,6 +115,7 @@ else
         CargarMenu();
     }
 
+    @* Loads the menu from the draft service or persistence for the selected date *@
     private void CargarMenu()
     {
         if (!UserSession.HaySesionActiva())
@@ -116,6 +127,7 @@ else
 
         Usuario usuario = UserSession.UsuarioAutenticado!;
 
+        @* Reuse the in-memory draft if it matches the same user and date *@
         if (DraftService.EsMismoMenu(usuario.Id, fechaSeleccionada))
         {
             menuActual = DraftService.MenuActual;
@@ -129,6 +141,7 @@ else
         CalcularTotales();
     }
 
+    @* Recalculates macronutrient totals from the current menu details *@
     private void CalcularTotales()
     {
         if (menuActual is null)
@@ -147,11 +160,13 @@ else
         totalCarbohidratos = totales.Carbohidratos;
     }
 
+    @* Navigates to the add food item page for the selected date *@
     private void AgregarAlimento()
     {
         Navigation.NavigateTo($"/dieta/agregar?fecha={fechaSeleccionada:yyyy-MM-dd}");
     }
 
+    @* Removes a food item detail from the current menu draft *@
     private void EliminarDetalle(Guid detalleId)
     {
         if (menuActual is null)
@@ -173,6 +188,7 @@ else
         CalcularTotales();
     }
 
+    @* Persists the current menu draft to storage *@
     private void GuardarMenu()
     {
         if (menuActual is null)
@@ -196,11 +212,13 @@ else
         DraftService.Establecer(menuActual);
     }
 
+    @* Navigates back to the main menu *@
     private void Volver()
     {
         Navigation.NavigateTo("/main");
     }
 
+    @* Navigates to the login page *@
     private void IrLogin()
     {
         Navigation.NavigateTo("/login");

@@ -2,8 +2,15 @@
 
 namespace NutriBalance.Model.Services.SQLite;
 
+/// <summary>
+/// Provides initialization logic for the SQLite database.
+/// </summary>
 public static class SqliteDatabaseInitializer
 {
+    /// <summary>
+    /// Initializes the database, creating tables and default data if they do not exist.
+    /// </summary>
+    /// <param name="rutaBaseDatos">The path to the SQLite database file.</param>
     public static void Inicializar(string rutaBaseDatos)
     {
         string? directorio = Path.GetDirectoryName(rutaBaseDatos);
@@ -85,6 +92,10 @@ CREATE TABLE IF NOT EXISTS MenuDiarioDetalles (
         CrearAdminPorDefecto(connection);
     }
 
+    /// <summary>
+    /// Adds missing columns to the Usuarios table if they do not exist.
+    /// </summary>
+    /// <param name="connection">The active database connection.</param>
     private static void AgregarColumnasSiNoExisten(SqliteConnection connection)
     {
         var columnas = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -108,9 +119,13 @@ CREATE TABLE IF NOT EXISTS MenuDiarioDetalles (
         }
     }
 
+    /// <summary>
+    /// Creates a default admin user if no admin exists in the database.
+    /// </summary>
+    /// <param name="connection">The active database connection.</param>
     private static void CrearAdminPorDefecto(SqliteConnection connection)
     {
-        // Solo crea el admin si no existe ningún usuario con Rol = 1
+        // Only creates the admin if no user with Rol = 1 exists
         using var check = new SqliteCommand("SELECT COUNT(*) FROM Usuarios WHERE Rol = 1;", connection);
         long count = (long)(check.ExecuteScalar() ?? 0L);
 

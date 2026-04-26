@@ -4,10 +4,17 @@ using NutriBalance.Model.Interfaces;
 
 namespace NutriBalance.Model.Services.SQLite;
 
+/// <summary>
+/// SQLite implementation of the food item repository.
+/// </summary>
 public class AlimentoSqliteRepository(string rutaBaseDatos) : IAlimentoRepository
 {
     private readonly string _connectionString = $"Data Source={rutaBaseDatos}";
 
+    /// <summary>
+    /// Gets all food items ordered by name.
+    /// </summary>
+    /// <returns>A list of all food items.</returns>
     public List<Alimento> ObtenerTodos()
     {
         List<Alimento> alimentos = [];
@@ -39,6 +46,11 @@ public class AlimentoSqliteRepository(string rutaBaseDatos) : IAlimentoRepositor
         return alimentos;
     }
 
+    /// <summary>
+    /// Gets a food item by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the food item.</param>
+    /// <returns>The matching food item, or <c>null</c> if not found.</returns>
     public Alimento? ObtenerPorId(Guid id)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -70,6 +82,10 @@ public class AlimentoSqliteRepository(string rutaBaseDatos) : IAlimentoRepositor
         };
     }
 
+    /// <summary>
+    /// Adds a new food item.
+    /// </summary>
+    /// <param name="alimento">The food item to add.</param>
     public void Agregar(Alimento alimento)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -96,6 +112,10 @@ VALUES
         command.ExecuteNonQuery();
     }
 
+    /// <summary>
+    /// Updates an existing food item.
+    /// </summary>
+    /// <param name="alimento">The food item with updated values.</param>
     public void Actualizar(Alimento alimento)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -129,6 +149,10 @@ WHERE Id = @Id";
         command.ExecuteNonQuery();
     }
 
+    /// <summary>
+    /// Deletes a food item by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the food item to delete.</param>
     public void Eliminar(Guid id)
     {
         using SqliteConnection connection = new(_connectionString);

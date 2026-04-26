@@ -3,10 +3,19 @@ using NutriBalance.Model.Enums;
 
 namespace NutriBalance.Controller;
 
+/// <summary>
+/// Provides statistical queries for admin reporting.
+/// </summary>
 public class AdminEstadisticasController(string rutaBaseDatos)
 {
     private readonly string _connectionString = $"Data Source={rutaBaseDatos}";
 
+    /// <summary>
+    /// Gets the most consumed food item within the specified date range.
+    /// </summary>
+    /// <param name="fechaInicio">The start date.</param>
+    /// <param name="fechaFin">The end date.</param>
+    /// <returns>The most consumed food item, or <c>null</c> if none found.</returns>
     public (string NombreAlimento, double TotalUnidades)? ProductoMasConsumido(
         string fechaInicio, string fechaFin)
     {
@@ -34,6 +43,11 @@ LIMIT 1;";
             Convert.ToDouble(reader["Total"])
         );
     }
+
+    /// <summary>
+    /// Gets the percentage distribution of diet types among active users.
+    /// </summary>
+    /// <returns>A list of diet types with their usage percentage.</returns>
     public List<(string TipoDieta, double Porcentaje)> PorcentajeTiposDieta()
     {
         using SqliteConnection connection = new(_connectionString);
@@ -61,6 +75,12 @@ ORDER BY Porcentaje DESC;";
 
         return resultado;
     }
+
+    /// <summary>
+    /// Gets the top users ranked by number of daily menus created.
+    /// </summary>
+    /// <param name="top">The maximum number of users to return.</param>
+    /// <returns>A list of user names and their total menu count.</returns>
     public List<(string NombreUsuario, int TotalMenus)> UsuariosConMasMenus(int top = 10)
     {
         using SqliteConnection connection = new(_connectionString);

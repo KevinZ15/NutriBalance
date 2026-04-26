@@ -1,18 +1,22 @@
-﻿@page "/main"
+﻿@* Route for the main menu page *@
+@page "/main"
 @inject UserSessionService UserSession
 @inject NavigationManager Navigation
 
 <PageTitle>Menú principal</PageTitle>
 
+@* Centered main menu card *@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card shadow-sm p-4" style="width: 600px;">
         <h1 class="mb-4">Menú principal</h1>
 
+        @* Redirect unauthenticated users to login *@
         @if (!UserSession.HaySesionActiva())
         {
             <div class="alert alert-warning">Debes iniciar sesión.</div>
             <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>Ir a login</button>
         }
+        @* Admin panel with user, food and statistics management options *@
         else if (UserSession.EsAdmin())
         {
             <div class="alert alert-danger fw-bold">
@@ -25,6 +29,7 @@
                 <button class="btn btn-danger" @onclick="CerrarSesion">Cerrar sesión</button>
             </div>
         }
+        @* Regular user menu with profile, diet and history options *@
         else
         {
             <div class="alert alert-success">
@@ -42,6 +47,7 @@
 </div>
 
 @code {
+    @* Ends the current session and redirects to the home page *@
     private void CerrarSesion()
     {
         UserSession.CerrarSesion();

@@ -1,4 +1,5 @@
-﻿@page "/perfil"
+﻿@* Route for the user profile view page *@
+@page "/perfil"
 @inject UserSessionService UserSession
 @inject NavigationManager Navigation
 
@@ -6,6 +7,7 @@
 
 <h1>Mi perfil</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">No hay usuario autenticado.</div>
@@ -15,6 +17,7 @@ else
 {
     var usuario = UserSession.UsuarioAutenticado!;
 
+    @* Profile data card displaying the authenticated user's information *@
     <div class="card p-4 shadow-sm">
         <div class="mb-2"><strong>Nombre:</strong> @usuario.Nombre</div>
         <div class="mb-2"><strong>Usuario:</strong> @usuario.NombreUsuario</div>
@@ -32,16 +35,19 @@ else
 }
 
 @code {
+    @* Navigates to the profile edit page *@
     private void EditarPerfil()
     {
         Navigation.NavigateTo("/perfil/editar");
     }
 
+    @* Navigates back to the main menu *@
     private void Volver()
     {
         Navigation.NavigateTo("/main");
     }
 
+    @* Navigates to the login page *@
     private void IrLogin()
     {
         Navigation.NavigateTo("/login");

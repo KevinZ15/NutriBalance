@@ -31,7 +31,7 @@ public class MenuDiarioJsonRepository : IMenuDiarioRepository
     {
         string contenido = File.ReadAllText(_rutaArchivo);
         List<MenuDiario>? menus = JsonSerializer.Deserialize<List<MenuDiario>>(contenido, _jsonOptions);
-        return menus ?? new List<MenuDiario>();
+        return menus ?? [];
     }
 
     /// <summary>
@@ -78,12 +78,8 @@ public class MenuDiarioJsonRepository : IMenuDiarioRepository
     {
         List<MenuDiario> menus = ObtenerTodos();
 
-        MenuDiario? menuExistente = menus.FirstOrDefault(m => m.Id == menu.Id);
-
-        if (menuExistente is null)
-        {
-            throw new InvalidOperationException("El menú no existe en el archivo JSON.");
-        }
+        MenuDiario menuExistente = menus.FirstOrDefault(m => m.Id == menu.Id)
+            ?? throw new InvalidOperationException("El menú no existe en el archivo JSON.");
 
         menuExistente.UsuarioId = menu.UsuarioId;
         menuExistente.Fecha = menu.Fecha;

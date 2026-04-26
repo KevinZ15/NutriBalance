@@ -1,4 +1,5 @@
-﻿@page "/historico"
+﻿@* Route for the monthly history page *@
+@page "/historico"
 @inject UserSessionService UserSession
 @inject MenuDiarioController MenuDiarioController
 @inject NavigationManager Navigation
@@ -8,6 +9,7 @@
 
 <h1>Histórico</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">No hay usuario autenticado.</div>
@@ -15,6 +17,7 @@
 }
 else
 {
+    @* Year and month selectors for filtering the history *@
     <div class="row mb-3">
         <div class="col-md-3">
             <label class="form-label">Año</label>
@@ -32,6 +35,7 @@ else
         </div>
     </div>
 
+    @* Action buttons for querying, downloading and navigating *@
     <div class="d-flex gap-2 mb-3">
         <button class="btn btn-primary" @onclick="CargarHistorico">Consultar</button>
         @if (resumenMensual.Count > 0)
@@ -41,6 +45,7 @@ else
         <button class="btn btn-secondary" @onclick="Volver">Volver</button>
     </div>
 
+    @* Summary text showing totals for the selected month *@
     <div class="mb-3">
         @resumenTexto
     </div>
@@ -51,6 +56,7 @@ else
     }
     else
     {
+        @* Daily calorie history table with goal status per row *@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -78,16 +84,19 @@ else
 }
 
 @code {
+    @* Default to the current year and month *@
     private int anio = DateTime.Today.Year;
     private int mes = DateTime.Today.Month;
     private List<ResumenDiaMes> resumenMensual = [];
     private string resumenTexto = "Sin registros para este mes.";
 
+    @* Loads the history on page initialization *@
     protected override void OnInitialized()
     {
         CargarHistorico();
     }
 
+    @* Fetches the monthly summary and builds the status summary text *@
     private void CargarHistorico()
     {
         if (!UserSession.HaySesionActiva())
@@ -112,6 +121,7 @@ else
             : $"Días registrados: {totalDias} | Cumplidos: {diasCumplidos} | Excedidos: {diasExcedidos} | Por debajo: {diasPorDebajo}";
     }
 
+    @* Builds a CSV string from the monthly summary and triggers a browser download *@
     private async Task DescargarCSV()
     {
         var invariant = System.Globalization.CultureInfo.InvariantCulture;
@@ -142,6 +152,7 @@ else
         await JS.InvokeVoidAsync("descargarCSV", nombreArchivo, sb.ToString());
     }
 
+    @* Returns the Spanish month name for the given month number *@
     private static string ObtenerNombreMes(int numeroMes)
     {
         return numeroMes switch
@@ -161,6 +172,7 @@ else
         };
     }
 
+    @* Returns the CSS class for a table row based on the daily goal status *@
     private static string ObtenerClaseFila(EstadoMetaDiaria estado)
     {
         return estado switch
@@ -171,11 +183,13 @@ else
         };
     }
 
+    @* Navigates back to the main menu *@
     private void Volver()
     {
         Navigation.NavigateTo("/main");
     }
 
+    @* Navigates to the login page *@
     private void IrLogin()
     {
         Navigation.NavigateTo("/login");

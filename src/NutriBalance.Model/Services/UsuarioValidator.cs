@@ -14,7 +14,7 @@ public static class UsuarioValidator
     /// <returns>A list of validation error messages. Empty if valid.</returns>
     public static List<string> Validar(Usuario usuario)
     {
-        List<string> errores = new();
+        List<string> errores = [];
 
         if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
         {

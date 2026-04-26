@@ -1,4 +1,5 @@
-﻿@page "/admin/usuarios"
+﻿@* Route for the admin user management page *@
+@page "/admin/usuarios"
 @inject UsuarioController UsuarioController
 @inject UserSessionService UserSession
 @inject NavigationManager Navigation
@@ -7,6 +8,7 @@
 
 <h1>Gestión de usuarios</h1>
 
+@* Restrict access to admin users only *@
 @if (!UserSession.EsAdmin())
 {
     <div class="alert alert-danger">Acceso denegado.</div>
@@ -16,11 +18,13 @@ else
 {
     <button class="btn btn-secondary mb-3" @onclick='() => Navigation.NavigateTo("/main")'>← Volver</button>
 
+    @* Feedback alert shown after any action *@
     @if (!string.IsNullOrWhiteSpace(mensaje))
     {
         <div class="alert @(exito ? "alert-success" : "alert-danger") mb-3">@mensaje</div>
     }
 
+    @* Users table with role, status and action columns *@
     <table class="table table-bordered table-striped align-middle">
         <thead class="table-dark">
             <tr>
@@ -38,6 +42,7 @@ else
                     <td>@u.NombreUsuario</td>
                     <td>@u.Nombre</td>
                     <td>
+                        @* Badge color differs by role *@
                         @if (u.Rol == RolUsuario.Admin)
                         {
                             <span class="badge bg-danger">Admin</span>
@@ -48,6 +53,7 @@ else
                         }
                     </td>
                     <td>
+                        @* Badge color differs by active status *@
                         @if (u.Activo)
                         {
                             <span class="badge bg-success">Activo</span>
@@ -58,6 +64,7 @@ else
                         }
                     </td>
                     <td>
+                        @* Admin users have no available actions *@
                         @if (u.Rol != RolUsuario.Admin)
                         {
                             <div class="d-flex gap-2 flex-wrap">
@@ -83,7 +90,7 @@ else
                     </td>
                 </tr>
 
-                @* Fila inline de reset contraseña *@
+                @* Inline password reset row shown for the selected user *@
                 @if (usuarioResetId == u.Id)
                 {
                     <tr class="table-warning">
@@ -109,19 +116,24 @@ else
     private List<Usuario> usuarios = [];
     private string mensaje = string.Empty;
     private bool exito;
+
+    @* Tracks which user has the password reset row open *@
     private Guid? usuarioResetId;
     private string nuevaContrasena = string.Empty;
 
+    @* Loads the user list on page initialization *@
     protected override void OnInitialized()
     {
         Cargar();
     }
 
+    @* Retrieves the full user list from the controller *@
     private void Cargar()
     {
         usuarios = UsuarioController.ObtenerTodosLosUsuarios();
     }
 
+    @* Opens the inline password reset row for the specified user *@
     private void AbrirReset(Guid id)
     {
         usuarioResetId = id;
@@ -129,12 +141,14 @@ else
         mensaje = string.Empty;
     }
 
+    @* Closes the inline password reset row without saving *@
     private void CancelarReset()
     {
         usuarioResetId = null;
         nuevaContrasena = string.Empty;
     }
 
+    @* Confirms and applies the password reset for the selected user *@
     private void ConfirmarReset()
     {
         if (usuarioResetId is null) return;
@@ -146,6 +160,7 @@ else
         nuevaContrasena = string.Empty;
     }
 
+    @* Deactivates the specified user and refreshes the list *@
     private void Desactivar(Guid id)
     {
         var result = UsuarioController.DesactivarUsuario(id);
@@ -154,6 +169,7 @@ else
         Cargar();
     }
 
+    @* Deletes the specified user and refreshes the list *@
     private void Eliminar(Guid id)
     {
         var result = UsuarioController.EliminarUsuario(id);

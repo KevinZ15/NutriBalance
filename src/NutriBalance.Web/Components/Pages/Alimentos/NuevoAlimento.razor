@@ -1,4 +1,5 @@
-﻿@page "/alimentos/nuevo"
+﻿@* Route for the new food item registration page *@
+@page "/alimentos/nuevo"
 @inject AlimentoController AlimentoController
 @inject UserSessionService UserSession
 @inject NavigationManager Navigation
@@ -7,11 +8,13 @@
 
 <h1>Registrar alimento</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">Debes iniciar sesión.</div>
     <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>Ir a login</button>
 }
+@* Restrict access to admin users only *@
 else if (!UserSession.EsAdmin())
 {
     <div class="alert alert-danger">Acceso restringido. Solo el administrador puede agregar alimentos.</div>
@@ -19,6 +22,7 @@ else if (!UserSession.EsAdmin())
 }
 else
 {
+    @* New food item form *@
     <div class="mb-3">
         <label class="form-label">Nombre</label>
         <input class="form-control" @bind="nombre" />
@@ -39,6 +43,7 @@ else
         <input class="form-control" @bind="carbohidratosTexto" />
     </div>
 
+    @* Diet type classification checkboxes *@
     <div class="form-check">
         <input class="form-check-input" type="checkbox" @bind="esKeto" />
         <label class="form-check-label">Keto</label>
@@ -59,6 +64,7 @@ else
         <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/alimentos")'>Volver</button>
     </div>
 
+    @* Feedback alert shown after save attempt *@
     @if (!string.IsNullOrWhiteSpace(mensaje))
     {
         <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">@mensaje</div>
@@ -66,25 +72,23 @@ else
 }
 
 @code {
+    @* Form field bindings for the new food item *@
     private string nombre = string.Empty;
     private string grasasTexto = string.Empty;
     private string proteinasTexto = string.Empty;
     private string carbohidratosTexto = string.Empty;
+
+    @* Diet type classification flags *@
     private bool esKeto;
     private bool esVegetariano;
     private bool esEstandar;
+
     private string mensaje = string.Empty;
     private bool exito;
 
+    @* Validates and submits the new food item to the controller *@
     private void Guardar()
     {
-        if (string.IsNullOrWhiteSpace(nombre))
-        {
-            mensaje = "El nombre del alimento es obligatorio.";
-            exito = false;
-            return;
-        }
-
         if (!decimal.TryParse(grasasTexto, out decimal grasas))
         {
             mensaje = "Las grasas deben ser numéricas.";
@@ -113,8 +117,6 @@ else
             return;
         }
 
-        decimal calorias = (proteinas * 4) + (carbohidratos * 4) + (grasas * 9);
-
         Alimento alimento = new()
         {
             Nombre = nombre.Trim(),
@@ -122,7 +124,6 @@ else
             Grasas = grasas,
             Proteinas = proteinas,
             Carbohidratos = carbohidratos,
-            Calorias = calorias,
             EsKeto = esKeto,
             EsVegetariano = esVegetariano,
             EsEstandar = esEstandar
@@ -132,7 +133,10 @@ else
         exito = resultado.Exito;
         mensaje = resultado.Mensaje;
 
+        @* Redirect to the food list on successful registration *@
         if (resultado.Exito)
+        {
             Navigation.NavigateTo("/alimentos");
+        }
     }
 }

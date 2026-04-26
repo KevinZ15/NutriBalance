@@ -1,4 +1,5 @@
-﻿@page "/perfil/editar"
+﻿@* Route for the user profile edit page *@
+@page "/perfil/editar"
 @inject UsuarioController UsuarioController
 @inject UserSessionService UserSession
 @inject NavigationManager Navigation
@@ -7,6 +8,7 @@
 
 <h1>Editar perfil</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">No hay usuario autenticado.</div>
@@ -14,7 +16,9 @@
 }
 else
 {
+    @* Profile edit form card *@
     <div class="card p-4 shadow-sm">
+        @* Username is read-only and cannot be changed *@
         <div class="mb-3">
             <label class="form-label">Nombre de usuario</label>
             <input class="form-control" value="@nombreUsuario" disabled />
@@ -30,6 +34,7 @@ else
             <input class="form-control" type="password" @bind="contrasena" />
         </div>
 
+        @* Physical data inputs *@
         <div class="mb-3">
             <label class="form-label">Peso</label>
             <input class="form-control" @bind="pesoTexto" />
@@ -40,6 +45,7 @@ else
             <input class="form-control" @bind="estaturaTexto" />
         </div>
 
+        @* Dropdowns populated from enum values *@
         <div class="mb-3">
             <label class="form-label">Objetivo</label>
             <select class="form-select" @bind="objetivoSeleccionado">
@@ -75,6 +81,7 @@ else
             <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
         </div>
 
+        @* Feedback alert shown after save attempt *@
         @if (!string.IsNullOrWhiteSpace(mensaje))
         {
             <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
@@ -85,17 +92,22 @@ else
 }
 
 @code {
+    @* Form field bindings pre-populated from the authenticated user *@
     private string nombreUsuario = string.Empty;
     private string nombre = string.Empty;
     private string contrasena = string.Empty;
     private string pesoTexto = string.Empty;
     private string estaturaTexto = string.Empty;
+
+    @* Default dropdown selections from the first enum value *@
     private string objetivoSeleccionado = Enum.GetNames<ObjetivoUsuario>()[0];
     private string nivelActividadSeleccionado = Enum.GetNames<NivelActividad>()[0];
     private string tipoDietaSeleccionado = Enum.GetNames<TipoDieta>()[0];
+
     private string mensaje = string.Empty;
     private bool exito;
 
+    @* Populates form fields from the current authenticated user's data *@
     protected override void OnInitialized()
     {
         if (!UserSession.HaySesionActiva())
@@ -115,6 +127,7 @@ else
         tipoDietaSeleccionado = usuario.TipoDieta.ToString();
     }
 
+    @* Validates inputs, updates the user profile, and refreshes the session *@
     private void Guardar()
     {
         if (!UserSession.HaySesionActiva())
@@ -163,15 +176,18 @@ else
             return;
         }
 
+        @* Update the session with the new user data and redirect to profile *@
         UserSession.ActualizarUsuario(usuarioActualizado);
         Navigation.NavigateTo("/perfil");
     }
 
+    @* Navigates back to the profile page without saving *@
     private void Cancelar()
     {
         Navigation.NavigateTo("/perfil");
     }
 
+    @* Navigates to the login page *@
     private void IrLogin()
     {
         Navigation.NavigateTo("/login");

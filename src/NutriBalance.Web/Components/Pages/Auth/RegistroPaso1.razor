@@ -1,4 +1,5 @@
-﻿@page "/registro/paso1"
+﻿@* Route for the first step of the user registration flow *@
+@page "/registro/paso1"
 @inject RegistroUsuarioState RegistroState
 @inject NavigationManager Navigation
 
@@ -6,10 +7,12 @@
 
 <h1>Registro de usuario - Paso 1</h1>
 
+@* Registration form card for basic user credentials *@
 <div class="row">
     <div class="col-md-8 col-lg-6">
         <div class="card shadow-sm">
             <div class="card-body">
+                @* Username, full name and password inputs *@
                 <div class="mb-3">
                     <label class="form-label">Nombre de usuario</label>
                     <input class="form-control" @bind="nombreUsuario" />
@@ -30,6 +33,7 @@
                     <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/")'>Volver</button>
                 </div>
 
+                @* Feedback alert shown on validation failure *@
                 @if (!string.IsNullOrWhiteSpace(mensaje))
                 {
                     <div class="alert alert-warning mt-3">@mensaje</div>
@@ -45,6 +49,7 @@
     private string contrasena = string.Empty;
     private string mensaje = string.Empty;
 
+    @* Restores previously entered values from the shared registration state *@
     protected override void OnInitialized()
     {
         nombreUsuario = RegistroState.NombreUsuario;
@@ -52,6 +57,7 @@
         contrasena = RegistroState.Contrasena;
     }
 
+    @* Validates inputs, saves them to the shared state, and navigates to step 2 *@
     private void Continuar()
     {
         if (string.IsNullOrWhiteSpace(nombreUsuario))

@@ -1,10 +1,14 @@
-﻿@rendermode InteractiveServer
+﻿@* Enable interactive server-side rendering for all routed components *@
+@rendermode InteractiveServer
 
 <Router AppAssembly="typeof(Program).Assembly">
+    @* Render the matched route using the default main layout *@
     <Found Context="routeData">
         <RouteView RouteData="routeData" DefaultLayout="typeof(NutriBalance.Web.Components.Layout.MainLayout)" />
+        @* Move focus to the h1 heading on each navigation *@
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
+    @* Fallback view shown when no matching route is found *@
     <NotFound>
         <LayoutView Layout="typeof(NutriBalance.Web.Components.Layout.MainLayout)">
             <h1>Página no encontrada</h1>

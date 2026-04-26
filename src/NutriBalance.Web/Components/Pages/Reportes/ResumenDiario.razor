@@ -1,4 +1,5 @@
-﻿@page "/resumen"
+﻿@* Route for the daily nutrition summary page *@
+@page "/resumen"
 @inject UserSessionService UserSession
 @inject MenuDiarioController MenuDiarioController
 @inject NavigationManager Navigation
@@ -7,6 +8,7 @@
 
 <h1>Resumen diario</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">No hay usuario autenticado.</div>
@@ -14,6 +16,7 @@
 }
 else
 {
+    @* Target nutrition values based on the user's profile *@
     <div class="mb-2"><strong>IMC:</strong> @imcTexto</div>
     <div class="mb-2"><strong>Calorías objetivo:</strong> @caloriasObjetivoTexto</div>
     <div class="mb-2"><strong>Dieta:</strong> @nombreDieta</div>
@@ -23,11 +26,13 @@ else
 
     <hr />
 
+    @* Actual consumed values from today's menu *@
     <div class="mb-2"><strong>Calorías consumidas:</strong> @caloriasConsumidasTexto</div>
     <div class="mb-2"><strong>Proteínas consumidas:</strong> @proteinasConsumidasTexto</div>
     <div class="mb-2"><strong>Grasas consumidas:</strong> @grasasConsumidasTexto</div>
     <div class="mb-2"><strong>Carbohidratos consumidos:</strong> @carbohidratosConsumidosTexto</div>
 
+    @* Remaining values with color-coded status classes *@
     <div class="mb-2 @claseCaloriasRestantes"><strong>@tituloMetaCalorica:</strong> @caloriasRestantesTexto</div>
     <div class="mb-2 @claseProteinasRestantes"><strong>Proteínas:</strong> @proteinasRestantesTexto</div>
     <div class="mb-2 @claseGrasasRestantes"><strong>Grasas:</strong> @grasasRestantesTexto</div>
@@ -40,6 +45,7 @@ else
 }
 
 @code {
+    @* Display strings for target nutrition values *@
     private string imcTexto = string.Empty;
     private string caloriasObjetivoTexto = string.Empty;
     private string nombreDieta = string.Empty;
@@ -47,23 +53,28 @@ else
     private string grasasObjetivoTexto = string.Empty;
     private string carbohidratosObjetivoTexto = string.Empty;
 
+    @* Display strings for consumed nutrition values *@
     private string caloriasConsumidasTexto = string.Empty;
     private string proteinasConsumidasTexto = string.Empty;
     private string grasasConsumidasTexto = string.Empty;
     private string carbohidratosConsumidosTexto = string.Empty;
 
+    @* Display strings for remaining nutrition values *@
     private string caloriasRestantesTexto = string.Empty;
     private string proteinasRestantesTexto = string.Empty;
     private string grasasRestantesTexto = string.Empty;
     private string carbohidratosRestantesTexto = string.Empty;
 
+    @* CSS classes applied to remaining values based on goal status *@
     private string claseCaloriasRestantes = string.Empty;
     private string claseProteinasRestantes = string.Empty;
     private string claseGrasasRestantes = string.Empty;
     private string claseCarbohidratosRestantes = string.Empty;
 
+    @* Dynamic title reflecting the daily calorie goal status *@
     private string tituloMetaCalorica = "Meta calórica del día";
 
+    @* Calculates BMI, macros, today's totals and remaining values on initialization *@
     protected override void OnInitialized()
     {
         if (!UserSession.HaySesionActiva())
@@ -88,6 +99,7 @@ else
         MenuDiario menuHoy = MenuDiarioController.ObtenerMenuPorUsuarioYFecha(usuario.Id, DateTime.Today);
         var totales = MenuDiarioController.CalcularTotales(menuHoy);
 
+        @* Calculate the difference between target and consumed values *@
         decimal caloriasRestantes = caloriasObjetivo - totales.Calorias;
         decimal proteinasRestantes = macros.Proteinas - totales.Proteinas;
         decimal grasasRestantes = macros.Grasas - totales.Grasas;
@@ -108,6 +120,7 @@ else
         claseGrasasRestantes = ObtenerClaseResultado(grasasRestantes);
         claseCarbohidratosRestantes = ObtenerClaseResultado(carbohidratosRestantes);
 
+        @* Set the calorie goal title based on the daily status *@
         EstadoMetaDiaria estadoCalorias = MenuDiarioController.EvaluarMetaCalorica(totales.Calorias, caloriasObjetivo);
 
         tituloMetaCalorica = estadoCalorias switch
@@ -118,6 +131,7 @@ else
         };
     }
 
+    @* Returns a formatted string describing the difference relative to the goal *@
     private static string FormatearResultadoMeta(decimal diferencia, string unidad)
     {
         if (diferencia < 0)
@@ -133,6 +147,7 @@ else
         return $"Faltan {diferencia:F2} {unidad}";
     }
 
+    @* Returns the CSS class corresponding to the goal difference sign *@
     private static string ObtenerClaseResultado(decimal diferencia)
     {
         if (diferencia < 0)
@@ -148,16 +163,19 @@ else
         return "text-success";
     }
 
+    @* Navigates back to the main menu *@
     private void Volver()
     {
         Navigation.NavigateTo("/main");
     }
 
+    @* Navigates to the monthly history page *@
     private void IrHistorico()
     {
         Navigation.NavigateTo("/historico");
     }
 
+    @* Navigates to the login page *@
     private void IrLogin()
     {
         Navigation.NavigateTo("/login");

@@ -1,4 +1,7 @@
-﻿@page "/alimentos/editar"
+﻿@* Route for editing a food item by its unique identifier *@
+@page "/alimentos/editar/{Id:guid}"
+
+@using NutriBalance.Model.Entities
 @inject AlimentoController AlimentoController
 @inject UserSessionService UserSession
 @inject NavigationManager Navigation
@@ -7,146 +10,118 @@
 
 <h1>Editar alimento</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">Debes iniciar sesión.</div>
     <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>Ir a login</button>
 }
+@* Restrict access to admin users only *@
 else if (!UserSession.EsAdmin())
 {
     <div class="alert alert-danger">Acceso restringido. Solo el administrador puede editar alimentos.</div>
-    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
+    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/alimentos")'>Volver</button>
+}
+@* Show loading state while the food item is being fetched *@
+else if (alimentoSeleccionado is null)
+{
+    <div class="alert alert-warning">Cargando alimento...</div>
 }
 else
 {
+    @* Food item edit form *@
     <div class="mb-3">
-        <label class="form-label">Seleccionar alimento</label>
-        <select class="form-select" @onchange="AlCambiarAlimento">
-            @foreach (var alimento in alimentos)
-            {
-                <option value="@alimento.Id" selected="@(alimento.Id == alimentoIdSeleccionado)">
-                    @alimento.Nombre
-                </option>
-            }
-        </select>
+        <label class="form-label">Nombre</label>
+        <input class="form-control" @bind="alimentoSeleccionado.Nombre" />
     </div>
 
-    @if (alimentoSeleccionado is not null)
-    {
-        <div class="mb-3">
-            <label class="form-label">Grasas</label>
-            <input class="form-control" @bind="grasasTexto" />
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Grasas</label>
+        <input class="form-control" @bind="grasasTexto" />
+    </div>
 
-        <div class="mb-3">
-            <label class="form-label">Proteínas</label>
-            <input class="form-control" @bind="proteinasTexto" />
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Proteínas</label>
+        <input class="form-control" @bind="proteinasTexto" />
+    </div>
 
-        <div class="mb-3">
-            <label class="form-label">Carbohidratos</label>
-            <input class="form-control" @bind="carbohidratosTexto" />
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Carbohidratos</label>
+        <input class="form-control" @bind="carbohidratosTexto" />
+    </div>
 
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" @bind="esKeto" />
-            <label class="form-check-label">Keto</label>
-        </div>
+    @* Diet type classification checkboxes *@
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" @bind="esKeto" />
+        <label class="form-check-label">Keto</label>
+    </div>
 
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" @bind="esVegetariano" />
-            <label class="form-check-label">Vegetariano</label>
-        </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" @bind="esVegetariano" />
+        <label class="form-check-label">Vegetariano</label>
+    </div>
 
-        <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" @bind="esEstandar" />
-            <label class="form-check-label">Estándar</label>
-        </div>
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" @bind="esEstandar" />
+        <label class="form-check-label">Estándar</label>
+    </div>
 
-        <div class="d-flex gap-2">
-            <button class="btn btn-primary" @onclick="Guardar">Guardar</button>
-            <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/alimentos")'>Volver</button>
-        </div>
-    }
-    else
-    {
-        <p>No hay alimentos para editar.</p>
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary" @onclick="Guardar">Actualizar</button>
         <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/alimentos")'>Volver</button>
-    }
+    </div>
 
+    @* Feedback alert shown after save attempt *@
     @if (!string.IsNullOrWhiteSpace(mensaje))
     {
-        <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">@mensaje</div>
+        <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
+            @mensaje
+        </div>
     }
 }
 
 @code {
-    [SupplyParameterFromQuery]
-    public Guid? Id { get; set; }
+    @* Route parameter for the food item identifier *@
+    [Parameter] public Guid Id { get; set; }
 
-    private List<Alimento> alimentos = [];
-    private Guid alimentoIdSeleccionado;
     private Alimento? alimentoSeleccionado;
+
+    @* String fields used for numeric input binding and parsing *@
     private string grasasTexto = string.Empty;
     private string proteinasTexto = string.Empty;
     private string carbohidratosTexto = string.Empty;
+
+    @* Diet type classification flags *@
     private bool esKeto;
     private bool esVegetariano;
     private bool esEstandar;
+
     private string mensaje = string.Empty;
     private bool exito;
 
+    @* Loads the food item and initializes form fields on page load *@
     protected override void OnInitialized()
     {
-        alimentos = AlimentoController.ObtenerTodos();
+        alimentoSeleccionado = AlimentoController.ObtenerPorId(Id);
 
-        if (alimentos.Count == 0)
-            return;
-
-        alimentoIdSeleccionado = Id.HasValue && alimentos.Any(a => a.Id == Id.Value)
-            ? Id.Value
-            : alimentos[0].Id;
-
-        CargarDatosSeleccionados();
-    }
-
-    private void AlCambiarAlimento(ChangeEventArgs e)
-    {
-        if (Guid.TryParse(e.Value?.ToString(), out Guid id))
+        if (alimentoSeleccionado is not null)
         {
-            alimentoIdSeleccionado = id;
-            CargarDatosSeleccionados();
+            grasasTexto = alimentoSeleccionado.Grasas.ToString();
+            proteinasTexto = alimentoSeleccionado.Proteinas.ToString();
+            carbohidratosTexto = alimentoSeleccionado.Carbohidratos.ToString();
+
+            esKeto = alimentoSeleccionado.EsKeto;
+            esVegetariano = alimentoSeleccionado.EsVegetariano;
+            esEstandar = alimentoSeleccionado.EsEstandar;
         }
     }
 
-    private void CargarDatosSeleccionados()
-    {
-        alimentoSeleccionado = alimentos.FirstOrDefault(a => a.Id == alimentoIdSeleccionado);
-
-        if (alimentoSeleccionado is null)
-        {
-            grasasTexto = string.Empty;
-            proteinasTexto = string.Empty;
-            carbohidratosTexto = string.Empty;
-            esKeto = false;
-            esVegetariano = false;
-            esEstandar = false;
-            return;
-        }
-
-        grasasTexto = alimentoSeleccionado.Grasas.ToString();
-        proteinasTexto = alimentoSeleccionado.Proteinas.ToString();
-        carbohidratosTexto = alimentoSeleccionado.Carbohidratos.ToString();
-        esKeto = alimentoSeleccionado.EsKeto;
-        esVegetariano = alimentoSeleccionado.EsVegetariano;
-        esEstandar = alimentoSeleccionado.EsEstandar;
-    }
-
+    @* Validates and submits the updated food item to the controller *@
     private void Guardar()
     {
         if (alimentoSeleccionado is null)
         {
-            mensaje = "Debe seleccionar un alimento.";
+            mensaje = "No se encontró el alimento.";
             exito = false;
             return;
         }
@@ -179,27 +154,28 @@ else
             return;
         }
 
-        decimal calorias = (proteinas * 4) + (carbohidratos * 4) + (grasas * 9);
-
         Alimento alimentoActualizado = new()
         {
             Id = alimentoSeleccionado.Id,
-            Nombre = alimentoSeleccionado.Nombre,
+            Nombre = alimentoSeleccionado.Nombre.Trim(),
             Porcion = alimentoSeleccionado.Porcion,
             Grasas = grasas,
             Proteinas = proteinas,
             Carbohidratos = carbohidratos,
-            Calorias = calorias,
             EsKeto = esKeto,
             EsVegetariano = esVegetariano,
             EsEstandar = esEstandar
         };
 
         var resultado = AlimentoController.ActualizarAlimento(alimentoActualizado);
+
         exito = resultado.Exito;
         mensaje = resultado.Mensaje;
 
+        @* Redirect to the food list on successful update *@
         if (resultado.Exito)
+        {
             Navigation.NavigateTo("/alimentos");
+        }
     }
 }

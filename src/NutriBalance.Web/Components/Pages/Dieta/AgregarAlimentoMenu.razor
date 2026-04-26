@@ -1,4 +1,5 @@
-﻿@page "/dieta/agregar"
+﻿@* Route for adding a food item to the daily menu *@
+@page "/dieta/agregar"
 @inject AlimentoController AlimentoController
 @inject MenuDiarioController MenuDiarioController
 @inject UserSessionService UserSession
@@ -9,6 +10,7 @@
 
 <h1>Agregar alimento al menú</h1>
 
+@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">No hay usuario autenticado.</div>
@@ -16,11 +18,13 @@
 }
 else
 {
+    @* Date picker for the target menu date *@
     <div class="mb-3">
         <label class="form-label">Fecha</label>
         <input class="form-control" type="date" @bind="fechaSeleccionada" />
     </div>
 
+    @* Food item dropdown *@
     <div class="mb-3">
         <label class="form-label">Alimento</label>
         <select class="form-select" @onchange="AlCambiarAlimento">
@@ -33,11 +37,13 @@ else
         </select>
     </div>
 
+    @* Show diet type classifications for the selected food item *@
     @if (alimentoSeleccionado is not null)
     {
         <div class="mb-2"><strong>Clasificaciones:</strong> @ObtenerClasificacionesTexto(alimentoSeleccionado)</div>
     }
 
+    @* Quantity and grams per unit inputs *@
     <div class="mb-3">
         <label class="form-label">Cantidad de unidades</label>
         <input class="form-control" @bind="cantidadUnidadesTexto" />
@@ -53,6 +59,7 @@ else
         <button class="btn btn-secondary" @onclick="Volver">Volver</button>
     </div>
 
+    @* Standard feedback alert shown when no compatibility warning is active *@
     @if (!string.IsNullOrWhiteSpace(mensaje) && !mostrarConfirmacionIncompatible)
     {
         <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
@@ -60,6 +67,7 @@ else
         </div>
     }
 
+    @* Compatibility warning with option to add the food item anyway *@
     @if (mostrarConfirmacionIncompatible)
     {
         <div class="alert alert-warning mt-3">
@@ -72,6 +80,7 @@ else
 }
 
 @code {
+    @* Optional date query parameter passed from the previous page *@
     [SupplyParameterFromQuery]
     public string? Fecha { get; set; }
 
@@ -83,8 +92,11 @@ else
     private string gramosPorUnidadTexto = string.Empty;
     private string mensaje = string.Empty;
     private bool exito;
+
+    @* Controls visibility of the diet incompatibility confirmation prompt *@
     private bool mostrarConfirmacionIncompatible;
 
+    @* Initializes the date from the query parameter and loads the food list *@
     protected override void OnInitialized()
     {
         if (!string.IsNullOrWhiteSpace(Fecha) && DateTime.TryParse(Fecha, out DateTime fechaQuery))
@@ -94,6 +106,7 @@ else
 
         alimentos = AlimentoController.ObtenerTodos();
 
+        @* Pre-select the first food item in the list *@
         if (alimentos.Count > 0)
         {
             alimentoIdSeleccionado = alimentos[0].Id;
@@ -101,6 +114,7 @@ else
         }
     }
 
+    @* Updates the selected food item when the dropdown value changes *@
     private void AlCambiarAlimento(ChangeEventArgs e)
     {
         if (Guid.TryParse(e.Value?.ToString(), out Guid id))
@@ -112,17 +126,20 @@ else
         }
     }
 
+    @* Triggers the add process with compatibility check enabled *@
     private void Aceptar()
     {
         mostrarConfirmacionIncompatible = false;
         ProcesarAgregar(false);
     }
 
+    @* Triggers the add process skipping the compatibility check *@
     private void AgregarDeTodosModos()
     {
         ProcesarAgregar(true);
     }
 
+    @* Validates inputs, checks diet compatibility, calculates macros, and adds the detail to the menu draft *@
     private void ProcesarAgregar(bool omitirCompatibilidad)
     {
         if (!UserSession.HaySesionActiva())
@@ -155,6 +172,7 @@ else
 
         Usuario usuario = UserSession.UsuarioAutenticado!;
 
+        @* Check if the food item matches the user's diet type *@
         bool clasificacionCompatible = usuario.TipoDieta switch
         {
             TipoDieta.Keto => alimentoSeleccionado.EsKeto,
@@ -170,6 +188,7 @@ else
             return;
         }
 
+        @* Reuse the existing draft if it matches the same user and date, otherwise load from persistence *@
         MenuDiario menu;
 
         if (DraftService.EsMismoMenu(usuario.Id, fechaSeleccionada))
@@ -182,6 +201,7 @@ else
             DraftService.Establecer(menu);
         }
 
+        @* Calculate macronutrients based on total grams consumed *@
         decimal totalGramos = cantidadUnidades * gramosPorUnidad;
         decimal factor = totalGramos / 100m;
 
@@ -209,6 +229,7 @@ else
         Navigation.NavigateTo($"/dieta?fecha={fechaSeleccionada:yyyy-MM-dd}");
     }
 
+    @* Returns a comma-separated string of the food item's diet classifications *@
     private static string ObtenerClasificacionesTexto(Alimento alimento)
     {
         List<string> clasificaciones = [];
@@ -222,11 +243,13 @@ else
         return string.Join(", ", clasificaciones);
     }
 
+    @* Navigates back to the diet page for the selected date *@
     private void Volver()
     {
         Navigation.NavigateTo($"/dieta?fecha={fechaSeleccionada:yyyy-MM-dd}");
     }
 
+    @* Navigates to the login page *@
     private void IrLogin()
     {
         Navigation.NavigateTo("/login");

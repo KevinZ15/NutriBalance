@@ -5,10 +5,18 @@ using NutriBalance.Model.Interfaces;
 
 namespace NutriBalance.Model.Services.SQLite;
 
+/// <summary>
+/// SQLite implementation of the user repository.
+/// </summary>
 public class UsuarioSqliteRepository(string rutaBaseDatos) : IUsuarioRepository
 {
     private readonly string _connectionString = $"Data Source={rutaBaseDatos}";
 
+    /// <summary>
+    /// Maps a database reader row to a <see cref="Usuario"/> instance.
+    /// </summary>
+    /// <param name="reader">The active data reader positioned at the current row.</param>
+    /// <returns>A mapped <see cref="Usuario"/> instance.</returns>
     private static Usuario MapearUsuario(SqliteDataReader reader)
     {
         return new Usuario
@@ -27,6 +35,10 @@ public class UsuarioSqliteRepository(string rutaBaseDatos) : IUsuarioRepository
         };
     }
 
+    /// <summary>
+    /// Gets all users ordered by username.
+    /// </summary>
+    /// <returns>A list of all users.</returns>
     public List<Usuario> ObtenerTodos()
     {
         List<Usuario> usuarios = [];
@@ -39,6 +51,11 @@ public class UsuarioSqliteRepository(string rutaBaseDatos) : IUsuarioRepository
         return usuarios;
     }
 
+    /// <summary>
+    /// Gets a user by their unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user.</param>
+    /// <returns>The matching user, or <c>null</c> if not found.</returns>
     public Usuario? ObtenerPorId(Guid id)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -49,6 +66,12 @@ public class UsuarioSqliteRepository(string rutaBaseDatos) : IUsuarioRepository
         return reader.Read() ? MapearUsuario(reader) : null;
     }
 
+    /// <summary>
+    /// Gets an active user by their credentials.
+    /// </summary>
+    /// <param name="nombreUsuario">The username.</param>
+    /// <param name="contrasena">The password.</param>
+    /// <returns>The matching user, or <c>null</c> if credentials are invalid.</returns>
     public Usuario? ObtenerPorCredenciales(string nombreUsuario, string contrasena)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -65,6 +88,11 @@ AND Activo = 1";
         return reader.Read() ? MapearUsuario(reader) : null;
     }
 
+    /// <summary>
+    /// Gets a user by their username.
+    /// </summary>
+    /// <param name="nombreUsuario">The username to search for.</param>
+    /// <returns>The matching user, or <c>null</c> if not found.</returns>
     public Usuario? ObtenerPorNombreUsuario(string nombreUsuario)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -76,6 +104,10 @@ AND Activo = 1";
         return reader.Read() ? MapearUsuario(reader) : null;
     }
 
+    /// <summary>
+    /// Adds a new user.
+    /// </summary>
+    /// <param name="usuario">The user to add.</param>
     public void Agregar(Usuario usuario)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -100,6 +132,10 @@ VALUES
         command.ExecuteNonQuery();
     }
 
+    /// <summary>
+    /// Updates an existing user.
+    /// </summary>
+    /// <param name="usuario">The user with updated values.</param>
     public void Actualizar(Usuario usuario)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -132,6 +168,10 @@ WHERE Id = @Id";
         command.ExecuteNonQuery();
     }
 
+    /// <summary>
+    /// Deletes a user by their unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to delete.</param>
     public void Eliminar(Guid id)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -141,6 +181,10 @@ WHERE Id = @Id";
         command.ExecuteNonQuery();
     }
 
+    /// <summary>
+    /// Deactivates a user by their unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to deactivate.</param>
     public void DesactivarUsuario(Guid id)
     {
         using SqliteConnection connection = new(_connectionString);
@@ -150,6 +194,11 @@ WHERE Id = @Id";
         command.ExecuteNonQuery();
     }
 
+    /// <summary>
+    /// Resets the password for the specified user.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user.</param>
+    /// <param name="nuevaContrasena">The new password to set.</param>
     public void ResetearContrasena(Guid id, string nuevaContrasena)
     {
         using SqliteConnection connection = new(_connectionString);

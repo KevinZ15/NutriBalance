@@ -1,4 +1,5 @@
-﻿@page "/registro/paso2"
+﻿@* Route for the second step of the user registration flow *@
+@page "/registro/paso2"
 @inject UsuarioController UsuarioController
 @inject RegistroUsuarioState RegistroState
 @inject NavigationManager Navigation
@@ -7,6 +8,7 @@
 
 <h1>Registro de usuario - Paso 2</h1>
 
+@* Guard: redirect to step 1 if its data has not been completed *@
 @if (!RegistroState.HayDatosPaso1())
 {
     <div class="alert alert-warning">Primero debes completar el paso 1.</div>
@@ -14,10 +16,12 @@
 }
 else
 {
+    @* Registration form card for physical and dietary profile *@
     <div class="row">
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm">
                 <div class="card-body">
+                    @* Weight and height inputs *@
                     <div class="mb-3">
                         <label class="form-label">Peso (kg)</label>
                         <input class="form-control" @bind="pesoTexto" />
@@ -28,6 +32,7 @@ else
                         <input class="form-control" @bind="estaturaTexto" />
                     </div>
 
+                    @* Dropdowns populated from enum values *@
                     <div class="mb-3">
                         <label class="form-label">Objetivo</label>
                         <select class="form-select" @bind="objetivoSeleccionado">
@@ -63,6 +68,7 @@ else
                         <button class="btn btn-secondary" @onclick="IrPaso1">Volver</button>
                     </div>
 
+                    @* Feedback alert shown after registration attempt *@
                     @if (!string.IsNullOrWhiteSpace(mensaje))
                     {
                         <div class="alert @(exito ? "alert-success" : "alert-warning") mt-3">
@@ -76,14 +82,19 @@ else
 }
 
 @code {
+    @* Form field bindings for physical data *@
     private string pesoTexto = string.Empty;
     private string estaturaTexto = string.Empty;
+
+    @* Default dropdown selections from the first enum value *@
     private string objetivoSeleccionado = Enum.GetNames<ObjetivoUsuario>()[0];
     private string nivelActividadSeleccionado = Enum.GetNames<NivelActividad>()[0];
     private string tipoDietaSeleccionado = Enum.GetNames<TipoDieta>()[0];
+
     private string mensaje = string.Empty;
     private bool exito;
 
+    @* Validates inputs, builds the user, and submits the registration *@
     private void Registrar()
     {
         if (!decimal.TryParse(pesoTexto, out decimal peso))
@@ -117,12 +128,14 @@ else
         exito = resultado.Exito;
         mensaje = resultado.Mensaje;
 
+        @* Clear shared state and redirect to login on success *@
         if (!resultado.Exito) return;
 
         RegistroState.Limpiar();
         Navigation.NavigateTo("/login");
     }
 
+    @* Navigates back to step 1 *@
     private void IrPaso1()
     {
         Navigation.NavigateTo("/registro/paso1");
