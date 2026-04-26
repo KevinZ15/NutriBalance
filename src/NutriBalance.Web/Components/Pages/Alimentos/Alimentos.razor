@@ -1,75 +1,88 @@
-﻿@* Route for the food item management page *@
-@page "/alimentos"
+﻿@page "/alimentos"
+
+@using NutriBalance.Model.Entities
 @inject AlimentoController AlimentoController
-@inject UserSessionService UserSession
 @inject NavigationManager Navigation
+@inject UserSessionService UserSession
 
 <PageTitle>Alimentos</PageTitle>
 
-<h1>Alimentos</h1>
+<h1>Lista de alimentos</h1>
 
-@* Redirect unauthenticated users to login *@
 @if (!UserSession.HaySesionActiva())
 {
     <div class="alert alert-warning">Debes iniciar sesión.</div>
-    <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>Ir a login</button>
-}
-@* Restrict access to admin users only *@
-else if (!UserSession.EsAdmin())
-{
-    <div class="alert alert-danger">Acceso restringido. Solo el administrador puede gestionar alimentos.</div>
-    <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
+    <button class="btn btn-primary" @onclick='() => Navigation.NavigateTo("/login")'>
+        Ir a login
+    </button>
 }
 else
 {
-    @* Search input for filtering food items by name *@
-    <div class="mb-3">
-        <label class="form-label">Buscar alimento</label>
-        <input class="form-control" @bind="textoBusqueda" />
+    <div class="mb-3 d-flex gap-2">
+        @if (UserSession.EsAdmin())
+        {
+            <!-- Navigate to create new food (admin only) -->
+            <button class="btn btn-success" @onclick='() => Navigation.NavigateTo("/alimentos/nuevo")'>
+                Agregar alimento
+            </button>
+        }
+
+        <!-- Go back to main page -->
+        <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>
+            Volver
+        </button>
     </div>
 
-    <div class="d-flex gap-2 mb-3">
-        <button class="btn btn-success" @onclick="NuevoAlimento">Agregar alimento</button>
-        <button class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/main")'>Volver</button>
-    </div>
-
-    @* Feedback alert shown after any action *@
-    @if (!string.IsNullOrWhiteSpace(mensaje))
+    @if (alimentos is null)
     {
-        <div class="alert @(exito ? "alert-success" : "alert-warning")">@mensaje</div>
+        <div class="alert alert-info">Cargando alimentos...</div>
     }
-
-    @if (alimentosFiltrados.Count == 0)
+    else if (alimentos.Count == 0)
     {
-        <p>No hay alimentos registrados.</p>
+        <div class="alert alert-warning">No hay alimentos registrados.</div>
     }
     else
     {
-        @* Food items table with macronutrient columns and actions *@
-        <table class="table table-bordered table-striped">
+        <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Alimento</th>
-                    <th>Grasas</th>
-                    <th>Proteína</th>
+                    <th>Nombre</th>
+                    <th>Calorías</th>
+                    <th>Proteínas</th>
                     <th>Carbohidratos</th>
-                    <th>Acciones</th>
+                    <th>Grasas</th>
+                    @if (UserSession.EsAdmin())
+                    {
+                        <th>Acciones</th>
+                    }
                 </tr>
             </thead>
             <tbody>
-                @foreach (var alimento in alimentosFiltrados)
+                @foreach (var alimento in alimentos)
                 {
                     <tr>
                         <td>@alimento.Nombre</td>
-                        <td>@alimento.Grasas</td>
+                        <td>@alimento.Calorias</td>
                         <td>@alimento.Proteinas</td>
                         <td>@alimento.Carbohidratos</td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-primary" @onclick="() => IrEditarConId(alimento.Id)">Editar</button>
-                                <button class="btn btn-sm btn-danger" @onclick="() => Eliminar(alimento.Id)">Eliminar</button>
-                            </div>
-                        </td>
+                        <td>@alimento.Grasas</td>
+
+                        @if (UserSession.EsAdmin())
+                        {
+                            <td>
+                                <!-- Navigate to edit page -->
+                                <button class="btn btn-primary btn-sm me-2"
+                                        @onclick="() => EditarAlimento(alimento.Id)">
+                                    Editar
+                                </button>
+
+                                <!-- Delete food -->
+                                <button class="btn btn-danger btn-sm"
+                                        @onclick="() => EliminarAlimento(alimento.Id)">
+                                    Eliminar
+                                </button>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>
@@ -78,47 +91,34 @@ else
 }
 
 @code {
-    private List<Alimento> alimentos = [];
-    private string textoBusqueda = string.Empty;
-    private string mensaje = string.Empty;
-    private bool exito;
+    private List<Alimento> alimentos = new();
 
-    @* Filters the food list by name based on the search input *@
-    private List<Alimento> alimentosFiltrados =>
-        string.IsNullOrWhiteSpace(textoBusqueda)
-            ? alimentos
-            : [.. alimentos.Where(a => a.Nombre.Contains(textoBusqueda, StringComparison.OrdinalIgnoreCase))];
-
-    @* Loads the food list on page initialization *@
+    /// <summary>
+    /// Loads all foods when page initializes
+    /// </summary>
     protected override void OnInitialized()
-    {
-        CargarAlimentos();
-    }
-
-    @* Retrieves all food items from the controller *@
-    private void CargarAlimentos()
     {
         alimentos = AlimentoController.ObtenerTodos();
     }
 
-    @* Navigates to the new food item form *@
-    private void NuevoAlimento()
+    /// <summary>
+    /// Navigates to edit page using route parameter
+    /// </summary>
+    private void EditarAlimento(Guid id)
     {
-        Navigation.NavigateTo("/alimentos/nuevo");
+        Navigation.NavigateTo($"/alimentos/editar/{id}");
     }
 
-    @* Navigates to the edit form for the specified food item *@
-    private void IrEditarConId(Guid id)
-    {
-        Navigation.NavigateTo($"/alimentos/editar?id={id}");
-    }
-
-    @* Deletes the specified food item and refreshes the list *@
-    private void Eliminar(Guid id)
+    /// <summary>
+    /// Deletes a food and refreshes the list
+    /// </summary>
+    private void EliminarAlimento(Guid id)
     {
         var resultado = AlimentoController.EliminarAlimento(id);
-        exito = resultado.Exito;
-        mensaje = resultado.Mensaje;
-        CargarAlimentos();
+
+        if (resultado.Exito)
+        {
+            alimentos = AlimentoController.ObtenerTodos();
+        }
     }
 }

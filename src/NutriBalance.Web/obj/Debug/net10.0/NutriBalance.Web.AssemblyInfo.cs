@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NutriBalance.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac5bbce2a449b7b0344a34c6896a7e2cb1da10f3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a74d09c1c984b2498ccf53178a3b9a7679988a0")]
 [assembly: System.Reflection.AssemblyProductAttribute("NutriBalance.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NutriBalance.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
