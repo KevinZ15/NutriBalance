@@ -23,7 +23,7 @@ El proyecto está estructurado bajo el patrón MVC (Modelo - Vista - Controlador
   Contiene la lógica de negocio (validaciones, cálculos, procesamiento)
 
 - **View**  
-  Interfaz gráfica desarrollada con Windows Forms
+  Interfaz gráfica desarrollada con Blazor
 
 ##  Tecnologías utilizadas
 
@@ -34,6 +34,8 @@ El proyecto está estructurado bajo el patrón MVC (Modelo - Vista - Controlador
 - Visual Studio
 - SonarLint (calidad de código)
 - Azure DevOps (gestión del proyecto)
+- SQlite
+- Blazor
 
 
 ##  Funcionalidades principales
@@ -46,3 +48,4 @@ El proyecto está estructurado bajo el patrón MVC (Modelo - Vista - Controlador
 - Resumen diario de consumo
 - Histórico mensual
 - Validación de metas nutricionales
+- Panel de administrador y estadisticas
